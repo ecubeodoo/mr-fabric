@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="yarn_requirement">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-set="quantity" t-value="0" />
+                        <t t-set="invoice_total" t-value="0" />
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .heading h2 {
+                                    text-align: center;
+                                }
+                                .heading p {
+                                    text-align: center;
+                                    
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                }
+                                .dk-grey-htr {
+                                    width: 100%;
+                                    padding: 40px;
+                                }
+                                .dk-grey-htr p {
+                                    width: 100%;
+                                    font-size: 19px;
+                                    margin-left: 30px;
+                                }
+                                .no-margin {
+                                    margin-bottom: 0px;
+                                    margin-top: 0px;
+                                }
+                                span.liner {
+                                    min-width: 500px;
+                                    border-bottom: 1px solid #000;
+                                    display: inline-block;
+                                    text-align: center;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+
+                                    <div class="heading">
+                                        <h2 class="no-margin">MR.FABRIC PVT LTD</h2>
+                                        <p class="no-margin">YARN REQUIREMENT</p>
+                                        <p class="no-margin">
+                                            <strong> Dated</strong> = <span t-esc="o.date"></span>
+                                        </p>
+                                    </div>
+                                    <t t-set="srno" t-value="0" />
+
+                                    <t t-foreach="entries" t-as="data">
+                                        <t t-set="srno" t-value="srno + 1" />
+                                        <div class="dk-grey-htr">
+                                            
+                                            <p class="no-margin">
+                                                <span t-esc="srno"></span>.
+                                                <span class="solid"> 
+                                                    <span t-esc="data.name"></span> 
+                                                    <span t-esc="getrate(data)" class="liner"></span> 
+                                                    <span t-esc="getbags(data)"></span> bags
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid"> 
+                                                    WO# <span t-esc="getworkorders(data)"></span> &gt; &lt; 
+                                                    <span t-esc="getbuyers(data)"></span> &gt; &lt;
+                                                    <span t-esc="getprodtype(data)"></span> &gt; &lt;
+                                                    Delivery date =<span t-esc="getdate(data)"></span>
+                                                </span>
+                                            </p>
+
+                                        </div>
+                                    </t>
+
+                                </div>
+                            </div>
+                        </div><!--end of page-->
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

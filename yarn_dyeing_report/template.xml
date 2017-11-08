@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="yarn_dyeing_report" 
+            model="yarn.dyeing"
+            name="yarn_dyeing_report.yarn_dyeing"
+            file="yarn_dyeing_report.yarn_dyeing"
+            report_type="qweb-html"
+            string="Yarn Dyeing"/> 
+    </data>
+</openerp>

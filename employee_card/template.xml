@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="tempo_card" 
+            model="hr.employee"
+            name="employee_card.emp_card"
+            file="employee_card.emp_card"
+            report_type="qweb-html"
+            string="Employee Card"/> 
+    </data>
+</odoo>
+
+<!-- commercial.packing.list -->

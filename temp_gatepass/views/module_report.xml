@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="assets_backend" name="custom assets" inherit_id="web.assets_backend"> 
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="//fonts.googleapis.com/earlyaccess/notonastaliqurdudraft.css" />
+        </xpath>
+    </template>
+
+    <template id="temp_card">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            .center-data h3 {
+                                text-align: center;
+                            }
+                            .center-data {
+                                font-size: 18px;
+                            }
+                            .temporary {
+                                width: 100%;
+                            }
+                            .employee {
+                                width: 33%;
+                                float: right;
+                            }
+                            .solid {
+                                font-weight: bold;
+                            }
+                            .company-worker {
+                                text-align: right;
+                            }
+                            .i-d-card {
+                                text-align: right;
+                            }
+                            .clearfloat {
+                                float: none;
+                                clear: both;
+                            }
+                            .page {
+                                font-family: 'Noto Nastaliq Urdu Draft', serif;
+                            }
+                        </style>
+
+                        <div class="main-data">
+                            <div class="center-data">
+                                <h3>Employee Temporary Gatepass</h3>
+                                <h3>عارضی گیٹ پاس براۓ ورکرذ</h3>
+                            <div class="temporary">
+                                <div class="employee">
+                                    <p><span class="liquid">______________________________ </span><span class="solid">:نام</span></p>
+                                </div>
+                                <div class="employee">
+                                    <p><span class="liquid">_____________________________ </span><span class="solid">:کهاته</span></p>
+                                </div>
+                                <div class="employee">
+                                    <p><span class="liquid">___________________________ </span><span class="solid">:عهده</span></p>
+                                </div>
+                                
+                                <div class="company-worker">
+                                    <p><span class="solid">مندرجه بالا ورکر کو فیکٹری میں کام کرنے کے لیے بلايا گیا ھے لھذا اس ورکر کو فیکٹری میں    </span></p>
+                                </div>
+                                <br class="clearfloat"/>
+                                <div class="employee">
+                                    <p><span class="liquid">____________________________ </span><span class="solid">:اذمورخه</span></p>
+                                </div>
+                                <div class="employee">
+                                    <p><span class="liquid">__________________________ </span><span class="solid">:تامورخه</span></p>
+                                </div>
+                                <div class="employee">
+                                    <p><span class="solid">-تک کام کر<strong>نۓ</strong>کی اجاذت دی جاۓ</span></p>
+                                </div>
+                                
+                                <div class="i-d-card">
+                                    <p><span class="liquid">________________________ </span><span class="solid">:شناختی کارڈ نمبر</span></p>
+                                </div>
+                                <div class="i-d-card">
+                                    <p><span class="liquid">________________________ </span><span class="solid">:دستخط ڈیپارٹمنٹ ھیڈ/انچارج </span></p>
+                                </div>
+                                <div class="i-d-card" style="text-align: left; border-bottom: 1px dashed;" >
+                                    <p><span class="liquid">________________________ </span><span class="solid">:دستخط  مینیجر ایچ آراینڈ ایڈمن</span></p>
+                                </div>
+
+                                
+                            </div>
+                            </div>
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

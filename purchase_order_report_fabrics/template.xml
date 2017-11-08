@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_purchase_order" 
+            model="purchase.order"
+            name="purchase_order_report_fabrics.purchase_report"
+            file="purchase_order_report_fabrics.purchase_report"
+            report_type="qweb-html"
+            string="Purchase order Report"/> 
+    </data>
+</openerp>
+
+<!-- commercial.packing.list -->

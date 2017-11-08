@@ -1,0 +1,80 @@
+<?xml version="1.0"?> 
+<odoo>
+    <data>
+
+        <record id="employee_form_extension" model="ir.ui.view"> 
+            <field name="name">employee_form_extension</field> 
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//page[@name='personal_information']/group" position="before">
+                    <group>
+                        <group string="Contact Information">
+                            <field name="address_id" context="{'show_address': 1}" options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"/>
+                            <field name="mobile_phone"/>
+                            <field name="work_location"/>
+                            <field name="work_email" widget="email"/>
+                            <field name="work_phone"/>
+                        </group>
+                        <group string="Position">
+                            <field name="dor" />
+                            <field name="department_id"/>
+                            <field name="job_id" string="Designation"/>
+                            <field name="parent_id"/>
+                            <field name="coach_id"/>
+                            <field name="calendar_id"/>
+                        </group>
+                        <group string="Hr Benefits">
+                            <field name="social_security" />
+                            <field name="ss_no"  attrs="{'invisible':[('social_security', '!=', True)]}"/>
+                            <field name="eobi"/>
+                            <field name="eobi_no" attrs="{'invisible':[('eobi', '!=', True)]}"/>
+                        </group>
+                    </group>
+                    
+
+                </xpath>
+
+                <xpath expr="sheet/notebook" position="after">
+                        <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                </xpath>
+
+                <xpath expr="//field[@name='category_ids']" position="after">
+                    <group name="group_top">
+                        <group name="group_right">
+                            <field name="salaried_person" />
+                            <field name="rate_per_piece" />
+                        </group>
+                        <group name="group_left">
+                            <field name="employee_type" />
+                        </group>
+                    </group>                   
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <label for="card_no" class="oe_edit_only" string="Card No"/>
+                    <field name="card_no" />
+                </xpath>
+
+                <xpath expr="//field[@name='country_id']" position="before">
+                    <field name="fname" />
+                    <field name="religion" />
+                </xpath>
+
+                <xpath expr="//field[@name='identification_id']" position="replace">
+                    <field name="cnic" />
+                </xpath>
+
+                <xpath expr="//page[@name='public']" position="replace">
+                </xpath>
+
+
+
+            </field>
+
+        </record>
+    </data>
+</odoo> 
+

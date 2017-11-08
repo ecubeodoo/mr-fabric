@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="store_issuance">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-set="quantity" t-value="0" />
+                        <t t-set="invoice_total" t-value="0" />
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .center-data h2 {
+                                    text-align: center;
+                                }
+                                .center-data p {
+                                    text-align: center;
+                                    line-height: 1.2;
+                                }
+                                .heads {
+                                    width: 50%;
+                                    float: left;
+                                    margin: 10px 0px;
+                                }
+                                .col01 p {
+                                    text-align: left;
+                                }
+                                .col02 p {
+                                    text-align: right;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 75px;
+                                    width: 75px;
+                                    min-width: 75px;
+                                }
+                                table tr td:nth-child,
+                                table tr th:nth-child {
+                                    max-width: 20px;
+                                    width: 20px;
+                                    min-width: 20px;
+                                }
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    border-color: #b4b4b4;
+                                    text-align: center;
+                                    padding: 15px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                span.underline {
+                                    text-decoration: underline;
+                                }
+                                span.solid {
+                                    font-weight: bold;
+                                }
+                                .report_footer {
+                                    width: 100%;
+                                    margin: 100px 0px 0px;
+                                }
+                                .report_footer .cols {
+                                    width: 33%;
+                                    float: left;
+                                }
+                                .report_footer .cols .bordered {
+                                    display: inline-block;
+                                    width: 200px;
+                                    border-bottom: 1px solid #b4b4b4;
+                                }
+                                .report_footer .cols:first-child {
+                                    text-align: left;
+                                }
+                                .report_footer .cols:nth-child(2) {
+                                    text-align: center;
+                                }
+                                .report_footer .cols:nth-child(3) {
+                                    text-align: right;
+                                }
+                                .report_footer .cols .liquid {
+                                    display: inline-block;
+                                    text-align: center;
+                                    width: 200px;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <h2 class="no-margin">MR FABRICS (PVT) LTD.</h2>
+                                    <p class="no-margin">STORE ISSUE REQUISITION</p>
+
+                                    <div class="heads col01">
+                                        <p>
+                                            <span class="solid">Date:</span>
+                                            <span class="liquid underline" t-esc="o.name"></span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="heads col02">
+                                        <p>
+                                            <span class="solid">Sr No:</span>
+                                            <span class="liquid">___________</span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="heads col01">
+                                        <p>
+                                            <span class="solid">Work Order #</span>
+                                            <span class="liquid underline" t-esc="o.wo.name"></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="heads col02">
+                                        <p>
+                                            <span class="solid">Issued Person:</span>
+                                            <span class="liquid underline" t-esc="o.issue_Person.name"></span>
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="heads col01">
+                                        <p>
+                                            <span class="solid">Production Units:</span>
+                                            <span class="liquid underline" t-esc="o.unit.name"></span>
+                                        </p>
+                                    </div>
+
+                                    <br class="clearfloat"/>
+
+                                    <table width="100%">
+                                        <tr>
+                                            <th>Sr No:</th>
+                                            <th>Description</th>
+                                            <th>Unit</th>
+                                            <th>Issue</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                        <t t-set="sr_no" t-value="0" />
+                                        <t t-foreach="o.tree_link" t-as="data">
+                                            <t t-set="sr_no" t-value="sr_no + 1" />
+                                            <tr>
+                                                <td><span t-esc="sr_no"></span></td>
+                                                <td><span t-esc="data.product_id.name"></span></td>
+                                                <td><span t-esc="data.uom.name"></span></td>
+                                                <td><span t-esc="data.qty"></span></td>
+                                                <td><span t-esc="data.remark"></span></td>
+                                            </tr>
+                                        </t>
+                                    </table>
+
+                                    <div class="report_footer">
+
+                                        <div class="cols">
+                                            <span class="bordered"></span>
+                                            <br />
+                                            <span class="liquid">Store Incharge</span>
+                                        </div>
+
+                                        <div class="cols">
+                                            <span class="bordered"></span>
+                                            <br />
+                                            <span class="liquid">Approved By</span>
+                                        </div>
+
+                                        <div class="cols">
+                                            <span class="bordered"></span>
+                                            <br />
+                                            <span class="liquid">Received By</span>
+                                        </div>
+                                        <br class="clearfloat"/>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

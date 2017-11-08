@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="yarn_dyeing">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                h2 {
+                                    text-align: center;
+                                }
+                                .monoo-dyeing {
+                                    width: 100%;
+                                }
+                                .yarn-dyeing {
+                                    width: 69%;
+                                    float: left;
+                                    margin-left: 30px;
+                                }
+                                h3 {
+                                    width: 67%;
+                                    float: left;
+                                    margin-left: 30px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin-right: 10px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                p {
+                                    margin-left: 20px;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 40px;
+                                    width: 40px;
+                                    min-width: 40px;
+                                }
+
+                                table tr td:last-child,
+                                table tr th:last-child {
+                                    max-width: 250px;
+                                    width: 250px;
+                                    min-width: 250px;
+                                }
+                                table,th, td {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    text-align: center;
+                                    padding: 8px;
+                                    border-color: #b4b4b4;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .dyeing {
+                                    width: 25%;
+                                    float: left;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <h2>MR.FABRICS PVT LTD</h2>
+                                    <div class="monoo-dyeing">
+                                        <p>To:</p>
+                                        <h3><span t-esc="o.name.name"></span></h3>
+                                        <h3 style="width: 25%;">MF # 201</h3>
+                                        <div class="yarn-dyeing">
+                                            
+                                            <p class="no-margin">
+                                                <span class="solid">Attn:</span>
+                                                <span class="liquid">Mr. Asim</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">CC:</span>
+                                                <span class="liquid">Mr Anwaar</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">From:</span>
+                                                <span class="liquid">Saeed</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">SUBJECT:</span>
+                                                <span class="liquid">YARN DYEING PROGRAMME</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">BUYER:</span>
+                                                <span class="liquid" t-esc="o.buyer.name"></span>
+                                            </p>
+
+                                        </div>
+
+                                        <div class="dyeing" style="height: 170px;">
+                                            
+                                            <p class="no-margin">
+                                                <span class="solid">Style</span>
+                                                <span class="liquid" t-esc="o.style"></span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">W/O</span>
+                                                <span class="liquid" t-esc="o.won.name"></span>
+                                            </p>
+
+                                        </div>
+                                        <br class="clearfloat"/>
+
+                                        <div class="dyeing" style="float: left; width: 67%; margin-left: 30px;">
+                                            
+                                            <p>
+                                                <span class="solid">Date: </span>
+                                                <span class="liquid" t-esc="o.date"></span>
+                                            </p>
+
+                                        </div>
+
+                                        <div class="yarn-dyeing" style="border: 1px solid; width: 25%; text-align: center; margin-bottom: 20px; border-color: #b4b4b4;">
+
+                                            <p>
+                                                <span class="solid">Light Source</span>
+                                                <span class="liqquid"></span>
+                                            </p>
+
+                                            <p>
+                                                <span class="solid">Primary =</span>
+                                                <span class="liqquid" t-esc="o.primary.name"></span>
+                                            </p>
+
+                                            <p>
+                                                <span class="solid">Secondary=</span>
+                                                <span class="liqquid" t-esc="o.secondary.name"></span>
+                                            </p>
+                                        </div>
+
+                                        <table width="100%">
+                                            <tr>
+                                                <th>NO</th>
+                                                <th>COLORS</th>
+                                                <th>Yarn Count</th>
+                                                <th>Quantity(Ecru/kg)</th>
+                                                <th>STD</th>
+                                            </tr>
+                                            <t t-set="sr_no" t-value="1" />
+                                            <t t-set="qty" t-value="0" />
+                                            <t t-foreach="o.tree_link" t-as="data">
+                                                <tr>
+                                                    <td>
+                                                        <span t-esc="sr_no"></span>
+                                                        <t t-set="sr_no" t-value="sr_no + 1" />
+                                                    </td>
+                                                    <td><span t-esc="data.color.name"></span></td>
+                                                    <td><span t-esc="data.yarn.name"></span></td>
+                                                    <td>
+                                                        <span t-esc="data.issue_qty"></span>
+                                                        <t t-set="qty" t-value="qty + data.issue_qty" />
+                                                    </td>
+                                                    <td>Given</td>
+                                                </tr>
+                                            </t>
+                                            <tr>
+                                                <td>..</td>
+                                                <td>..</td>
+                                                <td>TOTAL</td>
+                                                <td><span t-esc="qty"></span> kgs</td>
+                                                <td>..</td>
+                                            </tr>
+                                        </table>
+                                        <p style="margin-top: 20px;">Thanks for your co-operation</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

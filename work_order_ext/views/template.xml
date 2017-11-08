@@ -1,0 +1,81 @@
+<?xml version="1.0"?> 
+<odoo>
+
+    <record id="work_order_form_view_extension" model="ir.ui.view"> 
+        <field name="name">work_order_form_view_extension</field> 
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name ='origin']" position="after">
+
+                <field name="style_no"/>
+                <field name="destination"/>
+                <field name="buyer"  domain= "[('buyer','=','True')]" context="{'default_knitting':True}"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name ='bom_id']" position="after">
+
+                <field name="custome_po"/>
+                <field name="vessal"/>
+                <field name="week"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name ='bom_id']" position="before">
+
+                <field name="plan_qty"/>
+
+            </xpath>
+
+            <xpath expr="//group[1]" position="after">
+
+                <group>
+
+                    <field name="remarks"/>
+
+                </group>
+
+            </xpath>
+
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="string">Garment Description</attribute>
+            </xpath>
+
+            <xpath expr="//label[@for='product_qty']" position="attributes">
+                <attribute name="string">100% Qty</attribute>
+            </xpath>
+
+        </field> 
+    </record>
+
+    <record id="view_Accessories_tree" model="ir.ui.view">
+        <field name="name">view_Accessories_tree</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[3]" position='after'>
+                <page string='Accessories'>
+                    <field name="production_id" nolabel='1'>
+                        <tree  editable="bottom">
+
+                            <field name="accessories" domain="[('ttype', '=', 'accessories')]"/>
+                            <field name="required_quantity"/>
+                            <field name="purchased"/>
+                            <field name="in_stock"/>
+                            <field name="issued"/>
+                            <field name="remaining"/>
+                        </tree>
+                    </field>
+                    <group name="group_top">
+                        <button name="validate_tree" type="object" string="Validate" />
+                    </group>
+                                   
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo> 

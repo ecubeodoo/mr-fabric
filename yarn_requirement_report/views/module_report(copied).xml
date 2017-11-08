@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="yarn_requirement">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <t t-set="quantity" t-value="0" />
+                        <t t-set="invoice_total" t-value="0" />
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .center-data h2 {
+                                    text-align: center;
+                                }
+                                .center-data p {
+                                    text-align: center;
+                                    line-height: 1.2;
+                                }
+                                .date {
+                                    width: 30%;
+                                    float: left;
+                                    padding: 15px;
+                                }
+                                .serial {
+                                    width: 20%;
+                                    float: right;
+                                    padding: 15px;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 75px;
+                                    width: 75px;
+                                    min-width: 75px;
+                                }
+                                table tr td:nth-child,
+                                table tr th:nth-child {
+                                    max-width: 20px;
+                                    width: 20px;
+                                    min-width: 20px;
+                                }
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    border-color: #b4b4b4;
+                                    text-align: center;
+                                    padding: 15px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <h2 class="no-margin">MR FABRICS (PVT) LTD.</h2>
+                                    <p class="no-margin">STORE ISSUE REQUISITION</p>
+                                <div class="date">
+                                    <p>
+                                        <span class="solid">Date:</span>
+                                        <span class="liquid"></span>
+                                    </p>
+                                </div>
+                                <div class="serial">
+                                    <p>
+                                        <span class="solid">Sr No:</span>
+                                        <span class="liquid">___________</span>
+                                    </p>
+                                </div>
+                                <br class="clearfloat"/>
+                                <table width="100%">
+                                    <tr>
+                                        <th>Sr No:</th>
+                                        <th>Description</th>
+                                        <th>Unit</th>
+                                        <th>Issue</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Main size lable</td>
+                                        <td></td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Main size lable</td>
+                                        <td></td>
+                                        <td>0.00</td>
+                                        <td>0.00</td>
+                                    </tr>
+                                </table>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="emp_card">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            .mr-fabrics {
+                                width: 49%;
+                                float: left;
+                                border: 1px solid;
+                                margin-right: 4px;
+                                padding: 3px;
+                            }
+                            .mr-fabrics p {
+                                width: 90%;
+                            }
+                            .instructions {
+                                width: 47%;
+                                float: left;
+                                border: 1px solid;
+                                
+                            }
+                            .solid {
+                                font-weight: bold;
+                                margin-left: 10px;
+                            }
+                            .center-data p {
+                                margin-left: 20px;
+                                font-size: 13px;
+                            }
+                            .no-margin {
+                                margin-top: 5px;
+                                margin-bottom: 0px;
+                            }
+                            .mr-fabrics h3 {
+                                margin: 0px 0px 10px !important;
+                                text-align: center;
+                                padding: 5px 0px;
+                                border-bottom: 1px solid #000;
+                            }
+                            .joining {
+                                width: 45%;
+                                float: left;
+                                margin-bottom: 9px;
+                            }
+                            .instructions h3 {
+                                border-bottom: 1px solid;
+                                text-align: center;
+                            }
+                            .clearfloat {
+                                clear: both;
+                                float: none;
+                            }
+                            .cnic {
+                                width: 45%;
+                                float: left;
+                            }
+                            .fabrics-ltd {
+                                width: 50%;
+                                float: left;
+                            }
+                            hr {
+                                margin-top: 6px;
+                                margin-bottom: 0px;
+                                border: 0;
+                                border-top: 1px solid #eeeeee;
+                            }
+                            .mr-fabrics,
+                            .instructions {
+                                min-height: 330px;
+                            }
+                            .bar_code {
+                                height: 35px;
+                                width: 100%;
+                                float: left;
+                                text-align: center;
+                            }
+                            .bar_code img {
+                                width: auto;
+                                height: 100%;
+                            }
+                            .mr-fabrics .bar_code {
+                                margin: 65px 0px 0px 0px;
+                            }
+                        </style>
+
+                        <div class="main-data">
+
+                            <div class="center-data">
+
+                                <div class="mr-fabrics">
+                                    <h3 class="no-margin" style="margin-top: 4px;">Mr. Fabrics (Pvt) Ltd.:</h3>
+                                
+                                    <p>
+                                        <span class="liquid">Name</span>
+                                        <span class="solid" t-esc="o.name"></span>
+                                    </p>
+
+                                    <p>
+                                        <span class="liquid">F/H Name:</span>
+                                        <span class="solid" t-esc="o.fname"></span>
+                                    </p>
+
+                                    <p>
+                                        <span class="liquid">Dept:</span>
+                                        <span class="solid" t-esc="o.department_id.name"></span>
+                                    </p>
+
+                                    <p>
+                                        <span class="liquid">Desg:</span>
+                                        <span class="solid" t-esc="o.job_id.name"></span>
+                                    </p>
+
+                                    <div class="cnic">
+                                        <p><span class="liquid">CINIC#</span>
+                                        <span class="solid" t-esc="o.cnic"></span></p>
+                                    </div>
+
+                                    <div class="cnic" style="text-align: right; margin-right: 40px;">
+                                        <p class="no-margin"><span class="liquid">Card No:</span></p>
+                                        <p class="no-margin"><span class="solid" style="margin-right: 10px;">9046</span></p>
+                                    </div>
+                                    <div class="bar_code">
+                                        <img src="/employee_card/static/src/img/barcode.jpg" />
+                                    </div>
+                                </div>
+
+                                <div class="instructions">
+                                    <h3 class="no-margin" style="padding: 3px;">INSTRUCTIONS</h3>
+                                    <p class="no-margin" style="margin-top: 5px;">&gt; This card is the property of Mr. Fabrics.</p>
+                                    <p class="no-margin">&gt; Keep this card safely.</p>
+                                    <p class="no-margin">&gt; Hang this card during working hours.</p>
+                                    <p class="no-margin">&gt; Incase of card missing immidiately inform the time office.</p>
+                                    <p class="no-margin">&gt; This card and employee code is not transferable.</p>
+                                    <p class="no-margin">&gt; Show the card when receiving your monthly salary.</p>
+                                    <hr width="100%"></hr>
+                                    
+                                    <div class="joining">
+                                        <p class="no-margin"><span class="liquid">Date of joining:</span>
+                                        <span class="solid">20-Dec-16</span></p>
+                                    </div>
+                                    
+                                    <div class="joining">
+                                        <p class="no-margin"><span class="liquid">Date of issue:</span>
+                                        <span class="solid">01-Nov-17</span></p>
+                                    </div>
+
+                                    <hr width="100%"></hr>
+                                    <p class="no-margin"><span class="solid">Approving authority:</span></p>
+                                    <br class="clearfloat"/>
+                                    <div class="bar_code">
+                                        <img src="/employee_card/static/src/img/barcode.jpg" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

@@ -1,0 +1,39 @@
+            <!-- <xpath expr="//field[@name='notes']" position="after">
+
+                <field name="salaried_person" />
+
+                <field name="rate_per_piece" />
+                
+            </xpath> -->
+
+
+            <!-- <group>
+    <group string="Contact Information">
+        <field name="address_id" context="{'show_address': 1}" options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"/>
+        <field name="mobile_phone"/>
+        <field name="work_location"/>
+        <field name="work_email" widget="email"/>
+        <field name="work_phone"/>
+    </group>
+    <group string="Position">
+        <field name="department_id"/>
+        <field name="job_id"/>
+        <field name="parent_id"/>
+        <field name="coach_id"/>
+        <field name="calendar_id"/>
+    </group>
+</group>
+<field name="notes" placeholder="Other Information ..." colspan="4"/> -->
+
+
+<record id="employee_form_view_extension" model="ir.ui.view"> 
+        <field name="name">employee_form_view_extension</field> 
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="type">form</field> 
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="merchant"/>
+            </xpath>
+        </field>
+    </record>

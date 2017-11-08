@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="purchase_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style type="text/css">
+                                .report-wrapper {
+                                    width: 900px;
+                                    margin: 0px auto;
+                                }
+                                h1 {
+                                    margin: 0px 0px 10px;
+                                    font-size: 40px;
+                                    text-align: center;
+                                    color: #000;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                    display: block;
+                                }
+                                .logo {
+                                    width: 150px;
+                                    float: left;
+                                }
+                                .company_info {
+                                    width: 850px;
+                                    float: left;
+                                }
+                                .company_info p {
+                                    text-align: center;
+                                }
+                                
+                                table {
+                                    width: 100%;
+                                    border: 2px solid #000;
+                                    border-spacing: 0px;
+                                    margin: 25px 0px 25px;
+                                    float: left;
+                                }
+                                table tr:first-child th {
+                                    border-bottom: 2px solid #000;
+                                }
+                                table tr td {
+                                    padding: 10px;
+                                    border-right: 2px solid #000;
+                                }
+                                table tr td:last-child {
+                                    border-right: none;
+                                }
+                                table tr th {
+                                    padding: 10px;
+                                    text-align: left;
+                                    border-right: 2px solid #000;
+                                }
+                                table tr th {
+                                    border-right: none;
+                                }
+                                .sign p {
+                                    width: 25%;
+                                    float: left;
+                                }
+                                .sign p span {
+                                    display: block;
+                                    text-align: center;
+                                }
+                                p.last_note {
+                                    text-align: center;
+                                    margin: 10px 0px 0px;
+                                }
+
+
+                                .report_heading {
+                                        width: 100%;
+                                        float: left;
+                                        
+                                    }
+                                .report_heading h2 {
+                                        margin: 5px 0px;
+                                        text-align: center;
+                                        line-height: 1;
+                                        margin-bottom:40px;
+                                .our{
+                                    width:100%;
+                                    float: left;
+                                }
+                                .header,
+                                footer {
+                                    display: none;
+                                }
+                            </style>
+                            
+                            <div class="report-wrapper">
+
+                                <div class="report_header">
+
+                                    <div class="logo">
+                                        <p>&#032;</p>
+                                    </div>
+
+                                    <div class="company_info">
+                                        <h1>Mr. Fabrics (PVT.) LTD.</h1>
+                                        <p>18-km, Ferozpur Road, Behind Nishtar Colony,(Ata Baksh Road), Lahore-Pakistan</p>
+                                        <p>PH. 042-35923033, 35923218</p>
+                                    </div>
+                                    <div class="report_heading">
+
+                                        <h2>Purchase Order</h2>
+
+                                    </div><!--end of report heading-->
+                                    <br class="clearfloat"/>
+                                    <div class="our">
+                                        <div style="display:inline;width: 25%;float:left;">
+                                            <span style="font-weight:bold;">Date:</span>
+                                            <span t-esc="o.date_order"></span>
+                                        </div>
+                                        <div style="display:inline;width: 25%;float:left;">
+                                            <span style="font-weight:bold;">PO No:</span>
+                                            <span t-esc="o.name"></span>
+                                        </div>
+                                        <div style="display:inline;width: 25%;float:left;">
+                                            <span style="font-weight:bold;">Messers:</span>
+                                            <span t-esc="o.partner_id.name"></span>
+                                        </div>
+                                        <div style="display:inline;width: 25%;float:left;">
+                                            <span style="font-weight:bold;">WO#</span>
+                                            <span t-esc="o.won.name"></span>
+                                        </div>
+                                    </div>
+
+                                </div><!--end of report header-->
+
+                                <div class="report_body">
+
+                                    <table>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Quantity</th>
+                                            <th>Rate</th>
+                                            <th>Delivery Date</th>
+                                            <th>Amount</th>
+
+                                        </tr>
+                                        <t t-set="add" t-value="0"/>
+                                        <t t-foreach="o.order_line" t-as="data">
+                                            <tr style="border-bottom:1px solid">
+                                                <td><span t-esc="data.product_id.name"></span></td>
+                                                <td><span t-esc="data.product_qty"></span></td>
+                                                <td><span t-esc="data.price_unit"></span></td>
+                                                <td><span t-esc="o.date_order"></span></td>
+                                                <td><span t-esc="data.product_qty * data.price_unit"></span>
+                                                <t t-set="add" t-value="add + data.product_qty * data.price_unit"/> </td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td colspan="4"><b>Total Amount</b></td>
+                                             <td>
+                                                <span t-esc="add"></span>
+                                            </td>
+                                        </tr>
+                        
+
+                                    </table>
+
+                                    <div class="sign">
+                                        <p>
+                                            <span class="liquid">_________________</span>
+                                            <span class="solid">Prepared By.</span>
+                                        </p>
+                                        <p>
+                                            <span class="liquid">_________________</span>
+                                            <span class="solid">Account Deptt.</span>
+                                        </p>
+                                        <p>
+                                            <span class="liquid">_________________</span>
+                                            <span class="solid">Approved By.</span>
+                                        </p>
+                                        <p>
+                                            <span class="liquid">_________________</span>
+                                            <span class="solid">Party Sign.</span>
+                                        </p>
+                                    </div>
+
+                                    <p class="last_note">Note: Factory has authority to cancel the order in case of delay.</p>
+
+                                </div><!--end of report body-->
+
+                            </div><!--end of report wrapper-->
+
+                        </div><!--end of page-->
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

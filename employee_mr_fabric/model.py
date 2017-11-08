@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*- 
+from odoo import models, fields, api
+
+class EmployeeFormExtension(models.Model):
+    _inherit = 'hr.employee'
+
+    salaried_person = fields.Boolean(string="Salaried Person")
+    rate_per_piece = fields.Boolean(string="Rate Per Piece")
+    employee_type = fields.Selection([('temporary','Temporary'),('permanent','Permanent')],string='Employee Type',default='temporary')
+    card_no = fields.Char(string='Card No')
+    dor = fields.Date(string='DOR')
+    religion = fields.Char(string='Religion')
+    fname = fields.Char(string='Father Name')
+    cnic = fields.Char(string='CNIC NO')
+    social_security = fields.Boolean(string="Social Security")
+    ss_no = fields.Char(string="SS No")
+    eobi = fields.Boolean(string="EOBI")
+    eobi_no = fields.Char(string="EOBI No")
+
+
+class HrOvertime(models.Model):
+    _name = 'hr.overtime'
+    _rec_name = 'date'
+
+    date = fields.Date(string="Date")
+    department = fields.Many2one('hr.job',string="Department")
+    total_overtime_hours = fields.Float(string="Total Overtime Hours") 
+    total_overtime_amount = fields.Float(string="Total Overtime Amount")
+    tree_link = fields.One2many('hr.overtime.tree','tree_linked')
+
+    @api.onchange('tree_link')
+    def onchange_tree(self):
+        actual_overtime = 0
+        total_overtime = 0
+        for x in self.tree_link:
+            actual_overtime = actual_overtime + x.actual_overtime_hours
+            total_overtime = total_overtime + x.overtime_amount
+
+        self.total_overtime_hours = actual_overtime
+        self.total_overtime_amount = total_overtime
+
+class HrOvertimeTreeView(models.Model):
+    _name = 'hr.overtime.tree'
+
+    employee = fields.Many2one('hr.employee',string="Employee")
+    planed_overtime_hours = fields.Float(string="Planed Overtime Hours") 
+    actual_overtime_hours = fields.Float(string="Actual Overtime Hours")
+    overtime_amount = fields.Float(string="Overtime Amount")
+    remarks = fields.Char(string="Remarks")
+
+    tree_linked = fields.Many2one('hr.overtime')
+
+    @api.onchange('actual_overtime_hours')
+    def onchange_actual(self):
+
+        contract = self.env['hr.contract'].search([('employee_id.id','=',self.employee.id)])
+
+        self.overtime_amount = (contract.wage/26)/8
