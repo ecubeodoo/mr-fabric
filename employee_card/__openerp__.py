@@ -2,7 +2,7 @@
 {
     'name': "Employee Card mr.fabrics",
 
-    'summary': "Employee Card mr.fabrics",
+    'summary': "Employee Card mr.fabrics employees",
 
     'description': "Employee Card mr.fabrics",
 
