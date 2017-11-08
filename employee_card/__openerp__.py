@@ -6,7 +6,7 @@
 
     'description': "Employee Card mr.fabrics",
 
-    'author': "Muhammmad Kamran",
+    'author': "Muhammmad Kamran ",
     'website': "http://www.bcube.com",
 
     # any module necessary for this one to work correctly
