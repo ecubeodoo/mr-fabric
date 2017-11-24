@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*- 
 from odoo import models, fields, api
+from openerp.exceptions import Warning, ValidationError, UserError
 
 class accessories(models.Model):
 	_name = 'purchase.accessories'
@@ -34,10 +35,8 @@ class accessories(models.Model):
 		('cancel', 'Cancel'),
 		],default='draft')
 
-	source_location = fields.Many2one('stock.location',string="Source Location")
-	destination_location = fields.Many2one('stock.location',string="Destination Location")
-	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
+	access_po_num = fields.Many2one('purchase.order',string="Po Num")
 
 	tree_link = fields.One2many('purchase.accessories.tree','tree')
 
@@ -55,6 +54,35 @@ class accessories(models.Model):
 	@api.multi
 	def in_recieved(self):
 		self.accessories_stages = "recieved"
+
+		connect_po = self.env['purchase.order'].search([('id','=',self.access_po_num.id)])
+
+		for x in self.tree_link:
+			for y in connect_po.order_line:
+				if y.product_id.id == x.product.id:
+					y.qty_received = y.qty_received + x.recieved
+
+		for x in self.tree_link:
+			if x.qty > x.recieved:
+				amount = x.qty - x.recieved
+
+				purchase_accessories_env=self.env['purchase.accessories']
+				purchase_accessories_record=purchase_accessories_env.create({
+					'vendor' : self.vendor.id,
+					'wonumber' : self.wonumber.id,
+					'access_po_num' : self.access_po_num.id
+				})
+
+				for x in self.tree_link:
+					lines=self.env['purchase.accessories.tree'].create({
+					'product' : x.product.id,
+					'unit_measurement' : x.unit_measurement.id,
+					'qty' : amount,
+					'to_recieve' : amount,
+					'price' : x.price,
+					'tree' : purchase_accessories_record.id,
+				})
+
 
 	@api.multi
 	def in_customer_approval(self):
@@ -85,7 +113,6 @@ class accessories(models.Model):
 		for x in self.tree_link:
 			create_variants = self.env['stock.move'].create({
 				'product_id': x.product.id,
-				# 'product_tmpl_id': x.product_tmpl_id.id ,
 				'product_uom_qty': x.recieved,
 				'product_uom': x.unit_measurement.id,
 				'picking_id': create_reorder.id,
@@ -143,6 +170,53 @@ class yarn(models.Model):
 		if self.tax_id:
 			value = self.total * self.tax_id.amount / 100
 			self.amt_total = self.total + value
+
+class yarnApproval(models.Model):
+	_name = 'yarn.approval'
+	_rec_name = 'date'
+	_inherit = ['mail.thread', 'ir.needaction_mixin']
+
+	date = fields.Date(string="Date")
+	start_date = fields.Date(string="Start Date")
+	end_date = fields.Date(string="End Date")
+
+	won = fields.Many2one('mrp.production', string="Word order No.")
+	yarn_count = fields.Many2one('product.product', string="Yarn Count")
+
+	week = fields.Char(string="Week")
+
+	tree_link = fields.One2many('yarn.requirement.tree','yarn_approval_tree')
+
+	@api.multi
+	def get_values(self):
+		require_lines = self.env['yarn.requirement.tree'].search([])
+		dates = []
+		w_orders = []
+		weeks = []
+		changes = 0
+
+		if self.start_date and self.end_date:
+			dates = require_lines.search([('delv_date','>=',self.start_date),('delv_date','<=',self.end_date)])
+			++changes
+		else:
+			dates = require_lines
+
+		if self.won:
+			w_orders = dates.search([('won.id','=',self.won.id)])
+			++changes
+		else:
+			w_orders = dates
+
+		if self.week:
+			weeks = w_orders.search([('week','=',self.week)])
+			++changes
+		else:
+			weeks = w_orders
+
+		if weeks == require_lines and changes == 0:
+			return
+		else:
+			self.tree_link = weeks
 
 class accessories_tree(models.Model):
 	_name = "purchase.accessories.tree"
@@ -203,7 +277,7 @@ class YarnRequirementTree(models.Model):
 
 	product = fields.Many2one('product.product',string="Yarn Count", required=True)
 	won = fields.Many2many('mrp.production',string="W/O")
-	buyer = fields.Many2one('res.partner',string="Buyer")
+	buyer = fields.Many2many('res.partner',string="Buyer")
 	prod_type = fields.Many2one('purchase.product.type',string="Product Type")
 	delv_date = fields.Date("Delivery Date")
 	qty = fields.Float("Quantity (KG)")
@@ -217,14 +291,27 @@ class YarnRequirementTree(models.Model):
 
 	yarn_tree = fields.Many2one('yarn.requirement')
 
+	yarn_approval_tree = fields.Many2one('yarn.approval')
+
 	@api.onchange('appr_rate')
 	def appr_rate_change(self):
-		self.unit_price = self.appr_rate.rate
+		self.unit_price = self.appr_rate.name
 
 	@api.onchange('qty')
 	def qty_change(self):
 		if self.product.net_weight > 0 and self.qty:
 			self.nob= self.qty / self.product.net_weight
+
+	@api.onchange('won')
+	def won_change(self):
+		buyers = []
+		for x in self.won:
+			work_order = self.env['mrp.production'].search([('id','=',x.id)])
+			for x in work_order:
+				if work_order.buyer:
+					buyers.append(work_order.buyer.id)
+
+		self.buyer = buyers
 
 class YarnRate(models.Model):
 	_name = "yarn.rates"
@@ -238,9 +325,8 @@ class PurchaseOrderExt(models.Model):
 	wo_no = fields.Many2one('mrp.production',string='WO No',required = True)
 	style = fields.Char("Style No")
 	merchant = fields.Many2one('hr.employee',string="Merchant Name")
-	# won = fields.Many2one('mrp.production',string="Work Order No",required = True)
 	order_line2 = fields.One2many('purchase.order.line','order_id')
-	purchase_recharge_count = fields.Integer(string="Recharge")
+	purchase_recharge_count = fields.Integer(string="Recharge",compute='act_show_accessories_deliveries')
 	ttype = fields.Selection([
 		('yarn', 'Yarn'),
 		('fabric', 'Fabric'),
@@ -248,31 +334,34 @@ class PurchaseOrderExt(models.Model):
 		('general', 'General')
 		],default='yarn', required=True, string="Type")
 
-	
-	# @api.one
-	# def _purchase_load_list(self):
-	# 	print ".........dddddddddddddddddddd........."
-	# 	self.recharge_count = self.env['yarn.wizard.class'].search_count([('tree_id','=',self.id)])
-
 	@api.multi
 	def custom_button(self):
-		# self.state = 'sent'
-		purchase_accessories_env=self.env['purchase.accessories']
-		purchase_accessories_record=purchase_accessories_env.create({
-			'vendor' : self.partner_id.id,
-			'wonumber' : self.wo_no.id,
-			# 'wonumber' : self.wo_no,
-			})
-		for x in self.order_line:
-			lines=self.env['purchase.accessories.tree'].create({
-			'product' : x.product_id.id,
-			'unit_measurement' : x.product_uom.id,
-			'qty' : x.product_qty,
-			'to_recieve' : x.product_qty,
-			'price' : x.price_unit,
-			# 'remarks' : x.name,
-			'tree' : purchase_accessories_record.id,
-			})
+
+		prev_order = self.env['purchase.accessories'].search([('access_po_num','=',self.id)])
+
+		if prev_order:
+			raise ValidationError("Accessories Order against this PO already Exist")
+
+		else:
+			purchase_accessories_env=self.env['purchase.accessories']
+			purchase_accessories_record=purchase_accessories_env.create({
+				'vendor' : self.partner_id.id,
+				'wonumber' : self.wo_no.id,
+				'access_po_num' : self.id
+				})
+			for x in self.order_line:
+				lines=self.env['purchase.accessories.tree'].create({
+				'product' : x.product_id.id,
+				'unit_measurement' : x.product_uom.id,
+				'qty' : x.product_qty,
+				'to_recieve' : x.product_qty,
+				'price' : x.price_unit,
+				'tree' : purchase_accessories_record.id,
+				})
+
+	@api.one 
+	def act_show_accessories_deliveries(self):
+		self.purchase_recharge_count = self.env['purchase.accessories'].search_count([('access_po_num','=',self.id)])
 
 class PurchaseOrderLineExt(models.Model):
 	_inherit = 'purchase.order.line'
@@ -324,6 +413,25 @@ class YarnDyeing(models.Model):
 		('complete', 'Complete')
 		],default = 'draft') 
 
+	@api.onchange('won')
+	def get_buyer(self):
+		buyers = []
+		styles = ' '
+		for x in self.won:
+			work_order = self.env['mrp.production'].search([('id','=',x.id)])
+			if work_order.delivery:
+				self.delv_date = work_order.delivery
+			if work_order.buyer:
+				buyers.append(work_order.buyer.id)
+			if work_order.style_no:
+				if styles == ' ':
+					styles = work_order.style_no
+				else:
+					styles = styles + ', ' + work_order.style_no
+
+		self.buyer = buyers
+		self.style = styles
+
 	@api.multi
 	def in_draft(self):
 		self.stage = "draft"
@@ -331,6 +439,27 @@ class YarnDyeing(models.Model):
 	@api.multi
 	def in_sent(self):
 		self.stage = "sent"
+
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Yarn Dyeing',
+		})
+
+		for x in self.tree_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.yarn.id,
+				'product_uom_qty':x.issue_qty,
+				'product_uom': 1,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
 
 	@api.multi
 	def in_house(self):
@@ -360,7 +489,7 @@ class YarnDyeingTree(models.Model):
 	rate = fields.Float("Rate")
 	issue_qty = fields.Float("Issue Qty")
 	receive_qty = fields.Float("Received Qty (Kg)")
-	receiveable_qty = fields.Float("eceivable Qty (Kg)")
+	receiveable_qty = fields.Float("Receivable Qty (Kg)")
 	blc = fields.Char("Balance" ,compute='_blc')
 	wastage = fields.Char("Actual Wastage" ,compute='_wastage')
 	agree_wastage = fields.Float("Agreed Wastage")
@@ -383,14 +512,26 @@ class YarnDyeingTree(models.Model):
 			if self.blc:
 				waste = ((float(self.blc) / self.issue_qty)* 100)
 				if waste < 0:
-					self.wastage = str(waste * (-1)) + "%"
+					self.wastage = str("{0:.2f}".format(waste * (-1))) + "%"
 				if waste > 0:
-					self.wastage = str(waste) + "%"   
+					self.wastage = str("{0:.2f}".format(waste)) + "%"   
 
 	@api.onchange('issue_qty','agree_wastage')
 	def get_reciving(self):
 		if self.issue_qty > 0.0:
-			self.receiveable_qty = self.issue_qty - ((self.agree_wastage * self.issue_qty)/ 100)
+			self.receiveable_qty = self.issue_qty - ((self.agree_wastage * self.issue_qty)/ 100)  
+
+	@api.onchange('receive_qty')
+	def get_recived(self):
+		recived = self.receive_qty
+		reciveable = self.receiveable_qty + (self.receiveable_qty*0.1)
+		print reciveable
+		print "----------------"
+
+		if recived > reciveable:
+			self.receive_qty = self.receiveable_qty
+			return {'value':{}, 'warning':{
+			'title': 'Warning', 'message': 'Recived Quantity should not be greater than the Reciveable Quantity'}}
 
 class FabricDyeing(models.Model):
 	_name = "fabric.dyeing"
@@ -422,6 +563,25 @@ class FabricDyeing(models.Model):
 	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
 
+	@api.onchange('won')
+	def get_buyer(self):
+		buyers = []
+		styles = ' '
+		for x in self.won:
+			work_order = self.env['mrp.production'].search([('id','=',x.id)])
+			if work_order.delivery:
+				self.delv_date = work_order.delivery
+			if work_order.buyer:
+				buyers.append(work_order.buyer.id)
+			if work_order.style_no:
+				if styles == ' ':
+					styles = work_order.style_no
+				else:
+					styles = styles + ', ' + work_order.style_no
+
+		self.buyer = buyers
+		self.style = styles
+
 	@api.one
 	def _load_list(self):
 		self.recharge_count = self.env['fabric.wizard.class'].search_count([('tree_id','=',self.id)])
@@ -433,6 +593,27 @@ class FabricDyeing(models.Model):
 	@api.multi
 	def in_sent(self):
 		self.stage = "sent"
+
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Fabric Dyeing',
+		})
+
+		for x in self.tree_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.fabric.id,
+				'product_uom_qty':x.issue_qty,
+				'product_uom': x.fabric.uom_id.id,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
 
 	@api.multi
 	def in_house(self):
@@ -469,11 +650,11 @@ class FabricDyeingTree(models.Model):
 	process = fields.Many2one('purchase.process' , string="Process")
 	rate = fields.Float("Rate")
 	issue_qty = fields.Float("Issue Qty")
-	receive_qty = fields.Float("Received Qty")
-	receivable_qty = fields.Float("Receivable Qty")
+	receive_qty = fields.Float("Received Qty (Kg)")
+	receivable_qty = fields.Float("Receivable Qty (Kg)")
 	blc = fields.Float("Balance" ,compute='_blc')
-	wastage = fields.Char("Actual Wastage" ,compute='_wastage')
-	agree_wastage = fields.Float("Agreed Wastage")
+	wastage = fields.Char("Actual Wastage" ,compute='_wastage', digits=(16,2))
+	agree_wastage = fields.Float(string="Agreed Wastage")
 	yarn_tree = fields.Many2one('fabric.dyeing')
 
 	@api.one
@@ -492,17 +673,30 @@ class FabricDyeingTree(models.Model):
 			if self.blc:
 				waste = ((self.blc / self.issue_qty)* 100)
 				if waste < 0:
-					self.wastage = str(waste * (-1)) + "%"
+					self.wastage = str("{0:.2f}".format(waste * (-1))) + "%"
 				if waste > 0:
-					self.wastage = str(waste) + "%"
+					self.wastage = str("{0:.2f}".format(waste)) + "%"
 
 	@api.onchange('issue_qty','agree_wastage')
 	def get_reciving(self):
 		if self.issue_qty > 0.0:
 			self.receivable_qty = self.issue_qty - ((self.agree_wastage * self.issue_qty)/ 100)
 
+	@api.onchange('receive_qty')
+	def get_recived(self):
+		recived = self.receive_qty
+		reciveable = self.receivable_qty + (self.receivable_qty*0.1)
+		print reciveable
+		print "----------------"
+
+		if recived > reciveable:
+			self.receive_qty = self.receivable_qty
+			return {'value':{}, 'warning':{
+			'title': 'Warning', 'message': 'Recived Quantity should not be greater than the Reciveable Quantity'}}
+
 class ResPartnerExt(models.Model):
 	_inherit = "res.partner"
+	_rec_name = 'ttype'
 
 	knitting = fields.Boolean("Knitting")
 	buyer = fields.Boolean("Buyer")
@@ -517,10 +711,11 @@ class FabricKnitting(models.Model):
 
 	name = fields.Many2one('res.partner',string="To", required=True)
 	date = fields.Date("Order Date" , required=True)
-	buyer = fields.Many2one('res.partner',"Buyer")
+	buyer = fields.Many2many('mrp.production',string="Buyer")
 	won = fields.Many2many('mrp.production',string="W/O")
 	delv_date = fields.Date("Delivery Date")
 	c_date = fields.Date("Order Completion Date")
+	style = fields.Char("Style No.")
 	req_code = fields.Char("Requisition Code")
 	sec_code = fields.Char("Security Code")
 	tree_link = fields.One2many('fabric.knitting.tree','fabric_tree')
@@ -537,6 +732,25 @@ class FabricKnitting(models.Model):
 	destination_location = fields.Many2one('stock.location',string="Destination Location")
 	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
+
+	# @api.onchange('won')
+	# def get_buyer(self):
+	# 	buyers = []
+	# 	styles = ' '
+	# 	for x in self.won:
+	# 		work_order = self.env['mrp.production'].search([('id','=',x.id)])
+	# 		if work_order.delivery:
+	# 			self.delv_date = work_order.delivery
+	# 		if work_order.buyer:
+	# 			buyers.append(work_order.buyer.id)
+	# 		if work_order.style_no:
+	# 			if styles == ' ':
+	# 				styles = work_order.style_no
+	# 			else:
+	# 				styles = styles + ', ' + work_order.style_no
+
+	# 	self.buyer = buyers
+	# 	self.style = styles
 
 	@api.one
 	def _load_list(self):
@@ -559,6 +773,27 @@ class FabricKnitting(models.Model):
 	@api.multi
 	def in_sent(self):
 		self.stage = "sent"
+
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Fabric Knitting Dyeing',
+		})
+
+		for x in self.tree_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.fabric.id,
+				'product_uom_qty':x.received,
+				'product_uom': x.fabric.uom_id.id,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
 
 	@api.multi
 	def in_house(self):
@@ -584,8 +819,8 @@ class FabricKnittingTree(models.Model):
 	dia = fields.Many2one('purchase.dia' , string="Dia")
 	gauge = fields.Many2one('purchase.gauge' , string="Gauge")
 	ndl = fields.Many2one('purchase.ndl' , string="NDL")
-	required = fields.Float("Required")
-	received = fields.Float("Received")
+	required = fields.Float("Required (KG)")
+	received = fields.Float("Received (KG)")
 	balance = fields.Float("Balance" ,compute='_balance')
 	wastage = fields.Char("Wastage Percentage" ,compute='_wastage')   
 	rate  = fields.Float("Rates") 
@@ -603,7 +838,7 @@ class FabricKnittingTree(models.Model):
 	def _wastage(self):
 		if self.balance < 0:
 			if self.received > 0.0 and self.required > 0.0:
-				self.wastage = str((-1*((self.balance) / self.required)* 100 )) + "%"
+				self.wastage = str("{0:.2f}".format((-1*((self.balance) / self.required)* 100 ))) + "%"
 
 	@api.onchange('fabric')
 	def get_yarn(self):
@@ -736,6 +971,30 @@ class AccessoriesIssuance(models.Model):
 	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
 
+	@api.multi
+	def in_validate(self, vals):
+
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			# 'partner_id':self.issue_Person.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Accessories Issuance',
+		})
+
+		for x in self.tree_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id': x.product_id.id,
+				'product_uom_qty': x.qty,
+				'product_uom': x.product_id.uom_id.id,
+				'location_id': self.source_location.id,
+				'picking_id': create_inventory.id,
+				'name': "test",
+				'location_dest_id': self.destination_location.id,
+			})
+
 class AccessoriesIssuanceTree(models.Model):
 	_name = 'purchase.access.tree'
 
@@ -759,7 +1018,17 @@ class Fabric_Receiving_Wizard_Tree(models.Model):
 	fr_done = fields.Float("Done")
 	fabric_tree = fields.Many2one("fabric.wizard.class")
 	color = fields.Many2one('purchase.color',string="Color")
-	yarn_count = fields.Char("Yarn Count")
+	yarn_count = fields.Many2one('product.product',"Yarn Count")
+
+	@api.onchange('fr_done')
+	def get_fab_done(self):
+		recived = self.fr_done
+		reciveable = self.fr_todo + (self.fr_todo*0.1)
+
+		if recived > reciveable:
+			self.fr_done = self.fr_todo
+			return {'value':{}, 'warning':{
+			'title': 'Warning', 'message': 'Recived Quantity should not be greater than the Reciveable Quantity'}}
 
 class Fabric_Receiving_Wizard(models.Model):
 	_name = "fabric.wizard.class"
@@ -779,8 +1048,6 @@ class Fabric_Receiving_Wizard(models.Model):
 	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
 
-
-	
 	@api.onchange('get_list')
 	def get_lines(self):
  
@@ -792,13 +1059,16 @@ class Fabric_Receiving_Wizard(models.Model):
 			self.name = active_class.name
 			for x in active_class.tree_link:
 				if x.receive_qty > 0:
-					t = x.issue_qty - x.receive_qty
+					t = x.receivable_qty - x.receive_qty
 				else:
-					t = x.issue_qty
+					t = x.receivable_qty
 				data.append({
 					'fr_won':x.won,
 					'fr_lot':x.lot,
 					'fr_todo':t,
+					'color': x.color.id,
+					'yarn_count': x.fabric.id,
+
 					})
 			self.fabric_link = data
 
@@ -814,20 +1084,26 @@ class Fabric_Receiving_Wizard(models.Model):
 							y.receive_qty = x.fr_done + y.receive_qty
 							self.l_list = 'True'
 
-	# @api.onchange('l_list')
-	# def l_lines(self):
-	#     data = []
-	#     active_class = self.env['fabric.dyeing'].browse(self._context.get('active_id'))
-	#     own_class = self.env['fabric.wizard.class'].search([('tree_id','=',active_class.id)])
-	#     for x in own_class:
-	#         for y in x.fabric_link:
-	#             data.append({
-	#                 'fr_won':y.fr_won,
-	#                 'fr_lot':y.fr_lot,
-	#                 'fr_todo':y.fr_todo,
-	#                 'fr_done':y.fr_done,
-	#                 })
-	#     self.fabric_link = data
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Fabric Reciving',
+		})
+
+		for x in self.fabric_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.yarn_count.id,
+				'product_uom_qty':x.fr_done,
+				'product_uom': x.yarn_count.uom_id.id,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
 
 class Yarn_Receiving_Wizard_Tree(models.Model):
 	_name="yarn.wizard.tree"
@@ -838,7 +1114,17 @@ class Yarn_Receiving_Wizard_Tree(models.Model):
 	fr_done = fields.Float("Done")
 	yarn_tree = fields.Many2one("yarn.wizard.class")
 	color = fields.Many2one('purchase.color',string="Color")
-	yarn_count = fields.Char("Yarn Count")
+	yarn_count = fields.Many2one('product.product',string="Yarn Count")
+
+	@api.onchange('fr_done')
+	def get_yarn_done(self):
+		recived = self.fr_done
+		reciveable = self.fr_todo + (self.fr_todo*0.1)
+
+		if recived > reciveable:
+			self.fr_done = self.fr_todo
+			return {'value':{}, 'warning':{
+			'title': 'Warning', 'message': 'Recived Quantity should not be greater than the Reciveable Quantity'}}
 
 class Yarn_Receiving_Wizard(models.Model):
 	_name = "yarn.wizard.class"
@@ -870,13 +1156,15 @@ class Yarn_Receiving_Wizard(models.Model):
 			self.name = active_class.name
 			for x in active_class.tree_link:
 				if x.receive_qty > 0:
-					t = x.issue_qty - x.receive_qty
+					t = x.receiveable_qty - x.receive_qty
 				else:
-					t = x.issue_qty
+					t = x.receiveable_qty
 				data.append({
 					'fr_won':x.won,
 					'fr_lot':x.lot,
 					'fr_todo':t,
+					'color':x.color.id,
+					'yarn_count': x.yarn.id,
 					})
 			self.yarn_link = data
 
@@ -893,6 +1181,27 @@ class Yarn_Receiving_Wizard(models.Model):
 							y.receive_qty = x.fr_done + y.receive_qty
 							self.l_list = 'True'
 
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Yarn Reciving',
+		})
+
+		for x in self.yarn_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.yarn_count.id,
+				'product_uom_qty':x.fr_done,
+				'product_uom': 1,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
+
 class Knit_Receiving_Wizard_Tree(models.Model):
 	_name="knit.wizard.tree"
 
@@ -900,7 +1209,8 @@ class Knit_Receiving_Wizard_Tree(models.Model):
 	fr_lot = fields.Many2one('purchase.lot',string="Lot No")
 	fr_todo = fields.Float("To Do")
 	fr_done = fields.Float("Done")
-	knit_tree = fields.Many2one("yarn.wizard.class")
+	knit_tree = fields.Many2one("knit.wizard.class")
+	product = fields.Many2one('product.product',string="Product")
 
 class Knit_Receiving_Wizard(models.Model):
 	_name = "knit.wizard.class"
@@ -936,6 +1246,8 @@ class Knit_Receiving_Wizard(models.Model):
 					'fr_won':x.won,
 					'fr_lot':x.lot,
 					'fr_todo':t,
+					'product': x.yarn.id
+
 					})
 			self.knit_link = data
 
@@ -951,6 +1263,27 @@ class Knit_Receiving_Wizard(models.Model):
 							y.lot = x.fr_lot
 							y.received = x.fr_done + y.received
 							self.l_list = 'True'
+
+		inventory = self.env['stock.picking']
+		inventory_lines = self.env['stock.move'].search([])
+		create_inventory = inventory.create({
+			'partner_id':self.name.id,
+			'location_id': self.source_location.id,
+			'picking_type_id' : self.picking_type_id.id,
+			'location_dest_id' : self.destination_location.id,
+			'origin': 'Fabric Knitting Reciving',
+		})
+
+		for x in self.knit_link:
+			create_inventory_lines = inventory_lines.create({
+				'product_id':x.product.id,
+				'product_uom_qty':x.fr_done,
+				'product_uom': 1,
+				'location_id':15,
+				'picking_id': create_inventory.id,
+				'name':"test",
+				'location_dest_id': 9,
+				})
 
 class HrEmployeeForm(models.Model):
 	_inherit = "hr.employee"

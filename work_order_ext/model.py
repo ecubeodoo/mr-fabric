@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*- 
 from odoo import models, fields, api
+import random
 
-class WokrOrder(models.Model):
+class WokrOrderMain(models.Model):
     _inherit = 'mrp.production'
+    _rec_name = 'order_name'
 
     custome_po = fields.Char(string="Customer Po#")
-    style_no = fields.Char(string="Style No")
+    style_no = fields.Many2one('style.number',string="Style No")
     vessal = fields.Date(string="Vessal Date")
+    delivery = fields.Date(string="Delivery Date")
     plan_qty = fields.Char(string="Plan Qty")
     week = fields.Integer(string="Week")
+    order_name = fields.Char(string="Workorder Name")
 
     remarks = fields.Text(string="Remarks")
 
@@ -47,7 +51,36 @@ class WokrOrder(models.Model):
 
         for x in self.production_id:
             x.remaining = x.in_stock - x.issued
-        
+
+    @api.model
+    def create(self, vals):
+        new_record = super(WokrOrderMain, self).create(vals)
+
+        m_orders = self.env['mrp.production'].search([("style_no.id","=",new_record.style_no.id)])
+        if len(m_orders) > 1:
+            rand = m_orders[0]
+            split_rand = rand.name.split(' - ')
+            m_name = split_rand[0]
+
+            record = len(m_orders)
+            list_1 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+            req_record = 0
+            if record >= 28 :
+                req_record = (record%28)
+                req_phase = int(record/28)
+                addition = m_name + ' - ' + list_1[req_record]
+
+                for x in range(0, req_phase):
+                    addition = addition + list_1[req_record]
+
+            else:
+                req_record = record - 2
+                addition = m_name + ' - ' + list_1[(req_record)]
+
+            new_record.name = addition
+
+        return new_record
 
 class WokrOrder(models.Model):
     _name = 'production.tree'
@@ -58,11 +91,27 @@ class WokrOrder(models.Model):
     in_stock = fields.Float(string="In Stock")
     issued = fields.Float(string="Issued")
     remaining = fields.Float(string="Remaining")
+    uom = fields.Many2one('product.uom',string="UOM")
+    factor = fields.Float(string="Factor")
+    source = fields.Selection([
+        ('imp','IMP'),
+        ('local','Local')
+        ],string="Source")
 
     production_tree  =fields.Many2one('mrp.production')
+
+    @api.onchange('accessories')
+    def onchange_depart(self):
+        self.uom = self.accessories.uom_id.id
 
 class Countries(models.Model):
     _name = 'country.countries'
     _rec_name = 'country'
 
     country = fields.Char(string="Name")
+
+class Style_no(models.Model):
+    _name = "style.number"
+    _rec_name = 'name'
+
+    name = fields.Char(string="Name")

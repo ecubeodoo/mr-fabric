@@ -52,9 +52,10 @@
                     </group>                   
                 </xpath>
 
-                <xpath expr="//field[@name='name']" position="after">
-                    <label for="card_no" class="oe_edit_only" string="Card No"/>
+                <xpath expr="//field[@name='employee_type']" position="after">
                     <field name="card_no" />
+                    <field name="doj" />
+                    <field name="doi" invisible="1"/>
                 </xpath>
 
                 <xpath expr="//field[@name='country_id']" position="before">
@@ -73,6 +74,22 @@
 
         </record>
 
+        <record id="employee_tree_extension" model="ir.ui.view"> 
+            <field name="name">employee_tree_extension</field> 
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="salaried_person" />
+                    <field name="rate_per_piece" />
+                    <field name="employee_type" />
+                    <field name="mobile_phone" />
+                </xpath>
+
+            </field>
+        </record>
+
         <record id="hr_overtime_form" model="ir.ui.view">
             <field name="name">hr_overtime_form</field>
             <field name="model">hr.overtime</field>
@@ -87,12 +104,13 @@
                                 <field name="department" />
                                 <field name="total_overtime_hours" />
                                 <field name="total_overtime_amount" />
+                                <field name="rec_name" invisible="1"/>
                             </group>
                         </group>
 
                         <field name="tree_link">
                           <tree editable="bottom">
-                            <field name="employee" domain="[('job_id','=',parent.department)]"/>
+                            <field name="employee" domain="[('department_id','=',parent.department)]"/>
                             <field name="planed_overtime_hours" />
                             <field name="actual_overtime_hours" />
                             <field name="overtime_amount" />

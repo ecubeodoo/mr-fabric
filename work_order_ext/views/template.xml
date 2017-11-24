@@ -10,9 +10,11 @@
 
             <xpath expr="//field[@name ='origin']" position="after">
 
+                <field name="order_name"/>
                 <field name="style_no"/>
                 <field name="destination"/>
                 <field name="buyer"  domain= "[('buyer','=','True')]" context="{'default_knitting':True}"/>
+                <field name="delivery"/>
 
             </xpath>
 
@@ -62,7 +64,10 @@
                         <tree  editable="bottom">
 
                             <field name="accessories" domain="[('ttype', '=', 'accessories')]"/>
+                            <field name="uom"/>
+                            <field name="factor"/>
                             <field name="required_quantity"/>
+                            <field name="source"/>
                             <field name="purchased"/>
                             <field name="in_stock"/>
                             <field name="issued"/>

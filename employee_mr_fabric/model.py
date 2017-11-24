@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*- 
 from odoo import models, fields, api
+from datetime import date, datetime, timedelta
 
 class EmployeeFormExtension(models.Model):
     _inherit = 'hr.employee'
@@ -9,6 +10,8 @@ class EmployeeFormExtension(models.Model):
     employee_type = fields.Selection([('temporary','Temporary'),('permanent','Permanent')],string='Employee Type',default='temporary')
     card_no = fields.Char(string='Card No')
     dor = fields.Date(string='DOR')
+    doj = fields.Date(string='Date of Joining')
+    doi = fields.Date(string='Date of issue',default=fields.Date.today)
     religion = fields.Char(string='Religion')
     fname = fields.Char(string='Father Name')
     cnic = fields.Char(string='CNIC NO')
@@ -17,16 +20,38 @@ class EmployeeFormExtension(models.Model):
     eobi = fields.Boolean(string="EOBI")
     eobi_no = fields.Char(string="EOBI No")
 
+    @api.model
+    def create(self, vals):
+        new_record = super(EmployeeFormExtension, self).create(vals)
+
+        if new_record.card_no:
+            new_record.name = new_record.name + ' - ' + new_record.card_no
+
+        return new_record
+
+    @api.multi
+    def write(self, vals):
+        before_name = self.name
+        variate = before_name.split(' - ')
+        new_variate = variate[0]
+        vals['name'] = new_variate
+        result = super(EmployeeFormExtension, self).write(vals)
+        return result
 
 class HrOvertime(models.Model):
     _name = 'hr.overtime'
-    _rec_name = 'date'
+    _rec_name = 'rec_name'
 
-    date = fields.Date(string="Date")
-    department = fields.Many2one('hr.job',string="Department")
+    date = fields.Date(string="Date", required= True)
+    department = fields.Many2one('hr.department',string="Department")
     total_overtime_hours = fields.Float(string="Total Overtime Hours") 
     total_overtime_amount = fields.Float(string="Total Overtime Amount")
     tree_link = fields.One2many('hr.overtime.tree','tree_linked')
+    rec_name = fields.Char(String="Rec name")
+
+    @api.onchange('date','department')
+    def onchange_depart(self):
+        self.rec_name = str(self.department.name) + ',' + str(self.date)
 
     @api.onchange('tree_link')
     def onchange_tree(self):
@@ -37,12 +62,12 @@ class HrOvertime(models.Model):
             total_overtime = total_overtime + x.overtime_amount
 
         self.total_overtime_hours = actual_overtime
-        self.total_overtime_amount = total_overtime
+        self.total_overtime_amount = total_overtime*actual_overtime
 
 class HrOvertimeTreeView(models.Model):
     _name = 'hr.overtime.tree'
 
-    employee = fields.Many2one('hr.employee',string="Employee")
+    employee = fields.Many2one('hr.employee',string="Employee", required= True)
     planed_overtime_hours = fields.Float(string="Planed Overtime Hours") 
     actual_overtime_hours = fields.Float(string="Actual Overtime Hours")
     overtime_amount = fields.Float(string="Overtime Amount")
@@ -55,4 +80,4 @@ class HrOvertimeTreeView(models.Model):
 
         contract = self.env['hr.contract'].search([('employee_id.id','=',self.employee.id)])
 
-        self.overtime_amount = (contract.wage/26)/8
+        self.overtime_amount = ((contract.wage/26)/8)*self.actual_overtime_hour
