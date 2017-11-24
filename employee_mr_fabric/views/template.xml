@@ -36,6 +36,11 @@
                     
                 </xpath>
 
+                <xpath expr="//field[@name='name']" position="replace">
+                        <field name="name" placeholder="Employee's Name" class="oe_edit_only"/>
+                        <field name="name_card" class="oe_read_only"/>
+                </xpath>
+
                 <xpath expr="sheet/notebook" position="after">
                         <field name="notes" placeholder="Other Information ..." colspan="4"/>
                 </xpath>
