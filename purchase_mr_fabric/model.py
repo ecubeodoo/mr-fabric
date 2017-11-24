@@ -6,7 +6,7 @@ class accessories(models.Model):
 	_name = 'purchase.accessories'
 	_rec_name = 'sr_no'
 	_inherit = ['mail.thread', 'ir.needaction_mixin']
-
+# fhgfhfdghdf
 	sr_no = fields.Char(string="Sr no")
 	wonumber = fields.Many2one('mrp.production',string="WO No",)
 	style = fields.Char(string="Style No")
