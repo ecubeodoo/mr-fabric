@@ -37,5 +37,5 @@ class SampleDevelopmentReport(models.AbstractModel):
             'docs': records,
             'data': data
             }
-
+            print "Test Atom"
         return report_obj.render('employee_card.emp_card', docargs)
