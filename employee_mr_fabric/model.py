@@ -19,24 +19,12 @@ class EmployeeFormExtension(models.Model):
     ss_no = fields.Char(string="SS No")
     eobi = fields.Boolean(string="EOBI")
     eobi_no = fields.Char(string="EOBI No")
+    name_card = fields.Char(string="Name")
 
-    @api.model
-    def create(self, vals):
-        new_record = super(EmployeeFormExtension, self).create(vals)
-
-        if new_record.card_no:
-            new_record.name = new_record.name + ' - ' + new_record.card_no
-
-        return new_record
-
-    @api.multi
-    def write(self, vals):
-        before_name = self.name
-        variate = before_name.split(' - ')
-        new_variate = variate[0]
-        vals['name'] = new_variate
-        result = super(EmployeeFormExtension, self).write(vals)
-        return result
+    @api.onchange('name','card_no')
+    def onchange_namecard(self):
+        addition = str(self.name) + ' - ' + str(self.card_no)
+        self.name_card = addition
 
 class HrOvertime(models.Model):
     _name = 'hr.overtime'

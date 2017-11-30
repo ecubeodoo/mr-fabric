@@ -10,7 +10,6 @@
 
             <xpath expr="//field[@name ='origin']" position="after">
 
-                <field name="order_name"/>
                 <field name="style_no"/>
                 <field name="destination"/>
                 <field name="buyer"  domain= "[('buyer','=','True')]" context="{'default_knitting':True}"/>
@@ -29,6 +28,12 @@
             <xpath expr="//field[@name ='bom_id']" position="before">
 
                 <field name="plan_qty"/>
+
+            </xpath>
+
+            <xpath expr="//field[@name ='product_id']" position="before">
+
+                <field name="order_name"/>
 
             </xpath>
 
