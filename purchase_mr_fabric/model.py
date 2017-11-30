@@ -525,9 +525,6 @@ class YarnDyeingTree(models.Model):
 	def get_recived(self):
 		recived = self.receive_qty
 		reciveable = self.receiveable_qty + (self.receiveable_qty*0.1)
-		print reciveable
-		print "----------------"
-
 		if recived > reciveable:
 			self.receive_qty = self.receiveable_qty
 			return {'value':{}, 'warning':{
@@ -686,9 +683,6 @@ class FabricDyeingTree(models.Model):
 	def get_recived(self):
 		recived = self.receive_qty
 		reciveable = self.receivable_qty + (self.receivable_qty*0.1)
-		print reciveable
-		print "----------------"
-
 		if recived > reciveable:
 			self.receive_qty = self.receivable_qty
 			return {'value':{}, 'warning':{
@@ -732,26 +726,6 @@ class FabricKnitting(models.Model):
 	destination_location = fields.Many2one('stock.location',string="Destination Location")
 	warehouse_id = fields.Many2one('stock.location',string="Warehouse")
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
-
-	# @api.onchange('won')
-	# def get_buyer(self):
-	# 	buyers = []
-	# 	styles = ' '
-	# 	for x in self.won:
-	# 		work_order = self.env['mrp.production'].search([('id','=',x.id)])
-	# 		if work_order.delivery:
-	# 			self.delv_date = work_order.delivery
-	# 		if work_order.buyer:
-	# 			buyers.append(work_order.buyer.id)
-	# 		if work_order.style_no:
-	# 			if styles == ' ':
-	# 				styles = work_order.style_no
-	# 			else:
-	# 				styles = styles + ', ' + work_order.style_no
-
-	# 	self.buyer = buyers
-	# 	self.style = styles
-
 	@api.one
 	def _load_list(self):
 		self.recharge_count = self.env['knit.wizard.class'].search_count([('tree_id','=',self.id)])
@@ -977,7 +951,6 @@ class AccessoriesIssuance(models.Model):
 		inventory = self.env['stock.picking']
 		inventory_lines = self.env['stock.move'].search([])
 		create_inventory = inventory.create({
-			# 'partner_id':self.issue_Person.id,
 			'location_id': self.source_location.id,
 			'picking_type_id' : self.picking_type_id.id,
 			'location_dest_id' : self.destination_location.id,
