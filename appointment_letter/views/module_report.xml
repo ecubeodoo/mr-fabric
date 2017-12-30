@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="appointment_letter_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                @font-face {
+                                    font-family: 'NafeesNastaleeq';
+                                    src: url('/appointment_letter/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                        url('/appointment_letter/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                        url('/appointment_letter/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                        url('/appointment_letter/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                                    font-weight: normal;
+                                    font-style: normal;
+                                }
+                                .main-data {
+                                    font-family: 'NafeesNastaleeq' ,'Open Sans', sans-serif;
+                                }
+                                h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                    line-height: 2.5;
+                                }
+                                @media (min-width: 992px)
+                                .container {
+                                    width: 100%;
+                                }
+
+                                @media (min-width: 768px)
+                                .container {
+                                    width: 100%;
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    border-bottom: 2px solid;
+                                    border-color: #A9A9A9;
+                                    padding: 5px;
+                                    font-weight: bold;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .center-data p {
+                                    font-size: 14px;
+                                }
+                                .solid {
+                                    margin-right: 20px;
+                                }
+                                .job-app {
+                                    width: 45%;
+                                    float: right;
+                                    text-align: right;
+                                }
+                                .no-marging {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .liquid {
+                                    text-align: left;
+                                    margin-left: 20px;
+                                    min-width: 200px;
+                                    text-align: center;
+                                    display: inline-block;
+                                    border-bottom: 1px solid #000;
+                                }
+                                .first_line .job-app {
+                                    width: 33%;
+                                }
+                                .first_line .liquid {
+                                    min-width: 185px;
+                                }
+                                .second_line .job-app {
+                                    width: 49%;
+                                }
+                                .second_line .liquid {
+                                    min-width: 390px;
+                                }
+                                .line_four .job-app {
+                                    width: 100%;
+                                }
+                                .line_four .liquid {
+                                    min-width: 880px;
+                                }
+                                .line_five p {
+                                    text-align: right;
+                                }
+                                .line_five .job-app {
+                                    width: 100%;
+                                }
+                                .line_five .liquid {
+                                    min-width: 150px;
+                                    display: inline-block;
+                                }
+                                .description .solid,
+                                .description p {
+                                    font-weight: normal;
+                                }
+                                .description .liquid {
+                                    margin: 0px;
+                                    min-width: 0px;
+                                    float: right;
+                                    border: none;
+                                }
+                                .attest .solid, 
+                                .attest .liquid {
+                                    float: none;
+                                    display: inline-block;
+                                    min-width: 150px;
+                                    border-bottom: 1px solid #000;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="heading">
+                                        <h2>مسٹر فیبرکس پرائیویٹ لمیٹڈ</h2>
+                                        <p class="no-margin">MR. FABRICS (PVT.) LTD</p>
+                                        <p class="no-margin english">Appointment Letter</p>
+                                        <p class="no-margin"><span class="english">Employment Agreement:</span>معاہدہ ملازمت</p>
+                                    </div>
+
+                                    <div class="first_line">
+                                        <div class="job-app">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="date"></span>
+                                                <span class="solid">:تاریخ</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="o.card_no.name"></span>
+                                                <span class="solid">:کوڈ نمبر</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="o.cnic"></span>
+                                                <span class="solid">:قومی شناختی کارڈ نمبر </span>
+                                            </p>
+                                        </div>
+                                        <br class="clearfloat"/>
+                                    </div>
+
+                                    <div class="second_line">
+
+                                        <div class="job-app">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="o.name"></span>
+                                                <span class="solid">:نام</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="o.fname"></span>
+                                                <span class="solid">:ولدیت</span>
+                                            </p>
+                                        </div>
+                                        <br class="clearfloat"/>
+
+                                    </div>
+
+                                    <div class="line_four">
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p class="no-margin">
+                                                <span class="liquid" t-esc="o.contact_address"></span>
+                                                <span class="solid">:عارضی پتہ</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app" style="width:  100%">
+                                            <p class="no-margin">
+                                                <span class="liquid"></span>
+                                                <span class="solid">:مستقل پتہ</span></p>
+                                        </div>
+                                        <br class="clearfloat"/>
+
+                                    </div>
+
+                                    <div class="line_five">
+                                        <p>
+                                            <!-- <span class="liquid"></span> -->
+                                            <span class="solid">:بحوالہ آپ کی درخواست مورخہ </span>
+
+                                            <span class="liquid"></span>
+                                            <span class="solid">ادارہ آپ کو اپنے شعبہ </span>
+
+                                            <span class="liquid" t-esc="o.department_id.name"></span>
+                                            <span class="solid">میں بطور</span>
+
+                                            <span class="liquid" t-esc="o.job_id.name"></span>
+                                            <span class="solid">:درج ذیل شرائط ملازمت کے تحت کی ملازمت کی پیشکش کرتا ہے اس دوران آپ کو در ج ذیل مجموعی تنخواہ ادا کی جائے گی ۔دوران ملازمت آپ ادارہ میں دی جانے والی سہولیات  میں بھی متعلقہ قوانین کے مطابق حقدار ہوں گے۔
+                                            کل تنخواہ _____________روپے </span>
+                                        </p>
+                                        <br class="clearfloat"/>
+                                    </div>
+                                    <br class="clearfloat"/>
+
+                                    <div class="description">
+                                    
+                                        <div class="job-app" style="width: 100%">
+                                            <p>
+                                                <span class="liquid"></span>
+                                                <span class="solid"><b>(Employment 
+                                                Terms &amp; Condition)شرائط ملازمت</b></span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="liquid">-1</span>
+                                            </p>
+
+                                            <p>
+                                                <span class="solid">ملازمین پر ادارے کے تمام موجودہ اور  مستقبل میں نافذ کئے جانے والے قوانین کی پابندی لازمی ہو گی۔</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">-2</span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="solid">ادارہ میں ملازمیں کیلئے (کل وقتی کام ) کے لیے  عمر کی کم ازکم حد 18 سال ہے اور کسی بھی ملازم سے زبر دستی کام نہیں لیا جاتا ہے ۔</span>
+                                            </p>
+
+                                            <p class="no-margin"><span class="liquid">-3</span></p>
+
+                                            <p class="no-margin"><span class="solid">ادارے میں کام کرنے والے ملازمین کو ملازمت کا  مکمل تحفظ حاصل ہے اور ملازمت سے بر خواستگی کے وقت  تمام تر قانونی ،فطری اور اخلاقی تقاضوں کو مد نظر رکھا جاتا ہے۔</span></p>
+                                            <p class="no-margin"><span class="liquid">-4</span></p>
+                                            <p class="no-margin"><span class="solid">ملازمین پر لازم ہے کہ وہ اپنی ڈیو ٹی مکمل دیانت داری کے ساتھ کریں  اور کوئی ایسا کام نہ کریں جس سے ادارے کو کسی قسم کا نقصان پہنچنے کا خدشہ ہو۔</span></p>
+                                            <p class="no-margin"><span class="liquid">-5</span></p>
+                                            <p class="no-margin"><span class="solid">ابتدائی 3 ماہ کی مدت آزمائشی ہے جس میں انتظامیہ  ملازمین کو بغیر کسی وجہ  /پیشگی نوٹس کمپنی سے بر خواست کر سکتی ہے اور ملازمین بھی بغیر پیشگی نوٹس ملازمت چھوڑ سکتے ہیں ۔آزمائشی ملازمت کی مدت پوری ہونے پر  ملازمت کی کار کر دگی کی بنیاد پرمستقل کی جاتی ہے۔فیکٹری ملازم کو کسی بھی شعبہ میں ٹرانسفر کر سکتی ہے۔</span></p>
+                                            <p class="no-margin"><span class="liquid">-6</span></p>
+                                            <p class="no-margin"><span class="solid"> ادارہ ایک ماہ کی پیشگی نوٹس  یا ایک ماہ کی تنخواہ بعوض نوٹس ملازم کو برخواست کرسکتا ہے اور ملازمین بھی ایک ماہ پیشگی نوٹس  یا تنخواہ بعوض نوٹس جمع کروا کر ملازمت چھوڑ سکتے ہیں۔</span></p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p>
+                                                <span class="liquid">-7</span>
+                                            </p>
+
+                                            <p>
+                                                <span class="solid"><b>Working Timings کام کے اوقات</b></span>
+                                            </p>
+
+                                            <p class="no-margin">ادارے  میں کام کے اوقات 6دن فی ہفتہ اور 8 گھنٹے روزانہ ہیں ملازمین کیلئے لازم ہے گیٹ پر آویزاں کردہ فیکٹری نظام الاوقات کی پابندی کریں۔انتظامیہ کو  ان اوقات میں تبدیلی کا اختیار حاصل  ہے۔خواتین ملازمین کو رات 8 بجے کے بعد کام کرنے کی اجازت نہیں ہو گی۔ملازمین پر لازم ہے کہ ادارے کی حدود میں داخل ہو کر سب سے پہلے اپنی حاظر ی لگائیں /انگوٹھا یا چہرہ سکین کریں ۔کام ختم ہونے کے فورأ بعد آوٹ کریں اور ادارے کی حدود میں  بلا تحریری ہرگز نہ رکیں ۔تمام ملازمین  کو  کام کے دوران وقفہ برائے نماز ، طعام اور آرام دیا جاتا ہے جس کی تفصیل فیکٹری گیٹ پر آویزاں ہیں۔</p>
+
+                                        </div>
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p>
+                                                <span class="liquid">-8</span>
+                                                <span class="solid"><b>Overtime اوورٹائم </b></span>
+                                            </p>
+
+                                            <p class="no-margin">اوور ٹائم کی تحریری اطلاع دی جاتی ہے،پلان کردہ اوور ٹائم ملازمین اپنی مرضی سے قبول یا کسی قسم کی سزا یا ہر جانے کے خوف کے بغیر انکار کر سکتے ہیں اوور ٹائم کی زیادہ سے زیادہ حد 12 گھنٹے فی ہفتہ ہے۔ ملازمین کو اوور ٹائم بحساب دوگنا اجرت دیا جاتا ہے۔</p>
+                                            
+                                            <p class="no-margin">اوورٹائم کا فارمولہ = ماہانہ تنخواہ ÷ 26 دن ÷ 8 گھنٹے *2 (اوور ٹائم ریٹ )  = ایک گھنٹے کا  اوور ٹائم </p>
+
+                                        </div>
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p class="no-margin">
+                                                <span class="liquid">-9</span>
+                                                <span class="solid"><b>Leaves / Holidays رخصت تعطیلات</b></span>
+                                            </p>
+                                            <p><span class="solid">ملازمین کو مندرجہ ذیل رخصت /تعطیلات تنخواہ کے  ساتھ دی  جاتی ہیں۔</span></p>
+                                            <p class="no-margin"><span class="liquid">-a</span><span class="solid">اتفاقی رخصت 10 یوم پوری تنخواہ کے ساتھ ۔</span></p>
+                                            <p class="no-margin"><span class="liquid">-b</span><span class="solid">بیماری کی رخصت 
+                                            16 یوم آدھی تنخواہ کے ساتھ۔
+                                            </span></p>
+                                            <p class="no-margin"><span class="liquid">-c</span><span class="solid">سالانہ رخصت 14 یوم پوری تنخواہ کے ساتھ (ایک سال مکمل ہونے کے بعد ) </span></p>
+                                            <p class="no-margin"><span class="liquid">-d</span><span class="solid">رخصت زچگی 12ہفتے (برائے خواتین ) </span></p>
+                                            <p class="no-margin"><span class="liquid">-e</span><span class="solid">ہفتہ وار تعطیل ( تفصیل فیکٹری گیٹ پر آویزاں ہیں )</span></p>
+                                            <p class="no-margin">
+                                                <span class="liquid">-f</span>
+                                                <span class="solid">حکومت کی طرف سے اعلان کردہ تمام تعطیلات  جن کی تفصیلات فیکٹری گیٹ پر آویزاں ہے(اس دن کام کی صورت میں دوگنا تنخواہ اور بدلے کی صورت میں  رخصت بمعہ تنخواہ دی جاتی ہے۔ملازمین رخصت حاصل کرنے کیلے  متعلقہ  فارم پر  درخواست  متعلقہ سپر وائزر /مینیجر کو دیں اور درخواست منظور یا نا منظور  ہونے کے بعد شعبہ ہیو من  ریسورس میں جمع کر وائیں ۔ بلا پیشگی رخصت کی  اجازت  نہیں  ہےسوائے ایمر جنسی یا بیماری  کے ۔</span>
+                                            </p>
+                                            <p class="no-margin"><span class="liquid">-10</span></p>
+                                            <p class="no-margin"><span class="solid">تنخواہ سے متعلقہ پے رول ریکارڈ اور تنخواہ کی پرچی پر درج ہوتی ہیں جو کہ ملازمین کو  تنخواہ کی ادائیگی سے قبل دی جاتی ہیں ۔ملازمین کو تنخواہ اور دیگر واجبات کی ادائیگی نہیں روکی جاتی۔ اور کوئی غیر قانونی یا جبری کٹوتی نہیں کی جاتی تنخواہ بشمول تمام منظور شدہ رخصت/تعطیلات دی جاتی ہیں۔تنخواہ میں سے کٹوتی قانون کے مطابق کی جاتی ہے  اور کٹوتی کی تفصیلات قانون کے مطابق کی جاتی  ہے اور کٹوتی کی تفصیلات  پے رول ریکارڈ پر درج ہوتی ہیں۔پے رول ریکارڈ کسی غلطی کی درستگی  یا مندرجات سمجھ نہ آنے کی صورت میں شعبہ اکاونٹس و ایڈ من سے رابطہ کریں۔</span></p>
+                                            <p class="no-margin"><span class="liquid">11</span>ملازمین کی تنخواہ میں  انتظامیہ  کہ فیصلہ اور کاروباری حالات کہ مطابق سالانہ اضافہ کیا جاتا ہے۔</p>
+                                            <p class="no-margin"><span class="liquid">12</span>ملازمین پر لازم ہے کہ وہ اپنا ادارے کا شناختی کارڈ ضرور لگائیں ، کارڈ گم ہونے کی صورت میں فورأ نیا کارڈ شعبہ ایڈمن سے جا ری کروائیں</p>
+                                            <p><span class="liquid">-13</span> ترقی یا تبادلہ کی صورت میں نئی آسامی پر تقرری آزمائشی ہوتی ہے اور کارکردگی اطمینان بخش نہ ہونے کی صورت میں ملازمین کو ان کی پہلی پوزیشن پر واپس بھیجا جا  سکتا ہے</p>
+                                            <p class="no-margin"><span class="liquid">-14</span>ملازمین پر لازم ہے کہ وہ ادارے سے متعلقہ کوئی بھی معلومات دوران ملازمت یا ملازمت کے اختتام کے بعد بغیر تحریری اجازت کسی دوسرے شخص  یا ادارے کو نہ بتائیں ماسوائے عدالتی کاروائی کے۔
+                                            </p>
+                                            <p class="no-margin"><span class="liquid">-15</span>ملازمین کو تمام تر واجبات کی ادائیگی ملازمت کے اختتام کے بعد7دن کے اندر(حساب بے باک ہونے کی صورت میں)کر دی جاتی ہے۔</p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p class="no-margin">
+                                                <span class="liquid">-16</span>
+                                                <span class="solid"><b>Employees Benefits &amp; Facilities:فوائد و سہولیات برائے ملازمین </b></span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-a</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid"><b>سوشل سکیورٹی</b></span>
+                                            </p>
+                                             <br />
+
+                                            <p class="no-margin">
+
+                                                <span class="solid">ادارے میں ایسے تمام ملازمین جن کی تنخواہ19000 ہزار  روپے یا اس سے کم ہو ، ادارہ اس ملازم کی تنخواہ کے 6 فیصد کے برابر رقم   سوشل سکیورٹی کنٹریبیوشن کے طور پر   جمع کرواتا ہے ، سوشل سکیورٹی ادارہ ملازمین  اور ان زیر کفالت  بیوی بچوں اور والدین کیلئے مختلف طبی سہولیات مہیا کرتا ہے،تفصیلات کے لیے شعبہ ایڈمن سے رابطہ کریں</span>
+
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-b</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <b>:حادثے کی صورت میں  علاج</b>
+                                                 <br />
+                                                کام کے دوران  کی صورت میں ادارہ ملازمین  کا مفت علاج صحت یابی تک کرواتا ہے۔دوران  علاج  ملازمین کو   خصوصی چھٹی بحساب مجموعی تنخواہ بھی دی جاتی ہے 
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-c</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+
+                                                <span class="solid"><b>انشورنس</b> ادارے کے تمام ملازمین کی انشورنس کروائی جاتی ہے۔حادثے مکمل یا عارضی  معذوری موت بیماری  کی صورت میں ادارہ درج ذیل  شرح کے لحاز سے ملازمین  یا ان کے لواحقین کو رقم ادا کرتا ہے مکمل معذوری =200000روپے طبعی موت =400000روپے، حادثاتی موت = 200000 روپے۔</span>
+
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-d</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+
+                                                <span class="solid"><b>پنشن</b>ادارہ تمام ملازمین کی کی مد  میں ہر ملازم کی تنخواہ  کا۵ فیصد کے برابر حکومت کو ادا کرتا ہے۔ جبکہ ملازمین کی تنخواہ سے ۱ فیصد کٹوتی کی جاتی ہے۔اس اسکیم کےتحت ریٹائرڈ ہونے والے ملازمین کو حکومت پنشن ادا کرتی ہے۔</span>
+
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-e</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+
+                                                <span class="solid"><b>گریجوئٹی</b>ملازمت کے اختتام پر ادارہ اپنے ملازمین کو  گریجو ئٹی بحساب مجموعی تنخواہ دی جاتی ہے  گریجوئٹی کا فارمولہ  =آخری ماہانہ مجموعی تنخواہ * مدت ملازمت ( سالوں میں) ایک سال کے بعد  چھ ماہ سے زیادہ مدت کو ایک سال تصور کیا جاتا ہے اور استعفی  نوٹس پیریڈ کو مدت ملازمت میں شامل کیا جاتا ہے ۔ </span>
+
+                                            </p>
+
+                                            <p class="no-margin">
+                                                <span class="liquid">
+                                                    <strong>16-f</strong>:
+                                                </span>
+                                            </p>
+
+                                            <p class="no-margin">
+
+                                                <span class="solid"><b>سالانہ بونس</b> کمپنی اپنے مستقل ملازمین کو  سالانہ  بونس کی ادائیگی قوانین کے مطابق کرتی ہے۔</span>
+
+                                            </p>
+
+                                        </div>
+
+                                        <div class="job-app" style="width: 45%">
+                                            <p class="no-margin">
+                                                <span class="liquid"></span>
+                                                <span class="solid">______________________:مورخہ</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 45%">
+                                            <p class="no-margin">
+                                                <span class="liquid"></span>
+                                                <span class="solid">______________________:تاریخ دستخط ومہر برائےانتظامیہ</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 100%">
+                                            <p class="no-margin attest"> 
+                                                میں <span class="liquid" t-esc="o.name"></span> ولد <span class="liquid" t-esc="o.fname"></span>نے اس
+                                            دستا
+                                            ویز کو حرف بہ حرف پڑھ لیا ہےیا مجھے پڑھ  کر سنا دیا گیا ہےاور مکمل طور پر سمجھ لیا ہے ۔میںاس دستاویز میں درج شدہ  حقوق وفرائض سے تفصیلأ آگاہ ہوں  اور ان کو بلا جبر  واکراہ کےاپنی مرضی سے قبول کرتا/کرتی ہوں  اور اس کے مطابق عمل کرنے کا /کی پابند ہوں۔ میں اس بات سے آگاہ ہوں  کہ یہ دستاویز اور ملازمین سے متعلقہ مزید معلومات  نوٹس بورڈ پر آویزاں کی جاتی ہیں اور یہ میری ذمہ داری ہے کہ میں وقتأ فوقتأ  یہ معلومات  پڑھتا/ پڑھتی  ہوں اور آپ کو ہونے والی تبدیلیو ں سے واقف رکھوں اور اس کہ متعلق عمل کروں  اس دستاویز کی ایک کاپی میں نے وصول کر لی ہے اور اس کہ گم ہونے کی صورت میں  یہ میری ذمہ داری ہے کہ تحریری طور پر اس کی اطلاع فورأ ادارے کو کروں اور اس دستاویز کی نئی کاپی حاصل کروں۔
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 45%">
+                                            <p class="no-margin">
+                                                <span class="liquid"></span>
+                                                <span class="solid">________________________:تاریخ</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app" style="width: 45%">
+                                            
+                                            <p class="no-margin">
+                                                <span class="liquid"></span>
+                                                <span class="solid">_________________________:دستخط ملازم</span>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

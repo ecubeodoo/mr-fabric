@@ -1,0 +1,206 @@
+"id","active","amount_select","appears_on_payslip","category_id/id","child_ids/id","code","company_id/id","condition_select","register_id/id","create_uid/id","create_date","note","amount_fix","input_ids/id","write_uid/id","write_date","condition_range_max","condition_range_min","name","parent_rule_id/id","amount_percentage","amount_percentage_base","amount_python_compute","condition_python","quantity","condition_range","sequence"
+"hr_payroll.hr_rule_basic","True","Python Code","True","hr_payroll.BASIC","","BASIC","base.main_company","Always True","","base.user_root","2017-11-10 10:42:37","","0.0","","base.user_root","2017-12-07 12:18:08","0.0","0.0","Basic","","0.0","","result = (contract.wage *2) / 3","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","1"
+"hr_payroll.hr_rule_taxable","True","Python Code","True","hr_payroll.GROSS","","GROSS","base.main_company","Always True","","base.user_root","2017-11-10 10:42:37","","0.0","","base.user_root","2017-11-10 10:42:37","0.0","0.0","Gross","","0.0","","result = categories.BASIC + categories.ALW","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","100"
+"hr_payroll.hr_rule_net","True","Python Code","True","hr_payroll.NET","","NET","base.main_company","Always True","hr_payroll.contrib_register_employees","base.user_root","2017-11-10 10:42:37","","100.0","","base.user_root","2017-12-07 12:55:38","0.0","0.0","Net","","0.0","","result = (BASIC + HR +ME) - (EOBI +LD + TAX + Cant)","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","200"
+"__export__.hr_salary_rule_4","True","Fixed Amount","True","hr_payroll.DED","","EOBI","base.main_company","Always True","","__export__.res_users_12","2017-11-14 12:03:24","","150.0","","base.user_root","2017-12-07 12:54:13","0.0","0.0","EOBI","","0.0","","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days.
+                    # inputs: object containing the computed inputs.
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = contract.wage * 0.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","150"
+"__export__.hr_salary_rule_5","True","Python Code","True","hr_payroll.ALW","","HR","base.main_company","Always True","","base.user_root","2017-12-07 12:18:27","","0.0","","base.user_root","2017-12-07 12:19:30","0.0","0.0","House Rent","","0.0","","result = BASIC *.40","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","5"
+"__export__.hr_salary_rule_6","True","Python Code","True","hr_payroll.ALW","","ME","base.main_company","Always True","","base.user_root","2017-12-07 12:19:49","","0.0","","base.user_root","2017-12-07 12:21:14","0.0","0.0","Medical Expense","","0.0","","result = BASIC *.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","10"
+"__export__.hr_salary_rule_7","True","Fixed Amount","True","hr_payroll.DED","","LD","base.main_company","Always True","","base.user_root","2017-12-07 12:41:45","","170.0","","base.user_root","2017-12-07 12:44:01","0.0","0.0","Leave Deduction","","0.0","","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days.
+                    # inputs: object containing the computed inputs.
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = contract.wage * 0.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","155"
+"__export__.hr_salary_rule_8","True","Fixed Amount","True","hr_payroll.DED","","TAX","base.main_company","Always True","","base.user_root","2017-12-07 12:42:05","","50.0","","base.user_root","2017-12-07 12:43:42","0.0","0.0","Tax","","0.0","","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days.
+                    # inputs: object containing the computed inputs.
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = contract.wage * 0.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","151"
+"__export__.hr_salary_rule_9","True","Fixed Amount","True","hr_payroll.DED","","Cant","base.main_company","Always True","","base.user_root","2017-12-07 12:42:28","","100.0","","base.user_root","2017-12-07 12:43:48","0.0","0.0","Canteen","","0.0","","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days.
+                    # inputs: object containing the computed inputs.
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = contract.wage * 0.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","160"
+"__export__.hr_salary_rule_10","True","Fixed Amount","True","hr_payroll.DED","","AAS","base.main_company","Always True","","base.user_root","2017-12-07 12:49:13","","500.0","","base.user_root","2017-12-07 12:51:29","0.0","0.0","Advance Against Salary","","0.0","","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days.
+                    # inputs: object containing the computed inputs.
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = contract.wage * 0.10","
+                    # Available variables:
+                    #----------------------
+                    # payslip: object containing the payslips
+                    # employee: hr.employee object
+                    # contract: hr.contract object
+                    # rules: object containing the rules code (previously computed)
+                    # categories: object containing the computed salary rule categories (sum of amount of all rules belonging to that category).
+                    # worked_days: object containing the computed worked days
+                    # inputs: object containing the computed inputs
+
+                    # Note: returned value have to be set in the variable 'result'
+
+                    result = rules.NET > categories.NET * 0.10","1.0","contract.wage","165"

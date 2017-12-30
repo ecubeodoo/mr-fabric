@@ -22,13 +22,13 @@
                                 float: left;
                                 border: 1px solid;
                                 margin-right: 4px;
-                                padding: 3px;
+                                padding: 0px;
                             }
                             .mr-fabrics p {
                                 width: 90%;
                             }
                             .instructions {
-                                width: 47%;
+                                width: 49%;
                                 float: left;
                                 border: 1px solid;
                                 
@@ -52,9 +52,12 @@
                                 border-bottom: 1px solid #000;
                             }
                             .joining {
-                                width: 45%;
+                                width: 50%;
                                 float: left;
                                 margin-bottom: 9px;
+                            }
+                            .joining p {
+                                margin-left: 10px;
                             }
                             .instructions h3 {
                                 border-bottom: 1px solid;
@@ -65,8 +68,11 @@
                                 float: none;
                             }
                             .cnic {
-                                width: 45%;
-                                float: left;
+                                width: 150px;
+                                float: right;
+                            }
+                            .cnic p {
+                                text-align: center;
                             }
                             .fabrics-ltd {
                                 width: 50%;
@@ -83,7 +89,7 @@
                                 min-height: 330px;
                             }
                             .bar_code {
-                                height: 35px;
+                                height: 60px;
                                 width: 100%;
                                 float: left;
                                 text-align: center;
@@ -93,7 +99,43 @@
                                 height: 100%;
                             }
                             .mr-fabrics .bar_code {
-                                margin: 65px 0px 0px 0px;
+                                margin: 2px 0px 5px 0px;
+                            }
+                            .img-of-card,
+                            .text-of-card {
+                                float: left;
+                            }
+                            .img-of-card {
+                                width: 20%;
+                            }
+                            .text-of-card {
+                                width: 75%;
+                            }
+                            .card-header {
+                                width: 100%;
+                                border-bottom: 1px solid #000;
+                                float: left; 
+                                margin-bottom: 5px;
+                            }
+                            .card-header img {
+                                width: 15%;
+                                display: block;
+                                float: left;
+                                height: auto;
+                                margin: 5px 0px 5px 5px;
+                            }
+                            .card-header h3 {
+                                width: 75%;
+                                float: left;
+                                border: none;
+                                text-align: right;
+                                margin-top: 10px !important;
+                            }
+                            .text-of-card p {
+                                font-size: 15px;
+                            }
+                            .img-responsive {
+                                min-height: 150px;
                             }
                         </style>
 
@@ -102,37 +144,54 @@
                             <div class="center-data">
 
                                 <div class="mr-fabrics">
-                                    <h3 class="no-margin" style="margin-top: 4px;">Mr. Fabrics (Pvt) Ltd.:</h3>
+                                    <div class="card-header">
+                                        <img src="/employee_card/static/src/logo.jpg" />
+                                        <h3 class="no-margin" style="margin-top: 4px;">Mr. Fabrics (Pvt) Ltd.</h3>
+                                    </div>
                                 
-                                    <p>
-                                        <span class="liquid">Name</span>
-                                        <span class="solid" t-esc="o.name"></span>
-                                    </p>
+                                    <div class="text-of-card">
+                                        <p>
+                                            <span class="liquid">Name:</span>
+                                            <span class="solid" t-esc="o.name"></span>
+                                        </p>
 
-                                    <p>
-                                        <span class="liquid">F/H Name:</span>
-                                        <span class="solid" t-esc="o.fname"></span>
-                                    </p>
+                                        <p>
+                                            <span class="liquid">F/H Name:</span>
+                                            <span class="solid" t-esc="o.fname"></span>
+                                        </p>
 
-                                    <p>
-                                        <span class="liquid">Dept:</span>
-                                        <span class="solid" t-esc="o.department_id.name"></span>
-                                    </p>
+                                        <p>
+                                            <span class="liquid">Dept:</span>
+                                            <span class="solid" t-esc="o.department_id.name"></span>
+                                        </p>
 
-                                    <p>
-                                        <span class="liquid">Desg:</span>
-                                        <span class="solid" t-esc="o.job_id.name"></span>
-                                    </p>
+                                        <p>
+                                            <span class="liquid">Desg:</span>
+                                            <span class="solid" t-esc="o.job_id.name"></span>
+                                        </p>
 
-                                    <div class="cnic">
-                                        <p><span class="liquid">CINIC#</span>
-                                        <span class="solid" t-esc="o.cnic"></span></p>
+                                        <p>
+                                            <span class="liquid">CINIC#</span>
+                                            <span class="solid" t-esc="o.cnic"></span>
+                                        </p>
+
+                                        <p>
+                                            <span class="liquid">Mobile#</span>
+                                            <span class="solid" t-esc="o.work_phone"></span>
+                                        </p>
+
                                     </div>
 
-                                    <div class="cnic" style="text-align: right; margin-right: 40px;">
-                                        <p class="no-margin"><span class="liquid">Card No:</span></p>
-                                        <p class="no-margin"><span class="solid" style="margin-right: 10px;">9046</span></p>
+                                    <div class="img-of-card">
+                                        <span t-field="o.image" t-field-options='{"widget": "image"}'></span>
+
+                                        <div class="cnic" style="text-align: right; margin-right: 10px;">
+                                            <p class="no-margin"><span class="liquid">Card No:</span></p>
+                                            <p class="no-margin"><span class="solid" style="margin-right: 10px;"><span t-esc="o.card_no.name"></span></span></p>
+                                        </div>
                                     </div>
+                                    <br class="clearfloat"/>
+
                                     <div class="bar_code">
                                         <img src="/employee_card/static/src/img/barcode.jpg" />
                                     </div>
@@ -150,17 +209,16 @@
                                     
                                     <div class="joining">
                                         <p class="no-margin"><span class="liquid">Date of joining:</span>
-                                        <span class="solid">20-Dec-16</span></p>
+                                        <span class="solid"><span t-esc="o.doj"></span></span></p>
                                     </div>
                                     
                                     <div class="joining">
                                         <p class="no-margin"><span class="liquid">Date of issue:</span>
-                                        <span class="solid">01-Nov-17</span></p>
+                                        <span class="solid"><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"></span></span></p>
                                     </div>
 
                                     <hr width="100%"></hr>
                                     <p class="no-margin"><span class="solid">Approving authority:</span></p>
-                                    <br class="clearfloat"/>
                                     <div class="bar_code">
                                         <img src="/employee_card/static/src/img/barcode.jpg" />
                                     </div>

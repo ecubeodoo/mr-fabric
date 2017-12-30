@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="card_hygiene_report" 
+            model="hr.employee"
+            name="hygiene_card.card_hygiene"
+            file="hygiene_card.card_hygiene"
+            report_type="qweb-html"
+            string="Hygiene Card"/> 
+    </data>
+</odoo>
+
+<!-- commercial.packing.list -->

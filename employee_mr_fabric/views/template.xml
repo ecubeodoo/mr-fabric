@@ -8,7 +8,6 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
 
-
                 <xpath expr="//page[@name='personal_information']/group" position="before">
                     <group>
                         <group string="Contact Information">
@@ -17,6 +16,7 @@
                             <field name="work_location"/>
                             <field name="work_email" widget="email"/>
                             <field name="work_phone"/>
+                            <field name="resigned" invisible="1"/>
                         </group>
                         <group string="Position">
                             <field name="dor" />
@@ -31,36 +31,40 @@
                             <field name="ss_no"  attrs="{'invisible':[('social_security', '!=', True)]}"/>
                             <field name="eobi"/>
                             <field name="eobi_no" attrs="{'invisible':[('eobi', '!=', True)]}"/>
+                            <field name="salary"/>
                         </group>
                     </group>
                     
                 </xpath>
 
-                <xpath expr="//field[@name='name']" position="replace">
-                        <field name="name" placeholder="Employee's Name" class="oe_edit_only"/>
-                        <field name="name_card" class="oe_read_only"/>
-                </xpath>
+                <!-- <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" placeholder="Employee's Name" class="oe_edit_only"/>
+                    <field name="name_card" class="oe_read_only"/>
+                </xpath> -->
 
                 <xpath expr="sheet/notebook" position="after">
-                        <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                    <field name="notes" placeholder="Other Information ..." colspan="4"/>
                 </xpath>
 
                 <xpath expr="//field[@name='category_ids']" position="after">
+                    
                     <group name="group_top">
                         <group name="group_right">
                             <field name="salaried_person" />
                             <field name="rate_per_piece" />
+                            <field name="confirmation_date" />
                         </group>
-                        <group name="group_left">
-                            <field name="employee_type" />
-                        </group>
-                    </group>                   
-                </xpath>
 
-                <xpath expr="//field[@name='employee_type']" position="after">
-                    <field name="card_no" />
-                    <field name="doj" />
-                    <field name="doi" invisible="1"/>
+                        <group name="group_left">
+                            <field name="emp_machine_id" />
+                            <field name="employee_type" />
+                            <field name="card_no" />
+                            <field name="doj" />
+                            <field name="doi" invisible="1"/>
+                        </group>
+
+                    </group>
+
                 </xpath>
 
                 <xpath expr="//field[@name='country_id']" position="before">
@@ -75,8 +79,42 @@
                 <xpath expr="//page[@name='public']" position="replace">
                 </xpath>
 
-            </field>
+                <xpath expr="//page[@name='personal_information']" position="inside">
+                    <group name="group_bottom">
+                        <group name="group_left" string="Reference">
+                            <field name="reff_name" />
+                            <field name="reff_city" />
+                            <field name="reff_cnic" />
+                            <field name="reff_relation" />
+                        </group>
+                    </group>
 
+                    <h2 class="o_horizontal_separator">Experience</h2>
+                    <field name="experience_tree">
+                        <tree editable="bottom">
+                            <field name="comany_name"/>
+                            <field name="city" />
+                            <field name="designation" />
+                            <field name="salary" />
+                            <field name="job_period" />
+                            <field name="dor" />
+                            <field name="resignation_reason" />
+                        </tree>
+                    </field>
+                </xpath>
+
+                <xpath expr="//field[@name='bank_account_id']" position="replace">
+                    <field name="bank" domain="[('type','=','bank')]"/>
+                    <field name="bank_account_id" />
+                    <field name="ntn" />
+                    <field name="qualification" />
+                </xpath>
+
+                <xpath expr="//field[@name='address_home_id']" position="replace">
+                    <field name="contact_address" />
+                </xpath>
+
+            </field>
         </record>
 
         <record id="employee_tree_extension" model="ir.ui.view"> 
@@ -85,11 +123,16 @@
             <field name="inherit_id" ref="hr.view_employee_tree"/>
             <field name="arch" type="xml">
 
+                <tree position="attributes">
+                    <attribute name="colors" translation="off">red:resigned==True;</attribute>
+                </tree>
+
                 <xpath expr="//field[@name='parent_id']" position="after">
                     <field name="salaried_person" />
                     <field name="rate_per_piece" />
                     <field name="employee_type" />
                     <field name="mobile_phone" />
+                    <field name="resigned" invisible="1"/>
                 </xpath>
 
             </field>
@@ -151,7 +194,417 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record id="contract_form_extension" model="ir.ui.view"> 
+            <field name="name">contract_form_extension</field> 
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='wage']" position="replace">
+                    <field name="wage"/>
+                    <field name="tax_amount"/>
+                    <field name="canteen"/>
+                    <field name="overtime_amount"/>
+                    <field name="advance_salary"/>
+                    <field name="days" />
+                    <field name="hours"/>
+                </xpath>
+
+                <xpath expr="//field[@name='advantages']" position="replace">
+                </xpath>
+
+                <xpath expr="//field[@name='notes']" position="before">
+                    <field name="advantages" placeholder="Advantages . . ."/>
+                </xpath>
+
+                <xpath expr="//page[1]" position="after">
+                    <page string="Allowances" name="allowances">
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="mobile"/>
+                                <field name="fuel"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Deduction" name="deduction">
+                        <group name="group_top">
+                            <group name="group_left">
+                                <field name="tax"/>
+                                <field name="eobi"/>
+                                <field name="advance"/>
+                                <field name="canteen"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="salary_rule_form_extension" model="ir.ui.view"> 
+            <field name="name">salary_rule_form_extension</field> 
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <label for="urdu_name" class="oe_edit_only" />
+                    <h1><field name="urdu_name" /></h1>
+                </xpath>                
+
+            </field>
+        </record>
+
+        <record id="promotion_form_view" model="ir.ui.view">
+            <field name="name">promotion_form_view</field>
+            <field name="model">promotion.transfer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Promotion Transfer">
+                    <header>
+
+                        <button name="in_waiting" type="object" string="Waiting for Approval" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('draft'))]}" />
+
+                        <button name="in_approved" type="object" string="Approved" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('waiting_Approval'))]}" />
+
+                        <button name="in_validate" type="object" string="Validate" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('approved'))]}" />
+
+                        <field name="accessories_stages" widget="statusbar" />
+
+                    </header>
+                    <sheet>
+
+                        <group name="group_top" string="Employee Information">
+
+                            <group name="group_left">
+                                <field name="date"/>
+                                <field name="employee_card"/>
+                                <field name="current_designation"/>
+                                <field name="current_department"/>
+                                <field name="current_salary"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="employee_name"/>
+                                <field name="doj"/>
+                                <field name="proposed_designation"/>
+                                <field name="proposed_department"/>
+                                <field name="proposed_salary"/>
+                                <field name="edp"/>
+                            </group>
+                        </group>
+
+                        <group name="group_top" string="Left/Replace Employee Detail">
+
+                            <group name="group_left">
+                                <field name="employee_card_replace"/>
+                                <field name="employee_name_replace"/>
+                                <field name="department_replace"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="salary_replace"/>
+                                <field name="designation_replace"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="promotion_tree_view" model="ir.ui.view">
+            <field name="name">promotion_tree_view</field>
+            <field name="model">promotion.transfer</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Promotion/Transfer">
+                    <field name="date" />
+                    <field name="employee_card" />
+                    <field name="employee_name" />
+                    <field name="current_department" />
+                    <field name="proposed_department" />
+                        
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="replace_tranfer">
+            <field name="name">Replace/Transfer</field>
+            <field name="res_model">promotion.transfer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="resignation_form_view" model="ir.ui.view">
+            <field name="name">resignation_form_view</field>
+            <field name="model">employee.resignation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Employee Resignation">
+                    <header>
+
+                        <button name="in_draft" type="object" string="Set to Draft" attrs="{'invisible': [('accessories_stages','not in', ('cancel'))]}" />
+
+                        <button name="in_clearance" type="object" string="Clearance" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('draft'))]}" />
+
+                        <button name="in_waiting" type="object" string="Waiting for Approval" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('clearance'))]}" />
+
+                        <button name="in_approved" type="object" string="Approved" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('waiting_approval'))]}" />
+
+                        <button name="in_cancel" type="object" string="Cancel" attrs="{'invisible': [('accessories_stages','in', ('cancel'))]}" />
+
+                        <field name="accessories_stages" widget="statusbar" />
+
+                    </header>
+
+                    <sheet>
+
+                        <group name="group_top" string="Employee Information">
+
+                            <group name="group_left">
+                                <field name="date"/>
+                                <field name="employee_card"/>
+                                <field name="designation"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="employee_name"/>
+                                <field name="dor"/>
+                                <field name="department"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="resignation_tree_view" model="ir.ui.view">
+            <field name="name">resignation_tree_view</field>
+            <field name="model">employee.resignation</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Resignation">
+                    <field name="date" />
+                    <field name="employee_card" />
+                    <field name="employee_name" />
+                    <field name="designation" />
+                    <field name="department" />
+                    <field name="dor" />
+                        
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="employee_resignation_action">
+            <field name="name">Employee Resignation</field>
+            <field name="res_model">employee.resignation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="advance_form_view" model="ir.ui.view">
+            <field name="name">advance_form_view</field>
+            <field name="model">employee.advance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Employee Advance">
+                    <header>
+
+                        <button name="in_draft" type="object" string="Set to Draft" attrs="{'invisible': [('accessories_stages','not in', ('cancel'))]}" />
+
+                        <button name="in_waiting" type="object" string="Waiting for Approval" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('draft'))]}" />
+
+                        <button name="in_approved" type="object" string="Approved" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('waiting_approval'))]}" />
+
+                        <button name="in_cancel" type="object" string="Cancel" attrs="{'invisible': [('accessories_stages','in', ('cancel'))]}" />
+
+                        <field name="accessories_stages" widget="statusbar" />
+
+                    </header>
+
+                    <sheet>
+
+                        <group name="group_top" string="Employee Information">
+
+                            <group name="group_left">
+                                <field name="date"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="department"/>
+                            </group>
+                        </group>
+
+                        <field name="advance_tree">
+                            <tree editable="bottom">
+                                <field name="employee_card"/>
+                                <field name="employee_name" />
+                                <field name="designation" />
+                                <field name="salary" />
+                                <field name="adv_request" />
+                                <field name="approved" />
+                                <field name="remarks" />
+                            </tree>
+                        </field>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="advance_tree_view" model="ir.ui.view">
+            <field name="name">advance_tree_view</field>
+            <field name="model">employee.advance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Advance">
+                    <field name="date" />
+                    <field name="department" />
+                        
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="employee_advance_action">
+            <field name="name">Employee Advance</field>
+            <field name="res_model">employee.advance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="increment_form_view" model="ir.ui.view">
+            <field name="name">increment_form_view</field>
+            <field name="model">employee.increment</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Employee Increment">
+
+                    <sheet>
+
+                        <group name="group_top">
+
+                            <group name="group_left">
+                                <field name="employee_card"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="date"/>
+                            </group>
+                        </group>
+
+                        <group nmae="group_bottom">
+
+                            <group name="group_left">
+                                <field name="employee_name" />
+                                <field name="fname" />
+                            </group>
+
+                            <group name="group_left">
+                                <field name="doj" />
+                                <field name="doc" />
+                            </group>
+
+                        </group>
+
+                        <group nmae="group_bottom">
+
+                            <group name="group_left">
+                                <field name="increment" />
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="increment_tree_view" model="ir.ui.view">
+            <field name="name">increment_tree_view</field>
+            <field name="model">employee.increment</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Increment">
+                    <field name="employee_name" />
+                    <field name="fname" />
+                    <field name="doj" />
+                    <field name="doc" />
+                        
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="employee_increment_action">
+            <field name="name">Employee Increment</field>
+            <field name="res_model">employee.increment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="training_form_view" model="ir.ui.view">
+            <field name="name">training_form_view</field>
+            <field name="model">orientation.training</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Orientation Training">
+
+                    <sheet>
+
+                        <group name="group_top">
+
+                            <group name="group_left">
+                                <field name="employee_card"/>
+                                <field name="department"/>
+                            </group>
+
+                            <group name="group_right">
+                                <field name="employee_name"/>
+                                <field name="designation"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="training_tree_view" model="ir.ui.view">
+            <field name="name">training_tree_view</field>
+            <field name="model">orientation.training</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orientation Training">
+                    <field name="employee_name"/>
+                    <field name="department"/>
+                    <field name="designation"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="orientation_training_action">
+            <field name="name">Orientation Training</field>
+            <field name="res_model">orientation.training</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <menuitem id="hr_overtime_menu_item"  parent="hr.menu_hr_root" action="hr_overtime" sequence="5" name="Overtime"/>
+
+        <menuitem id="replace_transfer_menu_item"  parent="hr.menu_hr_root" action="replace_tranfer" sequence="6" name="Replace/Transfer"/>
+
+        <menuitem id="resignation_menu_item"  parent="hr.menu_hr_root" action="employee_resignation_action" sequence="7" name="Resignation"/>
+
+        <menuitem id="advance_menu_item"  parent="hr.menu_hr_root" action="employee_advance_action" sequence="8" name="Advance"/>
+
+        <menuitem id="increment_menu_item"  parent="hr.menu_hr_root" action="employee_increment_action" sequence="8" name="Increment"/>
+
+        <menuitem id="orientation_menu_item"  parent="hr.menu_hr_root" action="orientation_training_action" sequence="8" name="Orientation Training"/>
     </data>
 </odoo> 
 

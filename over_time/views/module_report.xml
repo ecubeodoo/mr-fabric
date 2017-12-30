@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="over_time_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                table,td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    text-align: center;
+                                    padding: 6px;
+                                    border-color: #b4b4b4;
+                                }
+                                h3 {
+                                    margin-left: 10px;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 50px;
+                                    width: 50px;
+                                    min-width: 50px;
+                                }
+                                table tr td:last-child,
+                                table tr th:last-child {
+                                    max-width: 100px;
+                                    width: 100px;
+                                    min-width: 100px;
+                                }
+                                table tr td:nth-child(2),
+                                table tr th:nth-child(2) {
+                                    text-align: left;
+                                    padding-left: 20px;
+                                }
+                            </style>
+                            
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <h3>OVERTIME 27-08-2017</h3>
+                                <table width="100%">
+                                    <tr>
+                                        <th></th>
+                                        <th>DEPARTMENT</th>
+                                        <th>OVER TIME</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>22</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td>YARN STORE</td>
+                                        <td>28</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="text-align: center;">TOTAL</td>
+                                        <td>400.1</td>
+                                    </tr>
+
+                                    
+                                </table>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

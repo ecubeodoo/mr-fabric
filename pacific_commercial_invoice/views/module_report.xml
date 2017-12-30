@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="pacific_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                    border: 2px solid;
+                                    border-color: #A9A9A9;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    border-bottom: 2px solid;
+                                    border-color: #A9A9A9;
+                                    padding: 5px;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .center-data p {
+                                    font-size: 15px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin-right: 20px;
+                                }
+
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    margin-top: 10px;
+                                    text-align: center;
+                                    padding: 8px;
+                                    border-color: #F4F6F7;
+                                    font-size: 15px;
+                                }
+                                table th {
+                                    background-color: #A9A9A9;
+                                }
+                                table td {
+                                    background-color: #D3D3D3;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 50px;
+                                    width: 50px;
+                                    min-width: 50px;
+                                    padding-left: 5px;
+                                }
+                                h3 {
+                                    text-align: center;
+                                    border-bottom: 2px solid;
+                                    border-color: #A9A9A9;
+                                    padding: 5px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                p {
+                                    margin-left: 20px;
+                                }
+                                .commercial-invoice {
+                                    width: 30%;
+                                    float: left;
+                                    margin: 15px 15px 15px 15px;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="heading">
+                                        <h2 class="no-margin">MR.FABRICS(PVT) LTD.</h2>
+                                        <p class="no-margin">18-KM Ferozepur road behind Nishtar Colony Lahore Pakitan</p>
+                                        <p class="no-margin">Ph+ 92-42-35923034-35821995 Fax+92-42-35923033</p>
+                                        <p class="no-margin">www.mrfabrics.com.pk NTN#146525-7</p>
+                                    </div>
+                                    <h3 class="no-margin">COMMERCIAL INVOICE</h3>
+                                    <div class="commercial-invoice">
+                                        <p class="no-margin"><span class="solid">APPLICANT/BILL TO:</span></p>
+                                        <p class="no-margin">Pacific Apparel Associates LLC</p>
+                                        <p class="no-margin">2380 Ashbourne Drive</p>
+                                        <p class="no-margin"> San Ramon  CA 94583 USA</p>
+                                    </div>
+                                    <div class="commercial-invoice">
+                                        <p><span class="solid">INVOICE NO</span><span class="liquid">3618/17</span></p>
+                                    </div>
+                                    <div class="commercial-invoice">
+                                        <p><span class="solid">DATED:</span><span class="liquid">16/08/2017</span></p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    <div class="commercial-invoice">
+                                        <p class="no-margin"><span class="solid">SHIP TO:</span><span class="liquid">RENO DC</span></p>
+                                        <p class="no-margin">ARAMARK RENO DC</p>
+                                        <p class="no-margin"> 1195 Trademark Dr, Suite 103</p>
+                                        <p class="no-margin"> Reno, NV 89521</p>
+                                    </div>
+                                    <div class="commercial-invoice">
+                                        
+                                        <p class="no-margin">
+                                            <span class="solid">FORM NO:</span>
+                                            <span class="liquid">SBL-20170000017052</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">TOTAL PACKGES:</span> 
+                                            <span class="liquid">680</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">PAYMENT:</span> 
+                                            <span class="liquid">DP</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">SHIPMENT MODE:</span>
+                                            <span class="liquid">BY SEA</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">SHIPPING TERM:</span>
+                                            <span class="liquid">FOB</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">FROM /AT:</span>
+                                            <span class="liquid">KARACHI PAKISTAN</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">TO /DESTINATION:</span>
+                                            <span class="liquid">RENO NV USA</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">NATIONAL TAX/NO:</span>
+                                            <span class="liquid">1456525-7</span>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <span class="solid">EXPORT REGISTRATION NO:W-170710:</span>
+                                            <span class="liquid">W-170710</span>
+                                        </p>
+                                    </div>
+
+                                    
+                                    <div class="commercial-invoice">
+                                        <p><span class="solid">DATED:</span><span class="liquid">16/08/2017</span></p>
+                                    </div>
+                                    <table width="100%">
+                                        <tr>
+                                            <th rowspan="3">ITEM NO</th>
+                                            <th rowspan="3">MARKS &amp; NUMBER</th>
+                                            <th colspan="4">FULL DESCRIPTION OF GOODS</th>
+                                            <th rowspan="3">QTY IN PIECES</th>
+                                            <th rowspan="3">RATE US $</th>
+                                            <th rowspan="3">TOTAL AMOUNT US $</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="4">APPAREL AS PER PO</th>
+                                        </tr>
+                                        <tr>
+                                            <th>PO NO</th>
+                                            <th>STYLE NO</th>
+                                            <th>COLOR</th>
+                                            <th>SIZES</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>MEN'S85%</td>
+                                            <td>COTTON15%</td>
+                                            <td>KNITTED LONG SLEEVE</td>
+                                            <td>NAVY</td>
+                                            <td>S-XL</td>
+                                            <td>1212</td>
+                                            <td>$</td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>MEN'S85%</td>
+                                            <td>COTTON15%</td>
+                                            <td>KNITTED LONG SLEEVE</td>
+                                            <td>NAVY</td>
+                                            <td>S-XL</td>
+                                            <td>1212</td>
+                                            <td>$</td>
+                                            <td>$0.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td colspan="2">GROSS WEIGHT</td>
+                                            <td>123</td>
+                                            <td colspan="4"></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td colspan="2">NET WEIGHT</td>
+                                            <td>227</td>
+                                            <td colspan="4"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td colspan="2">TOTAL PIECES</td>
+                                            <td>3900</td>
+                                            <td colspan="4"></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"></td>
+                                            <td colspan="2">TOTAL PACKGES</td>
+                                            <td>2430 KGS</td>
+                                            <td colspan="4"></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                            <td>8160</td>
+                                            <td>PIECES</td>
+                                            <td>$6,957.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">TOTAL AMOUNT US </td>
+                                            <td colspan="4">$ 6,957.00</td>
+                                            <td>8160</td>
+                                            <td>PIECES</td>
+                                            <td>$6,957.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9">US ($) DOLLAR SIXTY EIGHT THOUSAND WIGHT HUNDRED SINTY TWO &amp; 00/100</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

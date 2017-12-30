@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="clearence_slip_report">
+
+            <t t-call="report.html_container">
+
+                <t t-call="report.external_layout">
+
+                    <t t-foreach="docs" t-as="o">
+                
+                        <div class="page">
+
+                            <style>
+                                @media (min-width: 992px) {
+                                    .container {
+                                        width: 100%;
+                                    }
+                                }
+                                @media (min-width: 768px) {
+                                    .container {
+                                        width: 100%;
+                                    }
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 50px auto 0px;
+                                    border: 1px solid;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    margin: 0px 0px 30px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                .card-no {
+                                    width: 23%;
+                                    float: left;
+                                }
+                                .store {
+                                    width: 23%;
+                                    float: left;
+                                }
+                                .liquid {
+                                    width: 150px;
+                                    border-bottom: 1px solid;
+                                    display: inline;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin-left: 30px;
+                                }
+                                .store liquid {
+                                    width: 50%;
+                                }
+                                .sign {
+                                    width: 50%;
+                                    float: left;
+                                    text-align: center;
+                                    margin-bottom: 20px;
+
+                                }
+                                .sign p {
+                                    display: inline;
+                                    border-top: 1px solid;
+                                }
+                                .col-01 {
+                                    width: 50%;
+                                    float: left;
+                                }
+                                .col-01 p .solid {
+                                    width: 100px;
+                                    display: inline-block;
+                                }
+                                .col-01 p .liquid {
+                                    width: 200px;
+                                    display: inline-block;
+                                }
+                                .clearences {
+                                    width: 100%;
+                                    float: left;
+                                    margin: 0px 0px 30px;
+                                }
+                                .clearences p {
+                                    width: 100%;
+                                    float: left;
+                                    margin: 0px 0px 20px;
+                                }
+                                .clearences p .solid {
+                                    width: 100px;
+                                    float: left;
+                                    display: block;
+                                }
+                                .clearences p .liquid {
+                                    width: 850px;
+                                    float: left;
+                                    display: block;
+                                    text-align: justify;
+                                    border: none;
+                                    line-height: 2.5;
+                                    position: relative;
+                                    margin: -12px 0px 0px 0px;
+                                }
+                            </style>
+                            
+                            <t t-if="stage != 'clearance'">
+                                <h1>Sorry</h1>
+                                <p>This slip will be only printed if record stage is in Clearence</p>
+                            </t>
+
+                            <t t-if="stage == 'clearance'">
+                                <div class="main-data">
+                                    <div class="center-data">
+                                        <div class="heading">
+                                            <h2>MR FABRICS PVT. LTD</h2>
+                                            <p><u>CLEARANCE SLIP</u></p>
+                                        </div>
+                                        <div class="col-01">
+                                            <p>
+                                                <span class="solid">Card No</span>
+                                                <span class="liquid" t-esc="resig.employee_card.name"></span>
+                                            </p>
+                                            <p>
+                                                <span class="solid">Name</span>
+                                                <span class="liquid" t-esc="resig.employee_name"></span>
+                                            </p>
+                                            <p>
+                                                <span class="solid">Designation</span>
+                                                <span class="liquid" t-esc="resig.designation.name"></span>
+                                            </p>
+                                        </div>
+
+                                        <div class="col-01">
+                                            <p>
+                                                <span class="solid">Date</span>
+                                                <span class="liquid" t-esc="resig.date"></span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">S/O</span>
+                                                <span class="liquid" t-esc="fname"></span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">Department</span>
+                                                <span class="liquid" t-esc="resig.department.name"></span>
+                                            </p>
+                                        </div>
+                                        <br class="clearfloat"/>
+                                        <br class="clearfloat"/>
+                                        <br class="clearfloat"/>
+
+                                        <div class="clearences">
+                                            <p>
+                                                <span class="solid">Canteen</span>
+                                                <span class="liquid">__________________________________________________________________________________________________________________________________________________________________________________________________________________________</span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">Store</span>
+                                                <span class="liquid">__________________________________________________________________________________________________________________________________________________________________________________________________________________________</span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">Security</span>
+                                                <span class="liquid">__________________________________________________________________________________________________________________________________________________________________________________________________________________________</span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">Accounts</span>
+                                                <span class="liquid">__________________________________________________________________________________________________________________________________________________________________________________________________________________________</span>
+                                            </p>
+                                            
+                                            <p>
+                                                <span class="solid">Administration</span>
+                                                <span class="liquid">__________________________________________________________________________________________________________________________________________________________________________________________________________________________</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="sign">
+                                            <p><strong>Employee Signature</strong></p>
+                                        </div>
+
+                                        <div class="sign">
+                                            <p><strong>General Manager</strong></p>
+                                        </div>
+                                        <br class="clearfloat"/>
+                                        
+                                    </div>
+                                </div>
+                            </t>
+
+                        </div><!--end of page -->
+
+                    </t>
+
+                </t>
+                
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

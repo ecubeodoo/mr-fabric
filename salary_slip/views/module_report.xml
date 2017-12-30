@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="salary_slip_report">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            @font-face {
+                              font-family: 'NafeesNastaleeq';
+                              src: url('/salary_slip/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                  url('/salary_slip/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                  url('/salary_slip/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                  url('/salary_slip/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                              font-weight: normal;
+                              font-style: normal;
+                            }
+                            .main-data {
+                                font-family: 'NafeesNastaleeq', serif;
+                            }
+                            h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                line-height: 2.5;
+                            }
+                            @media (min-width: 992px) {
+                                .container {
+                                    width: 100%;
+                                }
+                            }
+                            @media (min-width: 768px) {
+                                .container {
+                                    width: 100%;
+                                }
+                            }
+                            .container {
+                                width: 100%;
+                            }
+                            .english {
+                                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                            }
+                            body {
+                                margin: 0px !important;
+                            }
+                            body.o_in_iframe {
+                                margin-top: 0px!important;
+                            }
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 550px;
+                                margin: 0px;
+                            }
+                            .solid {
+                                font-weight: bold;
+                            }
+                            .heading {
+                                text-align: center;
+                                padding: 10px;
+                            }
+                            .salary-slip {
+                                width: 15%;
+                                float: left;
+                                text-align: right;
+                                padding: 8px;
+                            }
+                            .solid {
+                                margin-right: 15px;
+                            }
+                            .clearfloat {
+                                clear: both;
+                                float: none;
+                            }
+                            .prepared-by {
+                                width: 40%;
+                                float: left;
+                                margin-top: 20px;
+                                margin-left: 20px;
+                            }
+                            .no-margin{
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                            }
+                            table, td, th {
+                                padding: 2px;
+                                border: none;
+                            }
+                            .info {
+                                width: 280px;
+                            }
+                            .info tr td:first-child,
+                            .info tr th:first-child {
+                                max-width: 0px;
+                                width: 93px;
+                                min-width: 0px;
+                                font-weight: bold;
+                                text-align: right;
+                            }
+                            .info tr td:last-child,
+                            .info tr th:last-child {
+                                max-width: 0px;
+                                width: 100px;
+                                min-width: 0px;
+                                padding-left: 10px;
+                                font-weight: bold;
+                            }
+                            .center {
+                                text-align: center;
+                            }
+                            .right {
+                                text-align: right;
+                            }
+                            .report-header {
+                                width: 100%;
+                                float: left;
+                            }
+                            .report-header p,
+                            .report-header h2 {
+                                line-height: 1.5;
+                            }
+                            .report-header .heading {
+                                width: 100%;
+                                float: left;
+                            }
+                            .report-header .slip-no {
+                                width: 16%;
+                                float: right;
+                                text-align: center
+                            }
+                            .report-header .slip-no p,
+                            .report-header .slip-no span {
+                                line-height: 1.5;
+                            }
+                            .budget {
+                                width: 400px;
+                                margin: 0px auto;
+                            }
+                            .budget tr td {
+                                padding: 0px 10px;
+                                line-height: 2.5;
+                            }
+                        </style>
+
+                        <div class="main-data">
+                            <div class="center-data">
+
+                                <div class="report-header">
+                                    <div class="slip-no">
+                                        <p class="no-margin english"><span class="solid">SLIP NO.</span></p>
+                                        <p class="no-margin english"><span class="liquid">326</span></p>
+                                    </div>
+                                    <div class="heading">
+                                        <h2 class="no-margin english">MR. FABRICS (PVT) LIMITED</h2>
+                                        <p class="no-margin english">SALARY SLIP</p>
+                                        <p class="no-margin english">For The Month of AUGUST 2017</p>
+                                        <p class="no-margin english">Payment Date= 30-Aug-17</p>
+                                    </div>
+                                </div>
+                                
+                                <table class="info">
+                                    <tr>
+                                        <td>کارڑ نمبر</td>
+                                        <td><span t-esc="o.employee_id.card_no.name"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td> نام</td>
+                                        <td><span t-esc="o.employee_id.name"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ڈیپارٹمنٹ</td>
+                                        <td><span t-esc="o.employee_id.department_id.name"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>عہدہ</td>
+                                        <td><span t-esc="o.employee_id.job_id.name"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>بنیا دی تنخواہ</td>
+                                        <td class="center english"><span t-esc="'{:0,}'.format(int(float(basic())))"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ہاوس رینٹ</td>
+                                        <td class="center english"><span t-esc="'{:0,}'.format(int(float(rent())))"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>میڈیکل الاونس</td>
+                                        <td class="center english"><span t-esc="'{:0,}'.format(int(float(medical())))"></span></td>Gross
+                                    </tr>
+                                    <tr>
+                                        <td><u>کل تنخواہ </u></td>
+                                        <td class="center english"><span t-esc="'{:0,}'.format(int(float(gross())))"></span></td>
+                                    </tr>
+                                </table>
+                                <br class="clearfloat"/>
+
+                                <table class="budget">
+                                    <tr>
+                                        <td colspan="3" class="right"><b><span t-esc="o.contract_id.days"></span></b></td>
+                                        <td>ایام کارکردگی</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="right"><b><span t-esc="o.contract_id.hours"></span></b></td>
+                                        <td>اوورٹائم گھنٹے</td>
+                                    </tr>
+                                    
+                                    <t t-foreach="rules" t-as="data">
+                                        <tr>
+                                            <td><span t-esc="data.urdu_name"></span></td>
+                                            <td>=</td>
+                                            <td>Rs</td>
+                                            <td class=" english"><span t-esc="'{:0,}'.format(int(float(data.total)))"></span></td>
+                                        </tr>
+                                    </t>
+
+                                </table>
+
+                                <div class="prepared-by">
+                                    <p class="no-margin english"><span class="solid">Prepared By:</span></p>
+                                    <p class="no-margin english"><span class="liquid">Muzaffar Iqbal</span></p>
+                                </div>
+
+                                <div class="prepared-by">
+                                    <p class="no-margin english">Signature of Employee</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

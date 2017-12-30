@@ -19,14 +19,15 @@
                 <form string="Purchase Order">
 
                     <header>
-                        <button name="action_rfq_send" states="draft" string="Send RFQ by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
-                        <button name="action_rfq_send" states="sent" string="Re-Send RFQ by Email" type="object" context="{'send_rfq':True}"/>
+                        <!-- <button name="action_rfq_send" states="draft" string="Send RFQ by Email" type="object" context="{'send_rfq':True}" class="oe_highlight" attrs="{'invisible': [('ttype', '=', 'accessories')]}"/> -->
 
-                        <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+                        <button name="action_rfq_send" states="sent" string="Re-Send RFQ by Email" type="object" context="{'send_rfq':True}" attrs="{'invisible': [('ttype', '=', 'accessories')]}"/>
 
-                        <button name="print_quotation" string="Print RFQ" type="object" states="sent" groups="base.group_user"/>
+                        <!-- <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user" attrs="{'invisible': [('ttype', '=', 'accessories')]}"/> -->
+
+                        <button name="print_quotation" string="Print RFQ" type="object" states="sent" groups="base.group_user" attrs="{'invisible': [('ttype', '=', 'accessories')]}"/>
                         
-                        <button name="custom_button" type="object" string="Confirm accessories" id="draft_confirm" attrs="{'invisible': [('ttype', '!=', 'accessories')]}"/>
+                        <button name="custom_button" type="object" string="Confirm" id="draft_confirm" attrs="{'invisible': [('ttype', '!=', 'accessories')]}"/>
                         
                         <button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm" attrs="{'invisible': [('ttype', '=', 'accessories')]}"/>
                         
@@ -67,6 +68,7 @@
                                 <field name='invoice_ids' invisible="1"/>
                             </button> 
                         </div>
+
                         <div class="oe_title">
                             <label string="Request for Quotation " attrs="{'invisible': [('state','not in',('draft','sent','bid'))]}"/>
                             <label string="Purchase Order " attrs="{'invisible': [('state','in',('draft','sent','bid'))]}"/>
@@ -74,6 +76,7 @@
                                 <field name="name" readonly="1"/>
                             </h1>
                         </div>
+
                         <group>
                             <group>
                                 <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
@@ -81,9 +84,18 @@
                                 <!-- <field name="won" widget="many2many_tags"/> -->
                                 <field name="currency_id" groups="base.group_multi_currency"/>
                                 <field name="is_shipped" invisible="1"/>
+                                <label for="date_planned"/>
+                                <div>
+                                    <field name="date_planned" required="1" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"/>
+                                    <button name="action_set_date_planned" type="object"
+                                        states="draft,sent"
+                                        string="Set date to all order lines"
+                                        help="This changes the scheduled date of all order lines to the given date"
+                                        class="fa fa-calendar o_icon_button oe_edit_only"/>
+                                </div>
                             </group>
                             <group>
-                                <field name="wo_no" attrs="{'required': ['|','|',('ttype','=','yarn'),('ttype','=','fabric'),('ttype','=','accessories')]}"/>
+                                <field name="wo_no" attrs="{'required': ['|','|',('ttype','=','yarn'),('ttype','=','fabric'),('ttype','=','accessories')]}" domain="[('state','in',('confirmed','inprogress'))]"/>
                                 <field name="date_order"/>
                                 <field name="style"/>
                                 <field name="merchant" />
@@ -92,161 +104,170 @@
                                 <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
                             </group>
                         </group>
+
                         <notebook>
-                            <page string="Products" attrs="{'invisible': [('ttype', '=', 'yarn')]}">
-                                <field name="order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
-                                     <tree string="Purchase Order Lines" editable="bottom">
-                                        <field name="currency_id" invisible="1"/>
-                                        <field name="state" invisible="1"/>
-                                        <field name="sequence" widget="handle"/>
-                                        <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" domain="[('ttype', '=', parent.ttype)]"/>
-                                        <field name="name" string="TESTING"/>
-                                        <field name="date_planned"/>
-                                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                                        <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
-                                        <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
-                                        <field name="product_qty"/>
-                                        <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
-                                        <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
-                                        <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
-                                        <field name="price_unit"/>
-                                        <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
-                                        <field name="price_subtotal" widget="monetary"/>
-                                    </tree>
-                                    <form string="Purchase Order Line">
-                                        <sheet>
-                                            <group>
+
+                            <page string="Products">
+                                
+                                <div  attrs="{'invisible': [('ttype', '=', 'yarn')]}">
+                                    <field name="order_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                                        <tree string="Purchase Order Lines" editable="bottom">
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="state" invisible="1"/>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" domain="[('ttype', '=', parent.ttype)]"/>
+                                            <field name="name" string="Description"/>
+                                            <field name="date_planned"/>
+                                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                            <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
+                                            <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
+                                            <field name="product_qty"/>
+                                            <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
+                                            <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
+                                            <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                                            <field name="price_unit"/>
+                                            <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
+                                            <field name="price_subtotal" widget="monetary"/>
+                                        </tree>
+
+                                        <form string="Purchase Order Line">
+                                            <sheet>
                                                 <group>
-                                                    <field name="product_id"
-                                                           context="{'partner_id': parent.partner_id}"/>
-                                                    <label for="product_qty"/>
-                                                    <div>
-                                                        <field name="product_qty" class="oe_inline"/>
-                                                        <span class="oe_inline">&#160;</span>
-                                                        <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
-                                                    </div>
-                                                    <field name="price_unit"/>
+                                                    <group>
+                                                        <field name="product_id"
+                                                               context="{'partner_id': parent.partner_id}"/>
+                                                        <label for="product_qty"/>
+                                                        <div>
+                                                            <field name="product_qty" class="oe_inline"/>
+                                                            <span class="oe_inline">&#160;</span>
+                                                            <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                                        </div>
+                                                        <field name="price_unit"/>
+                                                    </group>
+                                                    <group>
+                                                        
+                                                        <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
+                                                        
+                                                        <field name="date_planned" widget="date"/>
+                                                        
+                                                        <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+
+                                                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+
+                                                    </group>
                                                 </group>
+                                                <notebook>
+                                                <page string="Notes">
+                                                    <field name="name"/>
+                                                </page><page string="Invoices and Incoming Shipments">
+                                                    <field name="invoice_lines"/>
+                                                    <field name="move_ids"/>
+                                                </page>
+                                                </notebook>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                </div>
+
+                                <div  attrs="{'invisible': [('ttype', '!=', 'yarn')]}">
+
+                                    <field name="order_line2" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+
+                                        <tree string="Purchase Order Lines" editable="bottom">
+                                            <field name="currency_id" invisible="1"/>
+                                            <field name="state" invisible="1"/>
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" domain="[('ttype', '=', parent.ttype)]"/>
+                                            <field name="name"/>
+                                            <field name="date_planned"/>
+                                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                            <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
+                                            <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
+                                            <field name="product_qty"/>
+                                            <field name="nob"/>
+                                            <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
+                                            <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
+                                            <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
+                                            <field name="price_unit"/>
+                                            <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
+                                            <field name="price_subtotal" widget="monetary"/>
+                                        </tree>
+
+                                        <form string="Purchase Order Line">
+                                            <sheet>
                                                 <group>
-                                                    <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
-                                                    <field name="date_planned" widget="date"/>
-                                                    <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
-                                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                                    <group>
+                                                        <field name="product_id"
+                                                               context="{'partner_id': parent.partner_id}"/>
+                                                        <label for="product_qty"/>
+                                                        <div>
+                                                            <field name="product_qty" class="oe_inline"/>
+                                                            <span class="oe_inline">&#160;</span>
+                                                            <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                                        </div>
+                                                        <field name="price_unit"/>
+                                                    </group>
+
+                                                    <group>
+                                                        <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
+                                                        <field name="date_planned" widget="date"/>
+                                                        <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
+                                                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                                    </group>
+
                                                 </group>
-                                            </group>
-                                            <notebook>
-                                            <page string="Notes">
-                                                <field name="name"/>
-                                            </page><page string="Invoices and Incoming Shipments">
-                                                <field name="invoice_lines"/>
-                                                <field name="move_ids"/>
-                                            </page>
-                                            </notebook>
-                                        </sheet>
-                                    </form>
-                                </field>
+                                                <notebook>
+                                                <page string="Notes">
+                                                    <field name="name"/>
+                                                </page><page string="Invoices and Incoming Shipments">
+                                                    <field name="invoice_lines"/>
+                                                    <field name="move_ids"/>
+                                                </page>
+                                                </notebook>
+                                            </sheet>
+                                        </form>
+                                    </field>
+
+                                </div>
+
                                 <group class="oe_subtotal_footer oe_right">
+
                                     <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    
                                     <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    
                                     <div class="oe_subtotal_footer_separator oe_inline">
                                         <label for="amount_total"/>
                                     </div>
+                                    
                                     <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+
                                 </group>
+                                
                                 <field name="notes" class="oe_inline" placeholder="An administrator can set up default Terms and conditions in your Company settings."/>
                                 <div class="oe_clear"/>
-                            </page>
-                            <page string="Products" attrs="{'invisible': [('ttype', '!=', 'yarn')]}">
-                                <field name="order_line2" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
-                                     <tree string="Purchase Order Lines" editable="bottom">
-                                        <field name="currency_id" invisible="1"/>
-                                        <field name="state" invisible="1"/>
-                                        <field name="sequence" widget="handle"/>
-                                        <field name="product_id" attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}" context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}" domain="[('ttype', '=', parent.ttype)]"/>
-                                        <field name="name"/>
-                                        <field name="date_planned"/>
-                                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                                        <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}" groups="purchase.group_analytic_accounting"/>
-                                        <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting" widget="many2many_tags"/>
-                                        <field name="product_qty"/>
-                                        <field name="nob"/>
-                                        <field name="qty_received" invisible="not context.get('show_purchase', False)"/>
-                                        <field name="qty_invoiced" invisible="not context.get('show_purchase', False)"/>
-                                        <field name="product_uom" groups="product.group_uom" attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"/>
-                                        <field name="price_unit"/>
-                                        <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]" context="{'default_type_tax_use': 'purchase'}"/>
-                                        <field name="price_subtotal" widget="monetary"/>
-                                    </tree>
-                                    <form string="Purchase Order Line">
-                                        <sheet>
-                                            <group>
-                                                <group>
-                                                    <field name="product_id"
-                                                           context="{'partner_id': parent.partner_id}"/>
-                                                    <label for="product_qty"/>
-                                                    <div>
-                                                        <field name="product_qty" class="oe_inline"/>
-                                                        <span class="oe_inline">&#160;</span>
-                                                        <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
-                                                    </div>
-                                                    <field name="price_unit"/>
-                                                </group>
-                                                <group>
-                                                    <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase')]"/>
-                                                    <field name="date_planned" widget="date"/>
-                                                    <field name="account_analytic_id" colspan="2" groups="purchase.group_analytic_accounting"/>
-                                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                                                </group>
-                                            </group>
-                                            <notebook>
-                                            <page string="Notes">
-                                                <field name="name"/>
-                                            </page><page string="Invoices and Incoming Shipments">
-                                                <field name="invoice_lines"/>
-                                                <field name="move_ids"/>
-                                            </page>
-                                            </notebook>
-                                        </sheet>
-                                    </form>
-                                </field>
-                                <group class="oe_subtotal_footer oe_right">
-                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <div class="oe_subtotal_footer_separator oe_inline">
-                                        <label for="amount_total"/>
-                                    </div>
-                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                </group>
-                                <field name="notes" class="oe_inline" placeholder="An administrator can set up default Terms and conditions in your Company settings."/>
-                                <div class="oe_clear"/>
+
                             </page>
                 
                             <page string="Deliveries &amp; Invoices">
                                 <group>
                                     <group>
-                                        <label for="date_planned"/>
-                                        <div>
-                                            <field name="date_planned" required="1" attrs="{'readonly': [('state', 'not in', ('draft', 'sent'))]}"/>
-                                            <button name="action_set_date_planned" type="object"
-                                                states="draft,sent"
-                                                string="Set date to all order lines"
-                                                help="This changes the scheduled date of all order lines to the given date"
-                                                class="fa fa-calendar o_icon_button oe_edit_only"/>
-                                        </div>
                                         <field name="picking_type_id" domain="[('code','=','incoming')]" options="{'no_create': True}" groups="stock.group_stock_multi_locations"/>
                                         <field name="dest_address_id" groups="stock.group_stock_multi_locations" attrs="{'invisible': [('default_location_dest_id_usage', '!=', 'customer')], 'required': [('default_location_dest_id_usage', '=', 'customer')]}"/>
                                         <field name="default_location_dest_id_usage" invisible="1"/>
                                         <field name="incoterm_id"/>
+                                        <field name="date_approve" groups="base.group_no_one"/>
                                     </group>
                                     <group>
                                         <field name="invoice_status"/>
                                         <field name="payment_term_id" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}"/>
                                         <field name="fiscal_position_id" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}"/>
-                                        <field name="date_approve" groups="base.group_no_one"/>
                                     </group>
                                 </group>
                             </page>
+
                         </notebook>
+
                     </sheet>
 
                     <div class="oe_chatter">
@@ -255,14 +276,10 @@
                     </div>
                 
                 </form>
+
             </xpath>
 
         </field>
-    </record>
-
-    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
-
-        <field name="active">false</field>
     </record>
 
     <record id="accessories_form_view" model="ir.ui.view">
@@ -271,6 +288,7 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Accessories Order">
+
                 <header>
                     <button name="in_draft" type="object" string="Set to Draft" attrs="{'invisible': [('accessories_stages','not in', ('cancel'))]}" />
 
@@ -278,21 +296,16 @@
 
                     <button name="in_customer_approval" type="object" string="Customer Approval" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('recieved'))]}" />
 
-                    <button name="in_approved" type="object" string="Approved" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('customer_approval'))]}" />
-
-                    <button name="rejected" type="object" string="Rejected" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('customer_approval'))]}" />
-
-                    <button name="in_validate" type="object" string="Validate" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('approved'))]}" />
-
-                    <button name="in_cancel" type="object" string="Cancel" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','in', ('cancel'))]}" />
+                    <button name="in_validate" type="object" string="Validate" class= "oe_highlight" attrs="{'invisible': [('accessories_stages','not in', ('customer_approval'))]}" />
 
                     <field name="accessories_stages" widget="statusbar" />
 
                 </header>
+
                 <sheet>
        
                     <div class="oe_title">
-                        <label string="Purchase Order"/>
+                        <label string="Accessories order"/>
                         <h1>
                             <field name="sr_no" readonly="1"/>
                         </h1>
@@ -301,67 +314,97 @@
                     <group name="group_top">
 
                         <group name="group_left">
-                            <field name="vendor" domain= "[('supplier','=','True')]"/>
-                            <field name="style" />
+                            <field name="vendor" domain= "[('supplier','=','True')]"  readonly="1"/>
+                            <field name="style"  readonly="1" />
                             <field name="merchant" domain="[('merchant','=','True')]"/>
                             <field name="customer" />
-                            <field name="delivery_date" />
+                            <field name="delivery_date"  readonly="1" />
                         </group>
 
                         <group name="group_right">
-                            <field name="date" />
-                            <field name="wonumber" />
+                            <field name="date"  readonly="1" />
+                            <field name="wonumber"  readonly="1"/>
                             <field name="seq_code" />
                             <field name="req_code" />
                             <field name="access_po_num" invisible="1"/>
                         </group>
                     </group>
 
-                <notebook>
+                    <notebook>
 
-                    <page name="products" string="Products">
+                        <page name="products" string="Products">
 
-                        <field name="tree_link" nolabel='1'>
-                            <tree editable="bottom">
-                                <field name="product"/>
-                                <field name="unit_measurement"/>
-                                <field name="qty"/>
-                                <field name="price"/>
-                                <field name="sub_total"/>
-                                <field name="to_recieve"/>
-                                <field name="recieved"/>
-                                <field name="rejected"/>
-                                <field name="remarks"/>
-                            </tree>
-                        </field> 
+                            <field name="tree_link" nolabel='1'>
+                                <tree editable="bottom">
+                                    <field name="product" readonly="1" required="1"/>
+                                    <field name="unit_measurement" readonly="1"/>
+                                    <field name="qty" readonly="1"/>
+                                    <field name="recieved"/>
+                                    <field name="approved"/>
+                                    <field name="remarks"/>
+                                </tree>
+                            </field> 
 
-                    </page>
+                        </page>
 
-                    <page name="locations" string="Locations">
-                        
-                        <group name="group_top">
+                        <page name="locations" string="Locations">
                             
-                            <group name="group_left">
-                                <field name="destination_location" />
-                                <field name="delivery" />
-                                <field name="picking_type_id"/>
+                            <group name="group_top">
+                                
+                                <group name="group_left">
+                                    <field name="destination_location" />
+                                    <field name="delivery" />
+                                    <field name="picking_type_id"/>
+                                </group>
+
+                                <group name="group_right">
+                                    <field name="source_location" />
+                                    <field name="warehouse" />
+                                </group>
+                            
                             </group>
 
-                            <group name="group_right">
-                                <field name="source_location" />
-                                <field name="warehouse" />
-                            </group>
-                        
-                        </group>
+                        </page>
 
-                    </page>
-
-                </notebook>
+                    </notebook>
                 </sheet>
+
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="accessories_wizard_form_view" model="ir.ui.view">
+        <field name="name">accessories_wizard_form_view</field>
+        <field name="model">accessories.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Accessories Order">
+                
+                <table class="o_group o_inner_group">
+                    <tr>
+                        <td colspan="1" style="width: 50%;">
+                            <p>You have processed less products than the initial demand.</p>
+                        </td>
+                        <td colspan="1" style="width: 50%;">
+                            <p class="text-muted">Create a backorder, if you expect to process the remaining products later.  Do not create a backorder if you will not supply the remaining products.</p>
+                        </td>
+                    </tr>
+                </table>
+
+                <footer>
+
+                    <button name="create_backorder" string="Create Backorder" type="object" class= "oe_highlight" />
+
+                    <button name="no_backorder" string="No Backorder" type="object" class= "oe_highlight" />
+
+                    <button name="cancel" string="Cancel" type="object" />
+
+                </footer>
 
             </form>
         </field>
@@ -474,7 +517,7 @@
                     <group name="group_top">
 
                         <group name="group_left">
-                            <field name="won"/>
+                            <field name="won" domain="[('state','in',('confirmed','inprogress'))]"/>
                             <field name="yarn_count"/>
                             <field name="week"/>
                         </group>
@@ -551,7 +594,7 @@
                         </group>
 
                         <group name="group_right">
-                            <field name="won" widget="many2many_tags" domain="[('state','=','progress')]"/>
+                            <field name="won" widget="many2many_tags" domain="[('state','in',('confirmed','inprogress'))]"/>
                         </group>
 
                     </group>
@@ -563,7 +606,7 @@
                         <field name="tree_link" nolabel='1'>
                             <tree editable="bottom">
                                 <field name="product" domain= "[('ttype','=','yarn')]"/>
-                                <field name="won" widget="many2many_tags" domain="[('state','=','progress')]"/>
+                                <field name="won" widget="many2many_tags"/>
                                 <field name="buyer" widget="many2many_tags" />
                                 <field name="prod_type"/>
                                 <field name="delv_date"/>
@@ -634,7 +677,7 @@
                     <group name="group_top">
 
                         <group name="group_left">
-                            <field name="won" widget="many2many_tags"/>
+                            <field name="won" widget="many2many_tags" domain="[('state','in',('confirmed','inprogress'))]"/>
                             <field name="buyer" widget="many2many_tags" domain= "[('buyer','=','True'),('knitting','=','True')]" context="{'default_knitting':True,'default_buyer':True}"/>
                             <field name="style"/>
                             <field name="mf"/>
@@ -747,7 +790,7 @@
                     <group name="group_top">
 
                         <group name="group_left">
-                            <field name="won" widget="many2many_tags"/>
+                            <field name="won" widget="many2many_tags" domain="[('state','in',('confirmed','inprogress'))]"/>
                             <field name="buyer" widget="many2many_tags" domain= "[('buyer','=','True'),('knitting','=','True')]" context="{'default_knitting':True,'default_buyer':True}"/>
                             <field name="style"/>
                             <field name="subject"/>
@@ -866,7 +909,7 @@
                     <group name="group_top">
 
                         <group name="group_left">
-                            <field name="won" widget="many2many_tags"/>
+                            <field name="won" widget="many2many_tags" domain="[('state','in',('confirmed','inprogress'))]"/>
                             <field name="buyer"  widget="many2many_tags"/>
                             <field name="style"/>
                             <field name="source_location"/>
@@ -1401,7 +1444,7 @@
         </field>
     </record>
 
-<!--ACTIONS-->
+    <!--ACTIONS-->
 
     <record model="ir.actions.act_window" id="accessories_action">
         <field name="name">Accessories Order</field>
@@ -1590,9 +1633,11 @@
         <field name="res_model">yarn.approval</field> 
         <field name="view_id" ref="yarn_approval_tree_view" /> 
     </record>
-<!--ACTIONS-->
 
-<!--SEQUENCES-->
+    <!--ACTIONS-->
+
+    <!--SEQUENCES-->
+
     <record id="accessories_seq" model="ir.sequence">
       <field name="name">accessories_seq</field>
       <field name="code">purchase.accessories</field>
@@ -1610,26 +1655,30 @@
     <record model="ir.ui.menu" id="mrp.menu_mrp_production_action">
         <field name="name">Work Order</field>
     </record>
-<!--SEQUENCES-->
 
-<!--MENUS-->
-    <menuitem id="accessories_menu_item" parent="purchase.menu_procurement_management" action="accessories_action" sequence="10"/>
+    <!--SEQUENCES-->
+
+    <!--MENUS-->
+
+    <menuitem id="product_menu" parent="purchase.menu_purchase_root" name="Products" sequence="3"/>
+
+    <menuitem id="PO_menu" parent="purchase.menu_purchase_root" name="PO Orders" sequence="4"/>
+
+    <menuitem id="fabrication_menu" parent="purchase.menu_purchase_root" sequence="5" name="Fabrication"/>
+
+    <menuitem id="yarn_menu" parent="purchase.menu_purchase_root" name="Yarn" sequence="6"/>
 
     <menuitem id="menu_purchase_form_ext_action" action="purchase_form_ext_action"  parent="purchase.menu_procurement_management" sequence="8"/>
 
-    <menuitem id="fabrication_menu" parent="purchase.menu_purchase_root" sequence="3" name="Fabrication"/>
-
     <menuitem id="yarn_menu_item" parent="purchase.menu_procurement_management" action="yarn_action" sequence="11"/>
 
-    <menuitem id="yarn_req_menu_item" parent="fabrication_menu" action="yarn_req_action" sequence="12"/>
+    <menuitem id="yarn_req_menu_item" parent="yarn_menu" action="yarn_req_action" sequence="12"/>
 
     <menuitem id="yarn_dye_menu_item" parent="fabrication_menu" action="yarn_dye_action" sequence="13"/>
 
     <menuitem id="fabric_dye_menu_item" parent="fabrication_menu" action="fabric_dye_action" sequence="14"/>
 
     <menuitem id="fabric_knitting_menu_item" parent="fabrication_menu" action="fabric_knitting_action" sequence="15"/>
-
-    <menuitem id="product_menu" parent="purchase.menu_purchase_root" name="Products" sequence="3"/>
 
     <menuitem id="yarn_product_menu_item" parent="product_menu" action="new_action_yarn_product" sequence="16"/>
 
@@ -1638,8 +1687,6 @@
     <menuitem id="accessories_product_menu_item" parent="product_menu" action="new_action_accessories_product" sequence="18"/>
 
     <menuitem id="general_product_menu_item" parent="product_menu" action="new_action_general_product" sequence="19"/>
-
-    <menuitem id="PO_menu" parent="purchase.menu_purchase_root" name="PO Orders" sequence="3"/>
 
     <menuitem id="yarn_PO_menu_item" parent="PO_menu" action="new_action_yarn_PO" sequence="20"/>
 
@@ -1651,14 +1698,42 @@
 
     <menuitem id="production_unit_menu_item" parent="mrp.menu_mrp_manufacturing" action="production_unit_action" sequence="5"/>
 
-    <menuitem id="inventory_ext_menu_item" name="Issuance" parent="stock.menu_stock_root" sequence="4"/>
+    <menuitem id="inventory_ext_menu_item" name="Accessories" parent="stock.menu_stock_root" sequence="4"/>
+
+    <menuitem id="accessories_menu_item" parent="inventory_ext_menu_item" action="accessories_action" sequence="10"/>
 
     <menuitem id="access_issue_menu_item"  parent="inventory_ext_menu_item" action="access_issue_action" sequence="5"/>
 
-    <menuitem id="yarn_approval_menu_item"  parent="PO_menu" action="yarn_approval_action" name="Yarn Approval" sequence="5"/>
+    <menuitem id="yarn_approval_menu_item"  parent="yarn_menu" action="yarn_approval_action" name="Yarn Approval" sequence="5"/>
 
-<!--MENUS-->
-    
-    
+    <!--MENUS-->
+
+    <!--Menu Removes-->
+
+    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+        <field name="active">false</field>
+    </record>
+
+    <record id="mail.mail_channel_menu_root_chat" model="ir.ui.menu"> 
+        <field name="active">False</field> 
+    </record>
+
+    <record id="calendar.mail_menu_calendar" model="ir.ui.menu"> 
+        <field name="active">False</field> 
+    </record>
+
+    <record id="purchase.menu_procurement_management" model="ir.ui.menu"> 
+        <field name="active">False</field> 
+    </record>
+
+    <record id="purchase.menu_purchase_control" model="ir.ui.menu"> 
+        <field name="active">False</field> 
+    </record>
+
+    <record id="purchase.purchase_report" model="ir.ui.menu"> 
+        <field name="active">False</field> 
+    </record>
+
+    <!--Menu Removes-->
 
 </odoo> 

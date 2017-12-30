@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+
+            id="report_for_clearence_slip" 
+            model="employee.resignation"
+            name="clearence_slip.clearence_slip_report"
+            file="clearence_slip.clearence_slip_report"
+            report_type="qweb-html"
+            string=" "/>
+
+        <record id="clearence_slip_wizard" model="ir.ui.view">
+            <field name="name">clearence_slip_wizard</field>
+            <field name="model">clearence.slip</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    
+                    <group name="group_top">
+
+                        <field name="accessories_stages"/>
+                        <field name="resignation" invisible="1"/>
+
+                    </group>
+
+                    <footer>
+                        <button name="%(report_for_clearence_slip)d" type="action" string="Print" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="clearence_slip_action" model="ir.actions.act_window">
+            <field name="name">Clearence Slip</field>
+            <field name="res_model">clearence.slip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="clearence_slip_wizard"/>
+            <field name="target">new</field>
+            <field name="context">{'default_accessories_stages': accessories_stages, 'default_resignation': active_id}</field> 
+        </record>
+
+        <record model="ir.values" id="clearence_slip_filter">
+            <field name="model_id" ref="" />
+            <field name="name">Print From Wizard</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval ="'ir.actions.act_window,'+str(ref('clearence_slip_action'))"/>
+            <field name="key">action</field>
+            <field name="model">employee.resignation</field>
+        </record>
+        
+    </data>
+</openerp>

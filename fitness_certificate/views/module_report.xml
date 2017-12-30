@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="fitness_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+        
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin: 10px 0px 10px;
+                                }
+                                .heading {
+                                    text-align: center;
+                                }
+                                h3 {
+                                    text-decoration: underline;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 10px;
+                                }
+                                .medical-certificate {
+                                    width: 50%;
+                                    float: left;
+                                    margin: 10px 0px 0px 0px;
+                                }
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    padding: 6px;
+                                    text-align: center;
+                                }
+                                .medical-exam .liquid {
+                                    width: 25%;
+                                    border: 2px solid;
+                                    padding: 10px 0px;
+                                    text-align: center;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                .center-data p {
+                                    margin-left: 15px;
+                                }
+                                h3 {
+                                    margin-left: 10px;
+                                }
+                                table tr td:first-child,
+                                table tr th:first-child {
+                                    max-width: 90px;
+                                    width: 90px;
+                                    min-width: 90px;
+                                }
+                                .medical-fitness {
+                                    border-bottom: 2px solid;
+                                }
+                                .medical-exam {
+                                    width: 30%;
+                                    float: left;
+                                    padding: 8px;
+                                }
+                                .signature {
+                                    text-align: right;
+                                    margin-right: 20px;
+                                }
+                                .liquid {
+                                    display: inline-block;
+                                    margin-left: 10px;
+                                    text-decoration: underline;
+
+                                }
+                                .medical-certificate .liquid {
+                                    display: inline-block;
+                                    border-bottom: 1px solid #000;
+                                    width: 300px;
+                                    text-decoration: none;
+                                }
+                                .cnic span {
+                                    border: 1px solid #000;
+                                    display: block;
+                                    line-height: 1;
+                                    margin: 0px;
+                                    width: 25px;
+                                    text-align: center;
+                                    padding: 4.5px 0px;
+                                    float: left;
+                                }
+                                .cnic {
+                                    display: inline-block;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="heading">
+                                        <h3 class="no-margin">MEDICAL FITNESS CERTIFICTE</h3>
+                                        <p class="no-margin">ONLY VALID FOR EMPLOYMENT UNDER SECTION 12 FACTORY ACT</p>
+                                    </div>
+                                
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Name:</span>
+                                            <span class="liquid" t-esc="o.name"></span>
+                                        </p>
+                                    </div>
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">S/o.D/o.W/o.:</span>
+                                            <span class="liquid" t-esc="o.fname"></span>
+                                        </p>
+                                    </div>
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Date of Birth:</span>
+                                            <span class="liquid" t-esc="o.birthday"></span>
+                                        </p>
+                                    </div>
+                                    <div class="medical-certificate">
+                                        <span class="solid">N.I.C. No.</span>
+                                        <div class="cnic">
+                                            <t t-foreach="result" t-as="cn">
+                                                <span t-esc="cn"></span>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Name of Establishment:</span>
+                                            <span class="liquid">Mr.Fabrics (PVT)LTD.</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Address:</span>
+                                            <span class="liquid">18 KM Ferozpur Road Nishtat Colony Lahore</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Signature &amp; Scale of Personal Manager :</span>
+                                            <span class="liquid"></span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-certificate">
+                                        <p>
+                                            <span class="solid">Date:</span>
+                                            <span class="liquid"></span>
+                                        </p>
+                                    </div>
+                                
+                                    <h3>MEDICAL EXAMINATION</h3>
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="solid">1.PHYSICALLY/MENTALLY:</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">FIT</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">UNFIT</span>
+                                        </p>
+                                    </div>
+
+                                    <br class="clearfloat"/>
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="solid">2.ANY H/O CRONIC AILMENT (if yes please speceify)</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">YES</span></p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">NO</span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="solid">3.TAKING ANY REGULAR MEDICINE</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">YES</span>
+                                        </p>
+                                    </div>
+
+                                    <div class="medical-exam">
+                                        <p class="no-margin">
+                                            <span class="liquid">NO</span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+
+                                    <p>
+                                        <span class="solid">AGE INMY OPINION:</span>
+                                        <span class="liquid"></span>
+                                    </p>
+
+                                    <p>
+                                        <strong>SIGNATURE OF THE APPLICANT</strong>
+                                    </p>
+
+                                    <div class="signature">
+                                        <p class="no-margin">
+                                            <strong>Dr. Shahid Nadeem</strong>
+                                        </p>
+
+                                        <p class="no-margin">
+                                            <strong>M.B.B.S(Pak)(MCPS)(Pb)</strong>
+                                        </p>
+
+                                        <p>
+                                            <strong>Signature &amp; Stamp</strong>
+                                        </p>
+
+                                        <p>
+                                            <span class="solid">Dated:</span>
+                                            <span class="liquid"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

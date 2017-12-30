@@ -26,13 +26,10 @@ class accessories(models.Model):
 	req_code = fields.Char(string="Req Code")
 	
 	accessories_stages = fields.Selection([
-		('draft', 'Draft'),
+		('draft', 'Open'),
 		('recieved', 'Received'),
 		('customer_approval', 'Customer Approval'),
-		('rejected', 'Rejected'),
-		('approved', 'Approved'),
 		('validate', 'Validate'),
-		('cancel', 'Cancel'),
 		],default='draft')
 
 	picking_type_id = fields.Many2one('stock.picking.type',string="Picking Type")
@@ -98,7 +95,32 @@ class accessories(models.Model):
 
 	@api.multi
 	def in_validate(self):
-		self.accessories_stages = "validate"
+		counter = 0
+
+		for x in self.tree_link:
+			if (x.recieved != x.qty and x.recieved != 0) or x.approved == 'no':
+				counter = counter + 1
+
+		if counter == 0:
+			self.create_stock_move()
+			self.accessories_stages = "validate"
+
+		else:
+			return {
+				'type': 'ir.actions.act_window',
+				'name': 'Confirm Backorder',
+				'res_model': 'accessories.wizard',
+				'view_type': 'form',
+				'view_mode': 'form',
+				'target' : 'new',
+				'context': {}
+			}
+
+	@api.multi
+	def in_cancel(self):
+		self.accessories_stages = "cancel"
+
+	def create_stock_move(self):
 
 		create_reorder = self.env['stock.picking'].create({
 			'partner_id': self.vendor.id,
@@ -111,21 +133,88 @@ class accessories(models.Model):
 		})
 
 		for x in self.tree_link:
-			create_variants = self.env['stock.move'].create({
-				'product_id': x.product.id,
-				'product_uom_qty': x.recieved,
-				'product_uom': x.unit_measurement.id,
-				'picking_id': create_reorder.id,
-				'location_id': create_reorder.location_id.id,
-				'name': x.product.name,
-				'location_dest_id': create_reorder.location_dest_id.id,
-			})
+			if x.approved == 'yes':
+				total_quant = 0
+
+				if x.recieved == 0:
+					total_quant = x.qty
+				else:
+					total_quant = x.recieved
+
+				create_variants = self.env['stock.move'].create({
+					'product_id': x.product.id,
+					'product_uom_qty': total_quant,
+					'product_uom': x.unit_measurement.id,
+					'picking_id': create_reorder.id,
+					'location_id': create_reorder.location_id.id,
+					'name': x.product.name,
+					'location_dest_id': create_reorder.location_dest_id.id,
+				})
 
 		self.delivery = create_reorder.id
 
+		create_reorder.action_assign()
+
+		stock = self.env['stock.picking'].search([('id','=',create_reorder.id)])
+
+		for x in stock.pack_operation_product_ids:
+			x.qty_done = x.product_qty
+
+		create_reorder.do_new_transfer()
+
+class yarn(models.Model):
+	_name = 'accessories.wizard'
+	
 	@api.multi
-	def in_cancel(self):
-		self.accessories_stages = "cancel"
+	def create_backorder(self):
+		active_class = self.env['purchase.accessories'].browse(self._context.get('active_ids'))
+		active_class.create_stock_move()
+
+		create_access = self.env['purchase.accessories'].create({
+			'wonumber': active_class.wonumber.id,
+			'style': 'kamran',
+			'date': active_class.date,
+			'merchant': active_class.merchant.id,
+			'vendor': active_class.vendor.id,
+			'warehouse': active_class.warehouse.id,
+			'destination_location': active_class.destination_location.id,
+			'source_location': active_class.source_location.id,
+			'delivery': active_class.delivery.id,
+			'customer': active_class.customer.id,
+			'delivery_date': active_class.delivery_date,
+			'seq_code': active_class.seq_code,
+			'req_code': active_class.req_code,
+			'picking_type_id': active_class.picking_type_id.id,
+			'access_po_num': active_class.access_po_num.id,
+		})
+
+		for x in active_class.tree_link:
+			if (x.recieved != x.qty and x.recieved != 0) or x.approved == 'no':
+				total_quant = 0
+
+				if x.approved == 'no':
+					total_quant = x.qty
+				else:
+					total_quant = x.qty - x.recieved
+
+				create_tree_variants = self.env['purchase.accessories.tree'].create({
+					'product' : x.product.id,
+					'unit_measurement' : x.unit_measurement.id,
+					'qty' : total_quant,
+					'tree': create_access.id
+				})
+
+		active_class.accessories_stages = "validate"
+
+	@api.multi
+	def no_backorder(self):
+		active_class = self.env['purchase.accessories'].browse(self._context.get('active_ids'))
+		active_class.create_stock_move()
+		active_class.accessories_stages = "validate"
+
+	@api.multi
+	def cancel(self):
+		print "----------------------------"
 
 class yarn(models.Model):
 	_name = 'purchase.yarn'
@@ -234,6 +323,11 @@ class accessories_tree(models.Model):
 	yarn_tree = fields.Many2one('purchase.yarn')
 	
 	remarks = fields.Char(string="Remarks")
+	
+	approved = fields.Selection([
+		('yes', 'Yes'),
+		('no', 'no'),
+		],default='yes',string="Approve")
 
 	@api.onchange('price','qty')
 	def sub_total_tree(self):
@@ -252,6 +346,7 @@ class YarnRequirement(models.Model):
 	won = fields.Many2many('mrp.production',string="Work Order No")
 	stage = fields.Selection([('draft', 'Draft'),('val', 'Validate'),('wait', 'Waiting for Approval'),('approve', 'Approved')],default = 'draft') 
 	tree_link = fields.One2many('yarn.requirement.tree','yarn_tree')
+	
 	@api.multi
 	def in_draft(self):
 		self.stage = "draft"
@@ -362,6 +457,36 @@ class PurchaseOrderExt(models.Model):
 	@api.one 
 	def act_show_accessories_deliveries(self):
 		self.purchase_recharge_count = self.env['purchase.accessories'].search_count([('access_po_num','=',self.id)])
+
+	@api.onchange('order_line')
+	def line_change(self):
+		total = 0
+		taxes = 0
+		for x in self.order_line:
+			total = total + x.price_subtotal
+			for tax in x.taxes_id:
+				taxed = (x.price_subtotal * tax.amount)/100
+				taxes = taxes + taxed
+
+		self.amount_untaxed = total
+		self.amount_tax = taxes
+
+		self.amount_total = self.amount_untaxed + self.amount_tax
+
+	@api.onchange('order_line2')
+	def line_change2(self):
+		total = 0
+		taxes = 0
+		for x in self.order_line2:
+			total = total + x.price_subtotal
+			for tax in x.taxes_id:
+				taxed = (x.price_subtotal * tax.amount)/100
+				taxes = taxes + taxed
+
+		self.amount_untaxed = total
+		self.amount_tax = taxes
+
+		self.amount_total = self.amount_untaxed + self.amount_tax
 
 class PurchaseOrderLineExt(models.Model):
 	_inherit = 'purchase.order.line'

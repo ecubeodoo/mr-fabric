@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_appointment" 
+            model="hr.employee"
+            name="appointment_letter.appointment_letter_report"
+            file="appointment_letter.appointment_letter_report"
+            report_type="qweb-html"
+            string="Appointment Letter"
+            menu="False"/> 
+
+        <record id="appointment_letter_wizard_form_view" model="ir.ui.view">
+            <field name="name">appointment_letter_wizard_form_view</field>
+            <field name="model">appointment.letter</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    
+                    <group name="group_top">
+
+                        <group name="group_left">
+
+                            <field name="employee"/>
+                            <field name="date"/>
+
+                        </group>
+
+                    </group>
+
+                    <footer>
+                        <button name="%(report_for_appointment)d" type="action" string="Print" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="appointment_letter_wizard_action" model="ir.actions.act_window">
+            <field name="name">Appointment Letter</field>
+            <field name="res_model">appointment.letter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="appointment_letter_wizard_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="appointment_letter_menu_item" name="Appointment Letter" action="appointment_letter_wizard_action" parent="confirmation_letter.hr_report_menu_item" />
+
+    </data>
+
+</openerp>

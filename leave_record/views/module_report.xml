@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="leave_rcrd">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                        <style>
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                                border: 1px solid;
+                            }
+                            .center-data p {
+                                font-size: 15px;
+                            }
+                            .solid {
+                                font-weight: bold;
+                                margin-right: 20px;
+                            }
+                            table, td, th {
+                                border: 1px solid;
+                                border-collapse: collapse;
+                                margin-top: 10px;
+                                text-align: center;
+                                padding: 5px;
+                                border-color: #F4F6F7;
+                                font-size: 15px;
+                            }
+                            table th {
+                                background-color: #A9A9A9
+                            }
+                            table td {
+                                background-color: #D3D3D3
+                            }
+                            table tr td:first-child,
+                            table tr th:first-child {
+                                max-width: 50px;
+                                width: 50px;
+                                min-width: 50px;
+                                text-align: left;
+                                padding-left: 5px;
+                            }
+                            h3 {
+                                text-align: center;
+                                border-bottom: 2px solid;
+                                border-color: #A9A9A9;
+                                padding: 5px;
+                            }
+                            .clearfloat {
+                                clear: both;
+                                float: none;
+                            }
+                            p {
+                                margin-left: 20px;
+                            }
+                        </style>
+                        <div class="main-data">
+                            <div class="center-data">
+                                <h3>LEAVES MONTH OF AUG 2017</h3>
+                                <p><span class="solid">DATE:</span><span class="liquid">26-AUG-17</span></p>
+                                <table width="100%">
+                                    <tr>
+                                        <th>SR#</th>
+                                        <th>CARD</th>
+                                        <th>NAME</th>
+                                        <th>DESIGNATION</th>
+                                        <th>DEPARTMENT</th>
+                                        <th>REMARKS</th>
+                                        <th>Leave apply</th>
+                                        <th>Absent</th>
+                                        <th>CPL</th>
+                                        <th>LEAVE BAL</th>
+                                        <th>App</th>
+                                        <th>Diff</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>8407</td>
+                                        <td>MUHAMMAD ASGAR</td>
+                                        <td>CHOWKIDAR</td>
+                                        <td>ADMIN SECUIRITY OFFICE STAFF</td>
+                                        <td>URGENT WORK</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>-</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>8407</td>
+                                        <td>MUHAMMAD ASGAR</td>
+                                        <td>CHOWKIDAR</td>
+                                        <td>ADMIN SECUIRITY OFFICE STAFF</td>
+                                        <td>URGENT WORK</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>-</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>8407</td>
+                                        <td>MUHAMMAD ASGAR</td>
+                                        <td>CHOWKIDAR</td>
+                                        <td>ADMIN SECUIRITY OFFICE STAFF</td>
+                                        <td>URGENT WORK</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>-</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>8407</td>
+                                        <td>MUHAMMAD ASGAR</td>
+                                        <td>CHOWKIDAR</td>
+                                        <td>ADMIN SECUIRITY OFFICE STAFF</td>
+                                        <td>URGENT WORK</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>-</td>
+                                        <td>4</td>
+                                        <td>2</td>
+                                        <td>0</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>  
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

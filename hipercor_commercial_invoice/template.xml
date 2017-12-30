@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_hipercor_report" 
+            model="account.invoice"
+            name="hipercor_commercial_invoice.hipercor_report"
+            file="hipercor_commercial_invoice.hipercor_report"
+            report_type="qweb-html"
+            string="Hipercor Commercial Invoice"/> 
+    </data>
+</openerp>

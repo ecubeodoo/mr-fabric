@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_employee_form" 
+            model="hr.employee"
+            name="employee_form.employee_form_report"
+            file="employee_form.employee_form_report"
+            report_type="qweb-html"
+            string="Employee Form"
+            menu="False"/> 
+
+        <record id="employee_form_wizard_form_view" model="ir.ui.view">
+            <field name="name">employee_form_wizard_form_view</field>
+            <field name="model">employee.form</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    
+                    <group name="group_top">
+
+                        <group name="group_left">
+
+                            <field name="employee"/>
+                            <field name="date"/>
+
+                        </group>
+
+                    </group>
+
+                    <footer>
+                        <button name="%(report_for_employee_form)d" type="action" string="Print" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_form_wizard_action" model="ir.actions.act_window">
+            <field name="name">Employee Form</field>
+            <field name="res_model">employee.form</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="employee_form_wizard_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="employee_form_menu_item" name="Employee Form" action="employee_form_wizard_action" parent="confirmation_letter.hr_report_menu_item" />
+
+    </data>
+
+</openerp>

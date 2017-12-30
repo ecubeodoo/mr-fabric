@@ -7,45 +7,149 @@
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="type">form</field>
         <field name="arch" type="xml">
+            <xpath expr="//form[1]" position="replace">
+            
+                <form string="Manufacturing Orders">
 
-            <xpath expr="//field[@name ='origin']" position="after">
+                    <header>
 
-                <field name="style_no"/>
-                <field name="destination"/>
-                <field name="buyer"  domain= "[('buyer','=','True')]" context="{'default_knitting':True}"/>
-                <field name="delivery"/>
+                        <button name="in_draft" type="object" string="Set to Draft" attrs="{'invisible': [('state', '!=', 'cancel')]}" class="oe_highlight"/>
 
+                        <button name="in_confirmed" type="object" string="Confirmed" attrs="{'invisible': [('state', '!=', 'draft')]}" class="oe_highlight"/>
+
+                        <button name="in_progress" type="object" string="In Progress" attrs="{'invisible': [('state', '!=', 'confirmed')]}" class="oe_highlight"/>
+
+                        <button name="in_done" type="object" string="Done" attrs="{'invisible': [('state', '!=', 'inprogress')]}" class="oe_highlight"/>
+
+                        <button name="in_cancel" type="object" string="Cancel" attrs="{'invisible': [('state', '=', 'cancel')]}"/>
+
+
+                        <field name="state" widget="statusbar"/>
+
+                    </header>
+
+                    <sheet>
+
+                        <field name="post_visible" invisible="1"/>
+                        <field name="unreserve_visible" invisible="1"/>
+                        
+                        <div class="oe_button_box" name="button_box">
+                            <button name="354" type="action" attrs="{'invisible': [('workorder_count', '=', 0)]}" class="oe_stat_button" icon="fa-play-circle-o">
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value"><field name="workorder_done_count" widget="statinfo" nolabel="1"/> / <field name="workorder_count" widget="statinfo" nolabel="1"/></span>
+                                    <span class="o_stat_text">Work Orders</span>
+                                </div>
+                            </button>
+                            <button name="350" type="action" string="Inventory Moves" class="oe_stat_button" icon="fa-arrows-v" attrs="{'invisible': [('state', 'not in', ('inprogress', 'cancel', 'done'))]}"/>
+                            <button class="oe_stat_button" name="action_see_move_scrap" type="object" icon="fa-arrows-v" attrs="{'invisible': [('scrap_count', '=', 0)]}">
+                                <div class="o_form_field o_stat_info">
+                                    <span class="o_stat_value"><field name="scrap_count"/></span>
+                                    <span class="o_stat_text">Scraps</span>
+                                </div>
+                            </button>
+                            <field name="workorder_ids" invisible="1"/>
+                        </div>
+
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Manufacturing Reference" nolabel="1"/></h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="has_moves" invisible="1"/>
+                                <field name="check_to_done" invisible="1"/>
+                                <field name="plan_qty"/>
+                                <field name="order_name"/>
+                                <field name="product_id" attrs="{'readonly': [('has_moves', '=', True)]}" domain="[('bom_ids', '!=', False)]"/>
+                                <field name="custome_po"/>
+                                <field name="vessal"/>
+                                <field name="week"/>
+                                <field name="product_tmpl_id" invisible="1"/>
+                                
+                                <label for="product_qty"/>
+                                
+                                <div class="o_row">
+
+                                    <field name="product_qty" attrs="{'readonly': [('has_moves', '=', True)]}"/>
+                                    
+                                    <field name="product_uom_id" attrs="{'readonly': [('has_moves', '=', True)]}"/>
+
+                                    <button type="action" name="347" string="Update" class="oe_link" attrs="{'invisible': [('state','!=','draft')]}"/>
+                                </div>
+                                
+                                <field name="bom_id" domain="['&amp;', '|',('product_id','=',product_id),'&amp;',('product_tmpl_id.product_variant_ids','=',product_id),('product_id','=',False),('type', '=', 'normal')]" context="{'default_product_tmpl_id': product_tmpl_id}" required="1" attrs="{'readonly': [('has_moves', '=', True)]}"/>
+
+                                <field name="routing_id" groups="mrp.group_mrp_routings"/>
+                            </group>
+
+                            <group>
+                                <field name="date_planned_start"/>
+                                <field name="date_planned_finished" invisible="1"/>
+                                <field name="user_id"/>
+                                <field name="origin"/>
+                                <field name="style_no"/>
+                                <field name="destination"/>
+                                <field name="buyer"  domain= "[('buyer','=','True')]" context="{'default_knitting':True}"/>
+                                <field name="delivery"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" attrs="{'readonly': [('has_moves', '=', True)]}"/>
+                            </group>
+
+                        </group>
+
+                        <group>
+
+                            <field name="remarks"/>
+
+                        </group>
+
+                        <notebook>
+
+                            <page string='Accessories'>
+
+                                <field name="production_id" nolabel='1'>
+                                    <tree  editable="bottom">
+
+                                        <field name="accessories" domain="[('ttype', '=', 'accessories')]"/>
+                                        <field name="uom"/>
+                                        <field name="factor"/>
+                                        <field name="required_quantity"/>
+                                        <field name="source"/>
+                                        <field name="purchased"/>
+                                        <field name="in_stock"/>
+                                        <field name="issued"/>
+                                        <field name="remaining"/>
+                                    </tree>
+                                </field>
+
+                                <group name="group_top">
+                                    <button name="validate_tree" type="object" string="Validate" />
+                                </group>
+                                               
+                            </page>
+
+                        </notebook>
+
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+                </form>
+            
             </xpath>
+            
+        </field> 
+    </record>
 
-            <xpath expr="//field[@name ='bom_id']" position="after">
+    <record id="work_order_form_view_extension2" model="ir.ui.view"> 
+        <field name="name">work_order_form_view_extension2</field> 
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="work_order_form_view_extension"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
 
-                <field name="custome_po"/>
-                <field name="vessal"/>
-                <field name="week"/>
-
-            </xpath>
-
-            <xpath expr="//field[@name ='bom_id']" position="before">
-
-                <field name="plan_qty"/>
-
-            </xpath>
-
-            <xpath expr="//field[@name ='product_id']" position="before">
-
-                <field name="order_name"/>
-
-            </xpath>
-
-            <xpath expr="//group[1]" position="after">
-
-                <group>
-
-                    <field name="remarks"/>
-
-                </group>
-
-            </xpath>
 
             <xpath expr="//field[@name='product_id']" position="attributes">
                 <attribute name="string">Garment Description</attribute>
@@ -56,36 +160,6 @@
             </xpath>
 
         </field> 
-    </record>
-
-    <record id="view_Accessories_tree" model="ir.ui.view">
-        <field name="name">view_Accessories_tree</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
-        <field name="arch" type="xml">
-            <xpath expr="//page[3]" position='after'>
-                <page string='Accessories'>
-                    <field name="production_id" nolabel='1'>
-                        <tree  editable="bottom">
-
-                            <field name="accessories" domain="[('ttype', '=', 'accessories')]"/>
-                            <field name="uom"/>
-                            <field name="factor"/>
-                            <field name="required_quantity"/>
-                            <field name="source"/>
-                            <field name="purchased"/>
-                            <field name="in_stock"/>
-                            <field name="issued"/>
-                            <field name="remaining"/>
-                        </tree>
-                    </field>
-                    <group name="group_top">
-                        <button name="validate_tree" type="object" string="Validate" />
-                    </group>
-                                   
-                </page>
-            </xpath>
-        </field>
     </record>
 
 </odoo> 

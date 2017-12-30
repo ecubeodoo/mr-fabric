@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_bank_letter"
+            model="hr.employee"
+            name="bank_letter.bank_letter_report"
+            file="bank_letter.bank_letter_report"
+            report_type="qweb-html"
+            string="Bank Letter"
+            menu="False"/> 
+
+        <record id="bank_letter_wizard_form_view" model="ir.ui.view">
+            <field name="name">bank_letter_wizard_form_view</field>
+            <field name="model">bank.letter</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    
+                    <group name="group_top">
+
+                        <group name="group_left">
+
+                            <field name="bank"/>
+                            <field name="authority_letter"/>
+
+                        </group>
+
+                        <group name="group_right">
+
+                            <field name="branch_code"/>
+                            <field name="cheque_no"/>
+
+                        </group>
+
+                    </group>
+                    
+                    <group name="group_bottom">
+
+                        <group name="group_left">
+
+                            <field name="date_from"/>
+
+                        </group>
+
+                        <group name="group_right">
+
+                            <field name="date_to"/>
+
+                        </group>
+
+                    </group>
+
+                    <field name="bank_tree">
+                        <tree editable="bottom">
+                            <field name="employee" domain= "[('bank.id','=',parent.bank)]"/>
+                            <field name="card_no" />
+                            <field name="bank" />
+                            <field name="account" />
+                        </tree>
+                    </field>
+                    <footer>
+                        <button name="%(report_for_bank_letter)d" type="action" string="Print" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="bank_letter_wizard_action" model="ir.actions.act_window">
+            <field name="name">Bank Letter</field>
+            <field name="res_model">bank.letter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="bank_letter_wizard_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bank_letter_menu_item" name="Bank Letter" action="bank_letter_wizard_action" parent="confirmation_letter.hr_report_menu_item" />
+
+    </data>
+
+</openerp>

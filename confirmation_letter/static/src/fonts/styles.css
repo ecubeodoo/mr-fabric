@@ -1,0 +1,9 @@
+@font-face {
+	font-family: 'NafeesNastaleeq';
+	src: url('NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+		url('NafeesNastaleeq.woff') format('woff'), 
+		url('NafeesNastaleeq.ttf')  format('truetype'), 
+		url('NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}

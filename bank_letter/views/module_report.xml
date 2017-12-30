@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="bank_letter_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                @media (min-width: 992px) {
+                                    .container {
+                                        width: 100%;
+                                    }
+                                }
+                                @media (min-width: 768px) {}
+                                    .container {
+                                        width: 100%;
+                                    }
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 50px auto 0px;
+                                    padding: 20px 10px;
+                                    border: 2px solid;
+                                    border-color: #A9A9A9;
+                                }
+                                .center-data p {
+                                    font-size: 15px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin-right: 20px;
+                                }
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    margin-top: 10px;
+                                    text-align: center;
+                                    padding: 8px;
+                                    font-size: 15px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                p {
+                                    margin-left: 20px;
+                                }
+                                .branch {
+                                    width: 25%;
+                                    float: left;
+                                }
+                                .branch_heads {
+                                    width: 18%;
+                                }
+                                .branch_heads p {
+                                    font-weight: bold;
+                                }
+                                .branch_codes p {
+                                    text-decoration: underline;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="branch branch_heads">
+                                        <p>BRACH CODE</p>
+                                        <p>TR DATE</p>
+                                        <p>PARTY A/C NO</p>
+                                        <p>TOTAL AMOUNT</p>
+                                        <p>CHEQUE NO</p>
+                                        <p>AUTHORITY LETTER NO</p>
+                                    </div>
+                                    <div class="branch branch_codes">
+                                        <p><span t-esc="branch_code"></span></p>
+                                        <p> - </p>
+                                        <p> - </p>
+                                        <p> - </p>
+                                        <p><span t-esc="cheque_no"></span></p>
+                                        <p><span t-esc="authority_letter"></span></p>
+                                    </div>
+                                    <br class="clearfloat" />
+                                    <table width="100%">
+                                        <tr>
+                                            <th>Sr No</th>
+                                            <th>Account No</th>
+                                            <th>Title</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                        <t t-set="sr_no" t-value="1" />
+                                        <t t-foreach="bank_tree" t-as="data">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="sr_no"></span>
+                                                    <t t-set="sr_no" t-value="sr_no + 1" />
+                                                </td>
+                                                <td><span t-esc="data.account"></span></td>
+                                                <td><span t-esc="data.employee.name"></span></td>
+                                                <td>0</td>
+                                            </tr>
+                                        </t>
+                                        <tr>
+                                            <td>EOF</td>
+                                            <td colspan="2">TOTAL</td>
+                                            <td>0</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="report_for_promotion_form" 
+            model="promotion.transfer"
+            name="promotion_form.promotion_form_report"
+            file="promotion_form.promotion_form_report"
+            report_type="qweb-html"
+            string="Promotion Form"/> 
+    </data>
+</odoo>

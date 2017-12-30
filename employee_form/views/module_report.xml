@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="employee_form_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                @font-face {
+                                    font-family: 'NafeesNastaleeq';
+                                    src: url('/employee_form/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                        url('/employee_form/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                        url('/employee_form/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                        url('/employee_form/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                                font-weight: normal;
+                                font-style: normal;
+                                }
+                                .main-data {
+                                    font-family: 'NafeesNastaleeq', serif;
+                                }
+                                h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                    line-height: 2.5;
+                                }
+                                @media (min-width: 992px)
+                                .container {
+                                    width: 100%;
+                                }
+
+                                @media (min-width: 768px)
+                                .container {
+                                    width: 100%;
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    border-bottom: 2px solid;
+                                    border-color: #A9A9A9;
+                                    padding: 5px;
+                                    margin-bottom: 15px;
+                                    padding-bottom: 15px;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .center-data p {
+                                    font-size: 15px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                }
+                                .body p {
+                                    margin-right: 8px;
+                                }
+                                table, th, td {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    padding: 8px;
+                                    text-align: center;
+                                }
+                                h3 {
+                                    text-align: center;
+                                    padding: 10px;
+                                    font-size: 40px;
+                                }
+                                h2 {
+                                    text-align: center;
+                                }
+                                .oath {
+                                    border-bottom: 2px solid;
+                                    font-weight: bold;
+                                    font-size: 18px;
+                                    margin-right: 8px;
+                                    margin-bottom: 25px;
+                                    padding-bottom: 20px;
+                                }
+                                .clearfloat {
+                                    width: 100%;
+                                    height: 1px;
+                                    display: block;
+                                    clear: both;
+                                    float: none;
+                                }
+                                .employees {
+                                    text-align: right;
+                                    padding: 10px;
+                                    float: right;
+                                }
+                                .employees p {
+                                    padding: 10px;
+                                    font-size: 20px;
+                                    text-align: right;
+                                }
+                                .name-employee {
+                                    width: 100%;
+                                }
+                                .name-employee p{
+                                    padding: 15px;
+                                    font-size: 20px;
+                                }
+                                .bar-one .job-app {
+                                    width: 33%;
+                                    float: left;
+                                }
+                                .bar-one .job-app .solid {
+                                    width: 28%;
+                                    display: inline-block;
+                                    margin: 0px 0px 0px 10px;
+                                    text-align: left;
+                                }
+                                .bar-one .job-app .liquid {
+                                    width: 65%;
+                                    display: inline-block;
+                                    border-bottom: 1px solid #000;
+                                    margin: 0px 0px 0px 3%;
+                                }
+                                .bar-one .job-app:nth-child(3) .solid {
+                                    text-align: right;
+                                }
+                                .tower .job-app {
+                                    width: 50%;
+                                    float: left;
+                                }
+                                .tower .job-app .solid {
+                                    width: 28%;
+                                    display: inline-block;
+                                    margin: 0px 0px 0px 10px;
+                                    text-align: left;
+                                }
+                                .tower .job-app .liquid {
+                                    width: 65%;
+                                    display: inline-block;
+                                    border-bottom: 1px solid #000;
+                                    margin: 0px 0px 0px 3%;
+                                }
+                                .bar-one .job-app:first-child .solid {
+                                    text-align: right;
+                                }
+                                .tower .job-app:nth-child(2) .solid {
+                                    text-align: right;
+                                    width: 20%;
+                                }
+                                .tower .job-app:nth-child(2) .liquid {
+                                    width: 73%;
+                                }
+                                .fullers {
+                                    width: 100%;
+                                }
+                                .fullers .solid,
+                                .fullers .liquid{
+                                    display: inline-block;
+                                }
+                                .fullers .liquid {
+                                    border-bottom: 1px solid #000;
+                                }
+                                .fullers_01 .solid {
+                                    width: 90px;
+                                }
+                                .fullers_01 .liquid {
+                                    width: 900px;
+                                }
+                                .fullers_02 .solid {
+                                    width: 270px;
+                                }
+                                .fullers_02 .liquid {
+                                    width: 720px;
+                                }
+                                .fullers_03 .solid {
+                                    width: 335px;
+                                }
+                                .fullers_03 .liquid {
+                                    width: 655px;
+                                }
+                                .fullers_04 .solid {
+                                    width: 300px;
+                                }
+                                .fullers_04 .liquid {
+                                    width: 690px;
+                                }
+                                .fullers_05 .solid {
+                                    width: 180px;
+                                }
+                                .fullers_05 .liquid {
+                                    width: 810px;
+                                }
+                                .fullers_06 .solid {
+                                    width: 90px;
+                                }
+                                .fullers_06 .liquid {
+                                    width: 900px;
+                                }
+                                .liquid {
+                                    text-align: center;
+                                }
+                                .tower {
+                                    width: 100%;
+                                    float: left;
+                                }
+                                .report-footer .liquid {
+                                    width: 20%;
+                                    border-bottom: 1px solid #000;
+                                    display: inline-block;
+                                }
+                                .job-app {
+                                    text-align: right;
+                                }
+                                .portions {
+                                    width: 50%;
+                                    float: right;
+                                    display: block;
+                                    text-align: right;
+                                }
+                                .portions:nth-child(2) {
+                                    text-align: left;
+                                }
+                                .portions .liquid {
+                                    width: 200px;
+                                }
+                                .report-footer .solid,
+                                .report-footer .liquid {
+                                    padding: 10px 0px 0px;
+                                    display: inline-block;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+
+                                    <div class="heading">
+                                        <h2 class="no-margin english">Mr. FABRICS (PVT) LTD</h2>
+                                        <p class="no-margin english">(Atta Baksh Road) Ferozepur Road</p>
+                                        <p class="no-margin"> درخواست برائے حصول   ملازمت</p>
+                                    </div>
+
+                                    <div class="bar-one">
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"></span>
+                                                <span class="solid">:تاریخ درخواست </span>
+                                            </p>
+                                        </div>
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"><span t-esc="o.job_id.name"></span></span>
+                                                <span class="solid"> :( براے  عہدہ )</span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"></span>
+                                                <span class="solid">:نمبر شمار </span>
+                                            </p>
+                                        </div>
+                                        <br class="clearfloat" />
+                                    </div>
+
+                                    <div class="tower">
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"><span t-esc="o.fname"></span></span>
+                                                <span class="solid">  :ولدیت</span>
+                                            </p>
+                                        </div>
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"><span t-esc="o.name"></span></span>
+                                                <span class="solid"> :مکمل نام</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="tower">
+
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"></span>
+                                                <span class="solid">:پیشہ والد  </span>
+                                            </p>
+                                        </div>
+                                        
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"><span t-esc="o.birthday"></span></span>
+                                                <span class="solid"> :عمر و تاریخ پیدائش</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="tower">
+
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"><span t-esc="o.qualification"></span></span>
+                                                <span class="solid"> :تعلیمی قا بلیت </span>
+                                            </p>
+                                        </div>
+
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid" style="width: 68%"><span t-esc="o.cnic"></span></span>
+                                                <span class="solid" style="width: 25%"> :قومی شناختی کارڈ نمبر  </span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="job-app fullers fullers_06">
+                                        <p>
+                                            <span class="liquid"><span t-esc="o.contact_address"></span></span>
+                                            <span class="solid">:موجودہ سکونت</span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    
+                                    <div class="job-app fullers fullers_01">
+                                        <p>
+                                            <span class="liquid"></span>
+                                            <span class="solid">:مستقل سکونت</span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    
+                                    <div class="job-app fullers fullers_02">
+                                        <p>
+                                        
+                                            <span class="liquid">
+                                                <span t-esc="o.reff_name"></span> 
+                                                <span t-esc="o.reff_city"></span>
+                                            </span>
+
+                                            <span class="solid">  نام  وپتہ  معز زین  شہر  :جو درخواست دہندہ کو جا نتے ہیں</span>
+                                        
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    
+                                    <div class="job-app fullers fullers_03">
+                                        <p>
+                                            <span class="liquid"></span>
+                                            <span class="solid"> ادارہ ہذا میں سابقہ ملا :زمت کی تفصیل اور وجو ہات تر ک ملازمت</span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    
+                                    <div class="job-app fullers fullers_04">
+                                        <p>
+                                            <span class="liquid"></span>
+                                            <span class="solid">  ادارہ ہذا  رشتہ داران سائل جو ادارہ ہذا میں کام  کر رہے ہیں: </span>
+                                        </p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    
+                                    <div class="job-app fullers fullers_05">
+                                        <p>
+                                            <span class="liquid"></span>
+                                            <span class="solid"> :اگر کوئی ضامن ہو تو  ان کا نام و پتہ </span>
+                                        </p>
+                                    </div>
+                                    
+                                    <h3> تجربہ</h3>
+                                    <table width="100%">
+                                        <tr>
+                                            <th>نمبر شمار </th>
+                                            <th> پتہ سابقہ ملازمت</th>
+                                            <th> جگہ/شہر</th>
+                                            <th>عہدہ</th>
+                                            <th> تنخواہ</th>
+                                            <th>مدت ملازمت</th>
+                                            <th>تاریخ علیحدگی </th>
+                                            <th>  ترک ملازمت کی وجوہات</th>
+                                        </tr>
+                                        <t t-set="sr_no" t-value="1" />
+                                        <t t-foreach="o.experience_tree" t-as="data">
+                                            <tr>
+                                                <td>
+                                                    <span t-esc="sr_no"></span>
+                                                    <t t-set="sr_no" t-value="sr_no + 1" />
+                                                </td>
+                                                <td><span t-esc="data.comany_name"></span></td>
+                                                <td><span t-esc="data.city"></span></td>
+                                                <td><span t-esc="data.designation"></span></td>
+                                                <td><span t-esc="data.salary"></span></td>
+                                                <td><span t-esc="data.job_period"></span></td>
+                                                <td><span t-esc="data.dor"></span></td>
+                                                <td><span t-esc="data.resignation_reason"></span></td>
+                                            </tr>
+                                        </t>
+                                    </table>
+
+                                    <div class="oath">
+
+                                        <p><strong style="font-size: 20px;"> حلفیہ بیان</strong> میں اقرار کرتا/کرتی ہوں کہ جو کوائف میں نے درج کیے ہیں وہ میرے علم کے مطا بق درست ہیں اور میں نے کوئی بات پوشید ہ نہیں رکھی مزید یہ کہ اگر کمپنی کو کسی غلط بیانی کا علم ہو جائے  تو کمپنی مجھے بلا عذر حیل وحجت ملازمت سے علیحدہ کرنے کی مجاذ ہو گی نیز میں کمپنی کے جملہ احکام اور قوانین کا پابند رہنے کا وعدہ کرتا /کرتی ہوں</p>
+
+                                    </div>
+
+                                    <div class="report-footer">
+                                        <div class="job-app">
+                                            <p>
+                                                <span class="liquid"></span> 
+                                                <span class="solid"> آج مور خہ   </span> 
+                                                <span class="liquid" t-esc="o.job_id.name"></span> 
+                                                <span class="solid">  کو بطور </span> 
+
+                                                <span class="liquid"></span> 
+                                                <span class="solid" style="width: 40px;">درکھاتہ</span> 
+
+                                                <span class="liquid"></span> 
+                                                <span class="solid">  برائے  </span> 
+
+                                                <span class="liquid" t-esc="salary(o)"></span> 
+                                                <span class="solid"> ماہانہ/یو میہ مشاہرہ مبلع </span> 
+
+                                                <span class="liquid"></span> 
+                                                <span class="solid">  روپے پر عارضی/مستقل/آزمائشی طور پر منتخب کر کے </span> 
+
+                                                <span class="liquid" t-esc="o.card_no.name"></span> 
+                                                <span class="solid">  کارڈ نمبر   </span> 
+
+                                                <span class="liquid"></span> 
+                                                <span class="solid">جا ری کیا گیا</span> 
+                                            </p>
+                                            <p>
+
+                                                <span class="portions">
+                                                    <span class="liquid"></span> 
+                                                    <span class="solid">دستخط متعلقہ ملازم</span>
+                                                </span> 
+
+                                                <span class="portions">
+                                                    <span class="liquid"></span> 
+                                                    <span class="solid">دستخط افسر مجاز</span> 
+                                                </span>
+                                            </p>
+
+                                            <h2>شرائط ملازمت  برائے ملازمین </h2>
+                                        </div>
+
+                                        <div class="employees">
+                                            <p>میں جملہ شرائط ملازمت کا پابند رہوں گا</p>
+                                            <p>میں ملازمت چھوڈنے سے پہلے  کمپنی کو حسب قاعدہ  مجوزہ نوٹس دونگا یا اس کے عوض اتنی رقم ادا کروں گا۔</p>
+                                            <p>اگر دوران ملازمت میں بلا اجازت گیا رہ دن تک متواتر غیر حاضر رہوں گاتو یہ سمجھا جائے گا میں ملازمت ترک کر چکا ہوں ایسی صورت میں کمپنی مجازہو گی کہ میرا نام مسطر رول سے خارج کر دے اور نوٹس پے کی رقوم میرے جملہ واجبات سے وضع کر لیوے مجھے کوئی عذر نہ ہو گا۔</p>
+                                            <p>میری غیر مستقلی کی صورت میں کسی وقت بھی کمپنی سے علیحدہ کرنے کی مجاذ ہو گی اور میں اس کے عوض تنخواہ کا مستحق نہیں ہوں گا۔</p>
+                                            <p>ملازمت سے علیحدگی کے فورأ بعد  اگر میرے قبضے میں کمپنی کی املاک  ہوں  گی جو میرے فرائض کی انجام دہی کے سلسلے میں  کمپنی نے عطا کی ہوں وہ بلا تاخیر حوالہ کمپنی کر دوں گا کہ میرے خلاف مناسب کاروائی کرے جس کہ حربہ وخرچہ کا میں ذمہ دار ہوں گا۔</p>
+                                            <p>اگر کسی وقت یہ قرار پایا جائے میں نے غلط وقعات بیان کر کے  ملازمت حاصل کی ہے  تو کمپنی کو یہ اختیار ہو گا کہ وہ نوٹس دیئے بغیر  مجھے ملازمت سے علیحدہ کر دے مجھے کوئی عذر نہ ہو گا۔</p>
+                                            <p>میں دوران ملازمت  اپنا کام اور فرائض  جو مجھے تفویض کیے گئے  ہیں  وقتأ فوقتأ  تفویض کیے جایئں گےپوری دیانت داری ہو شیاری محنت اور پابندی سے ادا کروں گا اور کسی تخریبی سرگرمی میں حصہ نہ لوں گا اور خلاف ورزی کی صورت میں ملازمت سے برطرفی کاحقدار ہوں گا</p>
+                                            <p>دوران ملازمت  ضرورت کے تحت کمپنی مجھے  پاکستان  میں اپنے کسی بھی ادارے  یا منصبے میں ٹرانسفر کرنے کی مجاز ہو گی</p>
+                                        </div>
+
+                                        <div class="name-employee">
+                                            <p>___________________:نام ملازم</p>
+                                            <p>______________:دستخط مع تاریخ</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>
