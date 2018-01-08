@@ -1,0 +1,76 @@
+<openerp>
+    <data>
+        <!-- Ecube Bio Raw Attendance Form View -->
+        <record id="ecube_bio_raw_attendance_form_view" model="ir.ui.view">
+            <field name="name">ecube_bio_raw_attendance_form_view</field>
+            <field name="model">ecube.raw.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Raw Attendance Form">
+                    <header> 
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1 style="width:50%;">
+                                <field name="name" placeholder="Erp Name"/>
+                            </h1>
+                        </div>
+                        <group name="group_left">
+                            <group name="group_top">
+                                <field name="employee_id"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="attendance_date"/>
+                                <!-- <field name="machine_name"/> -->
+                                <field name="machine_id" />
+                                <field name="department"/>
+                                <field name="date"/>
+                                <field name="time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_filter_ecube_raw_attendanceh" model="ir.ui.view"> 
+            <field name="name">view_filter_ecube_raw_attendanceh</field> 
+            <field name="model">ecube.raw.attendance</field> 
+            <field name="arch" type="xml"> 
+                <search> 
+                           <field name="employee_id" string="Employee"/>
+                            <field name="machine_id" string ="Card No" />
+                     <field name="department" string= "Department"/>
+                </search> 
+            </field> 
+        </record>
+        <!-- Ecube Bio Raw Attendance Tree View -->
+        <record id="ecube_bio_raw_attendance_tree_view" model="ir.ui.view">
+            <field name="name">ecube_bio_raw_attendance_tree_view</field>
+            <field name="model">ecube.raw.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Raw Attendance Tree">
+                    <field name="machine_id"/>
+                    <field name="employee_id"/>
+                    <field name="department"/>
+                    <!-- <field name="machine_name"/> -->
+                    <field name="attendance_date"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Ecube Bio Raw Attendance Action -->
+        <record id="action_ecube_bio_raw_attendance" model="ir.actions.act_window">
+            <field name="name">Raw Attendance</field>
+            <field name="res_model">ecube.raw.attendance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    You have'nt created any record yet.
+                </p>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem
+                id="ecube_bio_raw_attendance"
+                name="Raw Attendance"
+                parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                action="action_ecube_bio_raw_attendance"
+                sequence="1000"
+                />
+<!--         <menuitem
+                id="ecube_bio_machine"
+                name="Bio Machines"
+                parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                action="action_ecube_bio_machine"
+                sequence="1001"
+                /> -->
+        <menuitem
+                id="ecube_bio_machine_attendence_error"
+                name="Machines Attendance Error"
+                parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                action="bio_machine_attendence_error"
+                sequence="1002"
+                />
+
+        <menuitem
+                id="ecube_machine_info_menu"
+                name="Machines Info"
+                parent="hr_attendance.menu_hr_attendance_manage_attendances"
+                action="ecube_machine_info_menu_action"
+                sequence="1003"
+                />
+    </data>
+</odoo>

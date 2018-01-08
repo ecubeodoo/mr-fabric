@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="card_hygiene">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            h3 {
+                                text-align: center;
+                            }
+                            .center-data p {
+                                text-align: center;
+                            }
+                            table, td, th {
+                                border: 1px solid #000;
+                                border-collapse: collapse;
+                                text-align: center;
+                                margin: 20px 0px 20px 0px;
+                                padding: 8px;
+                            }
+                            .last_one tr td {
+                                color: #FFF;
+                            }
+                            table tr td:first-child,
+                            table tr th:first-child {
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+                            table tr td:nth-child(2),
+                            table tr th:nth-child(2){
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+
+                            table tr td:nth-child(3),
+                            table tr th:nth-child(3){
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+
+
+                            table tr td:last-child,
+                            table tr th:last-child{
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+                        </style>
+
+                        <div class="main-data">
+                            <div class="center-data">
+                                <h3>MR.FABRICS(PVT) LTD</h3>
+                                <p>FORM F.I.(RULE 47(1)}</p>
+                                <p><strong>HYGIENE CARD</strong></p>
+                                <table width="100%">
+                                    <tr>
+                                        <td>Card#</td>
+                                        <td><span t-esc="o.card_no.name"></span></td>
+                                        <td>Designation</td>
+                                        <td><span t-esc="o.job_id.name"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Name of Worker</td>
+                                        <td><span t-esc="o.name"></span></td>
+                                        <td>Father's Name</td>
+                                        <td><span t-esc="o.fname"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code number of worker</td>
+                                        <td><span t-esc="o.card_no.name"></span></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <table width="100%" class="last_one">
+                                    <tr>
+                                        <th>Date of Examination</th>
+                                        <th>Whether free form contagious disease or not</th>
+                                        <th>Remarks,brief description of disease in case it is detected</th>
+                                        <th>Thumb impression or worker,s sign</th>
+                                        <th>Signature of Doctor</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td></td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

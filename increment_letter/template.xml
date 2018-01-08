@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="letter_increment_report" 
+            model="employee.increment"
+            name="increment_letter.letter_increment"
+            file="increment_letter.letter_increment"
+            report_type="qweb-html"
+            string="Increment Letter"/> 
+    </data>
+</odoo>
+
+<!-- commercial.packing.list -->

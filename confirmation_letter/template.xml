@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_confirmation" 
+            model="hr.employee"
+            name="confirmation_letter.confirmation_report"
+            file="confirmation_letter.confirmation_report"
+            report_type="qweb-html"
+            string="Confirmation Letter"
+            menu="False"/> 
+
+        <record id="confirmation_letter_wizard" model="ir.ui.view">
+            <field name="name">confirmation_letter_wizard</field>
+            <field name="model">confirmation.letter</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Report">
+                    
+                    <group name="group_top">
+
+                        <group name="group_left">
+
+                            <field name="card_no"/>
+                            <field name="employee"/>
+                            <field name="date"/>
+
+                        </group>
+
+                    </group>
+
+                    <footer>
+                        <button name="%(report_for_confirmation)d" type="action" string="Print" class="oe_highlight"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="confirmation_letter_wizard_action" model="ir.actions.act_window">
+            <field name="name">Confirmation Letter</field>
+            <field name="res_model">confirmation.letter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="confirmation_letter_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="hr_report_menu_item" name="Reports" parent="hr.menu_hr_root" sequence="100" />
+
+        <menuitem id="confirmation_menu_item" name="Confirmation Letter" action="confirmation_letter_wizard_action" parent="confirmation_letter.hr_report_menu_item" />
+
+    </data>
+
+</openerp>

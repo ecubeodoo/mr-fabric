@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_gatepass" 
+            model="hr.employee"
+            name="employee_gatepass.gatepass_report"
+            file="employee_gatepass.gatepass_report"
+            report_type="qweb-html"
+            string="Employee Gatepass"/> 
+    </data>
+</openerp>

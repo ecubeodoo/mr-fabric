@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="promotion_form_report">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            @font-face {
+                                font-family: 'NafeesNastaleeq';
+                                src: url('/promotion_form/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                    url('/promotion_form/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                    url('/promotion_form/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                    url('/promotion_form/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                                font-weight: normal;
+                                font-style: normal;
+                            }
+                            .main-data {
+                                font-family: 'NafeesNastaleeq', serif;
+                            }
+                            h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                line-height: 2.5;
+                            }
+                            @media (min-width: 992px)
+                            .container {
+                                width: 100%;
+                            }
+
+                            @media (min-width: 768px)
+                            .container {
+                                width: 100%;
+                            }
+                            .container {
+                                width: 100%;
+                            }
+                            .center-data h3.english {
+                                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                            }
+                            body {
+                                margin: 0px !important;
+                            }
+                            body.o_in_iframe {
+                                margin-top: 0px!important;
+                            }
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            .employees {
+                                width: 50%;
+                                float: left;
+                            }
+                            .solid {
+                                font-weight: bold;
+                                margin-left: 10px;
+                            }
+                            table, td, th {
+                                border: 1px solid;
+                                border-collapse: collapse;
+                                padding-left: 10px;
+                                padding: 5px;
+                            }
+
+                            table tr td:first-child,
+                            table tr th:first-child {
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                                font-weight: bold;
+                            }
+                            table tr td:nth-child(2),
+                            table tr th:nth-child(2){
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+                            table tr td:nth-child(3),
+                            table tr th:nth-child(3){
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                                font-weight: bold;
+                            }
+                            table tr td:last-child,
+                            table tr th:last-child{
+                                max-width: 200px;
+                                width: 200px;
+                                min-width: 200px;
+                            }
+                            .heading {
+                                text-align: center;
+                            }
+                            .no-margin {
+                                margin-top: 0px;
+                                margin-right: 0px;
+                            }
+                            .department {
+                                width: 25%;
+                                float: left;
+                                text-align: center;
+                                margin-top: 50px;
+                                border-top: 1px solid;
+                                font-weight: bold;
+                            }
+                            .urdu {
+                                text-align: right;
+                                padding-right: 10px;
+                            }
+                            table tr td p {
+                                margin: 0px;
+                                line-height: 1.5;
+                            }
+                        </style>
+
+                        <div class="main-data">
+                            <div class="center-data">
+                                <div class="heading">
+                                    <h3>MR.Fabrics (Pvt) Ltd.</h3>
+                                    <p><strong>Promotion Form /Transfer Form</strong></p>
+                                    <p><strong>پرموشن / ٹرانسفر فارم </strong></p>
+                                </div>
+                                <div class="employees">
+                                <p><span class="solid">Section-1:</span><span class="liquid">Employee's Information</span></p>
+                            </div>
+                            <div class="employees">
+                                <p>
+                                    <span class="solid">Dated:</span>
+                                    <span class="liquid" t-esc="o.date"></span>
+                                </p>
+                            </div>
+                            <table width="100%">
+                                <tr>
+                                    <td><p>Employees Card#</p><p class="urdu"> ورکر کارڑ نمبر</p></td>
+                                    <td colspan="3"><span t-esc="o.employee_card.name"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Employees Name:</p>
+                                        <p class="urdu"> ورکر کا نام</p>
+                                    </td>
+                                    <td colspan="3"><span t-esc="o.employee_card.name"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Current Designation</p>
+                                        <p class="urdu"> موجود ہ پتہ </p>
+                                    </td>
+                                    <td><span t-esc="o.current_designation.name"></span></td>
+                                    <td><p>Proposed Designation </p><p class="urdu">  تجویز کردہ عہدہ</p></td>
+                                    <td><span t-esc="o.proposed_designation.name"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Current Department</p> 
+                                        <p class="urdu"> موجو دہ کھاتہ</p> 
+                                    </td>
+                                    <td><span t-esc="o.current_department.name"></span></td>
+                                    <td>
+                                        <p>Proposed Department</p> 
+                                        <p class="urdu">تجویز کردہ  کھاتہ</p> 
+                                    </td>
+                                    <td><span t-esc="o.proposed_department.name"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Current Salary</p>
+                                        <p class="urdu">موجووددہ تننخواہ</p>
+                                    </td>
+                                    
+                                    <td><span t-esc="o.current_salary"></span></td>
+                                    <td>
+                                        <p>Proposed Salary</p> 
+                                        <p class="urdu">بھرتی تننخواہ</p>
+                                    </td>
+                                    
+                                    <td><span t-esc="o.proposed_salary"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Date of Joining</p> 
+                                        <p class="urdu">بھرتی تاریخ</p>
+                                    </td>
+                                    <td><span t-esc="o.doj"></span></td>
+                                    
+                                    <td>
+                                        <p>Effected date of Promotion</p> 
+                                        <p class="urdu">موثر  ہونے کی تاریخ</p> 
+                                    </td>
+                                    <td><span t-esc="o.edp"></span></td>
+                                </tr>
+                            </table>
+                            <p><span class="solid">Section-11:</span><span class="liquid">Leit/Replacement employee's detail</span></p>
+                            <table width="100%">
+                            
+                                <tr>
+                                    <td>
+                                        <p>Employees Card# </p>
+                                        <p class="urdu">ورکر کارڑ نمبر</p>
+                                    </td>
+                                    <td><span t-esc="o.employee_card_replace.name"></span></td>
+                                    
+                                    <td>
+                                        <p>Salary</p>
+                                        <p class="urdu"> تننخواہ</p> 
+                                    </td>
+                                    <td><span t-esc="o.salary_replace"></span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>Employees Name:</p> 
+                                        <p class="urdu">ورکر کا نام</p>
+                                    </td>
+                                    <td><span t-esc="o.employee_name_replace"></span></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Department</p> 
+                                        <p class="urdu"> کھاتہ</p>
+                                    </td>
+                                    <td><span t-esc="o.department_replace.name"></span></td>
+                                    <td>
+                                        <p>Designation</p>
+                                        <p class="urdu">  عہدہ </p>
+                                    </td>
+                                    <td><span t-esc="o.designation_replace.name"></span></td>
+                                </tr>
+                            </table>
+                            <div class="department">
+                                <p class="no-margin">Signature of employee</p>
+                            </div>
+                            <div class="department">
+                                <p class="no-margin">Department Manager</p>
+                            </div>
+                            <div class="department">
+                                <p class="no-margin">Admin Manager </p>
+                            </div>
+                            <div class="department">
+                                <p class="no-margin">General Manager</p>
+                            </div>
+                            <div class="department">
+                                <p class="no-margin">Approved/Not/Approved by HR</p>
+                            </div>
+                            </div>
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

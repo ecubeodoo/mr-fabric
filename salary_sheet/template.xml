@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+
+            id="report_for_salary_sheet" 
+            model="hr.payslip"
+            name="salary_sheet.salary_sheet"
+            file="salary_sheet.salary_sheet"
+            report_type="qweb-html"
+            string="Salary Sheet"
+            menu="False"/>
+    </data>
+
+    <record id="salary_sheet_wizard" model="ir.ui.view">
+        <field name="name">salary_sheet_wizard</field>
+        <field name="model">ecube.salary.sheet</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Report">
+
+                <group name="group_top">
+
+                    <p>This wizard will print report which display a pay head employee breakup for a specified dates.</p>
+
+                </group>
+
+                <group name="group_top">
+
+                    <group name="group_right">
+                        <field name="form"/>
+                    </group>
+
+                    <group name="group_left">
+                        <field name="to"/>
+                    </group>
+
+                </group>
+
+                <group name="group_bottom">
+                    <field name="tree_link" nolabel="1" domain="[('date_from', '&gt;=', form),('date_to', '&lt;=', to)]"/>
+                </group>
+
+                <footer>
+                    <button name="%(report_for_salary_sheet)d" type="action" string="Print" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ecube_action_salary_sheet" model="ir.actions.act_window">
+        <field name="name">Salary Sheets</field>
+        <field name="res_model">ecube.salary.sheet</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="salary_sheet_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="ecube_action_salary_sheet" id="salary_sheet_menu_item" name="Salary Sheet" parent="hr_payroll.menu_hr_payslip_run" sequence="2" />
+    
+</odoo>

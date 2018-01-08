@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="confirmation_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                @font-face {
+                                    font-family: 'NafeesNastaleeq';
+                                    src: url('/confirmation_letter/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                        url('/confirmation_letter/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                        url('/confirmation_letter/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                        url('/confirmation_letter/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                                    font-weight: normal;
+                                    font-style: normal;
+                                }
+                                .main-data {
+                                    font-family: 'NafeesNastaleeq', serif;
+                                }
+                                h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                    line-height: 2.5;
+                                }
+                                @media (min-width: 992px)
+                                .container {
+                                    width: 100%;
+                                }
+
+                                @media (min-width: 768px)
+                                .container {
+                                    width: 100%;
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .center-data h3.english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                h1 {
+                                    text-align: center;
+                                    margin-top: 0px;
+                                }
+                                .confirmation-letter {
+                                    width: 33%;
+                                    float: right;
+                                    text-align: right;
+                                }
+                                .confirmation-letter .solid {
+                                    width: 26%;
+                                    text-align: left;
+                                    margin: 0px 0px 0px 3%;;
+                                }
+                                .confirmation-letter .liquid {
+                                    width: 65%;
+                                    border-bottom: 1px solid #000;
+                                    text-align: center;
+                                    margin: 0px 0px 0px 5%;
+                                }
+                                .liquid {
+                                    width: 160px;
+                                    display: inline-block;
+                                    border-bottom: 1px solid #000;
+                                    text-align: center;
+                                    margin: 0px 10px 0px 10px;
+                                }
+                                .confirmation-letter .solid,
+                                .confirmation-letter .liquid {
+                                    display: inline-block;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    font-weight: bold;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                .mr-fabrics {
+                                    text-align: right;
+                                    font-weight: bold;
+                                    font-size: 20px;
+                                }
+                                p {
+                                    font-size: 18px;
+                                }
+                            </style>
+                            
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="heading">
+                                        <h1>مسٹر فیبرکس پرایئو ٹ لمیٹڈ</h1>
+                                        <p style="font-size: 20px;"> کنفر میشن لیٹر</p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p><span class="liquid" t-esc="o.name"></span>
+                                        <span class="solid">:نام ورکر</span></p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p>
+                                            <span class="liquid" t-esc="o.fname"></span>
+                                            <span class="solid">:ولد</span>
+                                        </p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p><span class="liquid"><span t-esc="o.card_no.name"></span></span>
+                                        <span class="solid">:کھاتہ</span></p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p><span class="liquid"><span t-esc="o.doj"></span></span>
+                                        <span class="solid">:تاریخ بھرتی</span></p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p><span class="liquid"><span t-esc="o.confirmation_date"></span></span>
+                                        <span class="solid">:تاریخ مستتقلی</span></p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    <div class="mr-fabrics">
+                                        <p>ہ آپ کو آزمائشی مدت کی  تکمیل پر آپ کو آج مورخہ <span class="liquid"><span t-esc="o.confirmation_date"></span></span>سے مستقل  کیاجاتا ہے اورامیدکی جاتی ہےآپ آئندہ بھی محنت،لگن اور ایمانداری سے اپنے فرائض انجام دیتےرہیں گے۔ </p>
+                                    </div>
+                                    <div class="confirmation-letter">
+                                        <p><span class="liquid"></span>
+                                        <span class="solid">:دستخط ورکر</span></p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    <div class="confirmation-letter" style="float: left; margin: 40px 0px 40px 0px;">
+                                        <p><span class="liquid"></span>
+                                        <span class="solid"> ایڈمن مینیجر</span></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <report
+            id="report_for_orientation" 
+            model="hr.payslip"
+            name="salary_slip.salary_slip_report"
+            file="salary_slip.salary_slip_report"
+            report_type="qweb-html"
+            string="Salary Slip"/> 
+    </data>
+</odoo>

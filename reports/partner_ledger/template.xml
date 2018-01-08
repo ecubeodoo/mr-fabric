@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="ledger_partnered" 
+            model="hr.employee"
+            name="partner_ledger.ledger_partner"
+            file="partner_ledger.ledger_partner"
+            report_type="qweb-html"
+            string="Partner Ledger"/> 
+    </data>
+</openerp>

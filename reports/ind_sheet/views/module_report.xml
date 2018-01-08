@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="ind_timesheet">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+                        <style>
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            .solid {
+                                font-weight: bold;
+                                margin-right: 10px;
+                            }
+                            .employee-code {
+                                width: 47%;
+                                float: left;
+                                margin-top: 30px;
+                                margin-bottom: 30px;
+                                margin-left: 20px;
+                            }
+                            .employee-code p {
+                                padding: 8px;
+                            }
+                            table, td, th {
+                                border: 1px solid;
+                                border-collapse: collapse;
+                                padding: 8px;
+                                text-align: center;
+                            }
+                            .no-margin {
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                            }
+                            .total-hours {
+                                margin-top: 20px;
+                                margin-bottom: 20px;
+                                border: 1px double;
+                                height: 40px;
+                            }
+                            .total-hours .solid{
+                                width: 50%;
+                                float: left;
+
+                            }
+                            .total-hours .liquid {
+                                width: 40%;
+                                float: right;
+                            }
+                            .total-hours p {
+                                margin: 10px 0px 10px 0px;
+                            }
+                            .over-time {
+                                width: 31%;
+                                float: left;
+                                margin-left: 15px;
+                            }
+                            .clearfloat {
+                                clear: both;
+                                float: none;
+                            }
+                            .signature {
+                                width: 18%;
+                                float: right;
+                                border-top: 1px solid;
+                                text-align: center;
+                                
+                            }
+                        </style>
+                        <div class="main-data">
+            <div class="center-data">
+                <h3 class="no-margin" style="margin-left: 20px;">MR.FABRICS(PVT) Ltd.</h3>
+                <p class="no-margin" style="margin-left: 20px;"><strong>Individual Time Sheet</strong></p>
+                <div class="employee-code">
+                    <p class="no-margin"><span class="solid">Employee code:</span><span class="iliquid">6605</span></p>
+                    <p class="no-margin"><span class="solid">Name:</span><span class="iliquid">SHOAIB AKRAM</span></p>
+                    <p class="no-margin"><span class="solid">Designation:</span><span class="iliquid">ASSIST, INCHARGE</span></p>
+                    <p class="no-margin"><span class="solid">Date:</span><span class="iliquid">29-Sep-2017 to 29-Sep-2017</span></p>
+                </div>
+                <div class="employee-code">
+                    <p class="no-margin"><span class="solid">Category:</span><span class="iliquid">ADMIN</span></p>
+                    <p class="no-margin"><span class="solid">Department:</span><span class="iliquid">ADMIN</span></p>
+                    <p class="no-margin"><span class="solid">Type:</span><span class="iliquid">Contractual</span></p>
+                </div>
+                <table width="100%">
+                    <tr>
+                        <th>Detein</th>
+                        <th>Day</th>
+                        <th>Timein</th>
+                        <th>DateOut</th>
+                        <th>TimeOut</th>
+                        <th>LateArrival</th>
+                        <th>Early Department</th>
+                        <th>Work Hours</th>
+                        <th>Overtime</th>
+                        <th>BreakHours</th>
+                        <th>Remarks</th>
+                    </tr>
+                    <tr>
+                        <td>9/29/2017</td>
+                        <td>FRIDAY</td>
+                        <td>09:09</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                        <td>02:00</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <div class="total-hours" style="text-align: center;">
+                    <p class="no-margin"><span class="solid">Total Hours</span><span class="iliquid">00:00:00</span></p>
+                </div>
+                <div class="over-time">
+                    <p><span class="solid">Ontime</span><span class="liquid"></span>1</p>
+                    <p><span class="solid">Early Department</span><span class="liquid">0</span></p>
+                    <p><span class="solid">Late Arrival</span><span class="liquid">0</span></p>
+                    <p><span class="solid">Gazetted holidays</span><span class="liquid">0</span></p>
+                </div>
+                <div class="over-time">
+                    <p><span class="solid">Total present</span><span class="liquid">1</span></p>
+                    <p><span class="solid">Physical Present</span><span class="liquid">1</span></p>
+                    <p><span class="solid">OffDays</span><span class="liquid"></span>0</p>
+                    <p><span class="solid">Absent</span><span class="liquid"></span>0</p>
+                </div>
+                <div class="over-time">
+                    <p><span class="solid">Casual Leave</span><span class="liquid">0</span></p>
+                    <p><span class="solid">Sick Leave</span><span class="liquid">0</span></p>
+                    <p><span class="solid">Annual Leave</span><span class="liquid">0</span></p>
+                    <p><span class="solid">Other Leave</span><span class="liquid">0</span></p>
+                </div>
+                <br class="clearfloat"/>
+                <p class="signature"><strong>Signature Authority</strong></p>
+            </div>
+                        </div>
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

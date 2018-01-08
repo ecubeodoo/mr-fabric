@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="report_for_pacific" 
+            model="account.invoice"
+            name="pacific_commercial_invoice.pacific_report"
+            file="pacific_commercial_invoice.pacific_report"
+            report_type="qweb-html"
+            string="Pacific Commercial Invoice"/> 
+    </data>
+</openerp>

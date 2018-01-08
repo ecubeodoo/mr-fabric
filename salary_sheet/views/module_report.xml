@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="salary_sheet">
+
+            <t t-call="report.html_container">
+
+                <t t-call="report.external_layout">
+
+                    <div class="page" style="font-size: 7pt;">
+                        
+                        <h2>MR Fabrics (PVT) LTD.</h2>
+                        <p>(Atta Baksh Road) Ferozpur Road Lahore</p>
+
+                        <h2 class="heading">Salary Sheet For <t t-esc="date_getter()"></t> </h2>
+
+                        <style>
+                            @media (min-width: 1200px) {
+                                .container {
+                                   width: 100%;
+                                }
+                            }
+                            @media (min-width: 992px) {
+                                .container {
+                                   width: 100%;
+                                }
+                            }
+                            @media (min-width: 768px) {
+                                .container {
+                                   width: 100%;
+                                }
+                            }
+                            .container {
+                               width: 100%;
+                            }
+                            table {
+                                width: 100%;
+                                min-width: 100%;
+                                max-width: 100%;
+                            }
+                            table tr th,
+                            .total-row {
+                                background: #ccc;
+                            }
+                            table tr th,
+                            table tr td {
+                                text-align: center;
+                                vertical-align: middle !important;
+                                padding: 5px !important;
+                            }
+                            table tr th.namer {
+                                min-width: 135px;
+                            }
+                            table tr td.namer {
+                                text-align: left;
+                            }
+                            table tr th,
+                            table tr td {
+                                min-width: 35px;   
+                            }
+                            address {
+                                display: none;
+                            }
+                            h1,h2 {
+                                font-size: 20px !important;
+                            }
+                            h2 {
+                                margin: 15px 0px 0px;
+                                text-align: center;
+                            }
+                            p {
+                                font-size: 14px;
+                                margin: 0px 0px 25px;
+                                text-align: center;
+                            }
+                            .heading {
+                                text-align: center;
+                                text-decoration: underline;
+                                margin: 0px 0px 15px 0px;
+                            }
+                            .dasher {
+                                display: block;
+                                text-align: center;
+                            }
+                            .total-row td {
+                                font-weight: bold;
+                            }
+                            .departmental {
+                                font-size: 11px;
+                                font-weight: bold;
+                                background: #EEE;
+                            }
+                            .totaled {
+                                background: #E1E1E1;
+                            }
+                        </style>
+
+                        <t t-set="rules_size" t-value="0" />
+                        <t t-foreach="rules" t-as="a">
+                            <t t-set="rules_size" t-value="rules_size + 1" />
+                        </t>
+
+                        <t t-set="total_size" t-value="rules_size + 5" />
+
+                        <table class="table table-condensed table-bordered">
+
+                            <tr style="border: 1px solid grey;">
+                                <th>Sr No.</th>
+                                <th class="namer">Card No.</th>
+                                <th class="namer">Name</th>
+                                <th>Designation</th>
+                                <t t-foreach="rules" t-as="rule">
+                                    <th><span t-esc="rule.name"></span></th>
+                                </t>
+                                <th>Bank Account Detail</th>
+                            </tr>
+
+                            <t t-set="sr_no" t-value="1" />
+                            <t t-set="total_of_basic" t-value="0" />
+                            <t t-set="total_of_net" t-value="0" />
+                            <t t-set="total_of_gross" t-value="0" />
+
+                            <t t-foreach="docs" t-as="rec">
+                                <tr>
+                                    <td t-att-colspan="total_size" class="departmental">
+                                        <span t-esc="rec.name"></span>
+                                    </td>
+                                </tr>
+
+                                <span t-esc="collect_records(rec)"></span>
+                                <t t-set="depart_basic" t-value="0" />
+                                <t t-set="depart_net" t-value="0" />
+                                <t t-set="depart_gross" t-value="0" />
+
+                                <t t-foreach="employee" t-as="o">
+                                    <tr>
+
+                                        <td>
+                                            <span t-esc="sr_no"></span>
+                                            <t t-set="sr_no" t-value="sr_no + 1" />
+                                        </td>
+
+                                        <td class="namer">
+                                            <span t-esc="o.employee_id.card_no.name"></span>
+                                        </td>
+
+                                        <td class="namer">
+                                            <span t-esc="o.employee_id.name"></span>
+                                        </td>
+
+                                        <td>
+                                            <span t-esc="o.employee_id.job_id.name"></span>
+                                        </td>
+
+                                        <t t-foreach="rules" t-as="rule">
+                                            <td>
+
+                                                <t t-set="value" t-value="get_amount(o,rule.code)" />
+                                                
+                                                <t t-if="value == 0">
+                                                    <span class="dasher"> - </span>
+                                                </t>
+
+                                                <t t-if="value > 0">
+                                                    <span t-esc="'{:0,}'.format(int(float(value)))"></span>
+                                                </t>
+
+                                            </td>
+                                        </t>
+                                        <td><span t-esc="o.employee_id.bank_account_id"></span></td>
+                                    </tr>
+                                </t>
+                                
+                                <tr class="totaled">
+                                    <td colspan="3">Total</td>
+                                    <td><span t-esc="'{:0,}'.format(int(float(depart_basic)))"></span></td>
+
+                                    <t t-foreach="rules" t-as="rule">
+                                        <td><span t-esc="'{:0,}'.format(int(float(depart_totale(rule.code))))"></span></td>
+                                    </t>
+
+                                    <td> - </td>
+                                </tr>
+                            </t>
+
+                            <tr class="total-row">
+                                <td colspan="3">Grand Total</td>
+                                <td><span t-esc="'{:0,}'.format(int(float(total_of_basic)))"></span></td>
+
+                                <t t-foreach="rules" t-as="rule">
+                                    <td><span t-esc="'{:0,}'.format(int(float(totaled(rule.code))))"></span></td>
+                                </t>
+
+                                <td> - </td>
+                            </tr>
+
+                        </table>         
+                    </div>
+
+                </t>
+                
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

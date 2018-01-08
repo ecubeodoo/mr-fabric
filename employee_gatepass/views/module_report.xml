@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="gatepass_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                @font-face {
+                                  font-family: 'NotoNastaliqUrdu';
+                                  src: url('/employee_gatepass/static/src/fonts/NotoNastaliqUrdu.eot?#iefix') format('embedded-opentype'),  
+                                       url('/employee_gatepass/static/src/fonts/NotoNastaliqUrdu.woff') format('woff'), 
+                                       url('/employee_gatepass/static/src/fonts/NotoNastaliqUrdu.ttf')  format('truetype'), 
+                                       url('/employee_gatepass/static/src/fonts/NotoNastaliqUrdu.svg#NotoNastaliqUrdu') format('svg');
+                                  font-weight: normal;
+                                  font-style: normal;
+                                }
+                                .main-data {
+                                    font-family: 'NotoNastaliqUrdu', serif;
+                                }
+                                @media (min-width: 992px)
+                                .container {
+                                    width: 100%;
+                                }
+
+                                @media (min-width: 768px)
+                                .container {
+                                    width: 100%;
+                                }
+                                .container {
+                                    width: 100%;
+                                }
+                                .center-data h3.english {
+                                    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                                }
+                                body {
+                                    margin: 0px !important;
+                                }
+                                body.o_in_iframe {
+                                    margin-top: 0px!important;
+                                }
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .center-data h3 {
+                                    text-align: center;
+                                }
+                                .center-data {
+                                    font-size: 18px;
+                                }
+                                .temporary {
+                                    width: 100%;
+                                }
+                                .employee {
+                                    width: 33%;
+                                    float: right;
+                                }
+                                .solid {
+                                    font-weight: normal;
+                                }
+                                .company_worker {
+                                    text-align: center;
+                                }
+                                .company_worker {
+
+                                }
+                                .i-d-card {
+                                    text-align: right;
+                                }
+                                .clearfloat {
+                                    float: none;
+                                    clear: both;
+                                }
+                                .employee p span.liquid {
+                                    display: inline-block;
+                                    width: 70%;
+                                    border-bottom: 1px solid #000;
+                                    margin: 0px 5px 0px 0px;
+                                }
+                                .employee p span.solid {
+                                    width: 25%;
+                                    display: inline-block;
+                                }
+                                .employee p span.solid.long {
+                                    width: 100%;
+                                    text-align: right;
+                                    padding: 0px 15px 0px 0px;
+                                }
+                                .i-d-card p span.solid {
+                                    display: inline-block;
+                                }
+                                .i-d-card p span.liquid {
+                                    display: inline-block;
+                                    width: 30%;
+                                    border-bottom: 1px solid #000;
+                                }
+                                .wrapper {
+                                    width: 100%;
+                                    float: left;
+                                    margin: 15px 0px;
+                                }
+                            </style>
+                            
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <h3 class="english">Employee Temporary Gatepass</h3>
+                                    <h3>عارضی گیٹ پاس براۓ ورکرذ</h3>
+                                    <div class="temporary">
+                                        
+                                        <div class="wrapper">
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:نام</span>
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:کهاته</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:عهده</span>
+                                                </p>
+                                            </div>
+                                        </div><!--End of wrapper-->
+                                        
+                                        <div class="wrapper">
+                                        
+                                            <div class="company_worker">
+                                                <p>
+                                                    <span class="solid">مندرجه بالا ورکر کو فیکٹری میں کام کرنے کے لیے بلايا گیا ھے لھذا اس ورکر کو فیکٹری میں    </span>
+                                                </p>
+                                            </div>
+                                        </div><!--End of wrapper-->
+                                        
+                                        <div class="wrapper">
+                                        
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:اذمورخه</span>
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:تامورخه</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="employee">
+                                                <p>
+                                                    <span class="solid long">-تک کام کرنۓ کی اجاذت دی جاۓ</span>
+                                                </p>
+                                            </div>
+                                        </div><!--End of wrapper-->
+                                        
+                                        <div class="wrapper">
+                                        
+                                            <div class="i-d-card">
+                                                <p>
+                                                    <span class="liquid"> </span>
+                                                    <span class="solid">:شناختی کارڈ نمبر</span>
+                                                </p>
+                                            </div>
+                                        </div><!--End of wrapper-->
+                                        
+                                        <div class="wrapper">
+                                        
+                                            <div class="i-d-card">
+                                                <p>
+                                                    <span class="liquid"> </span>
+                                                    <span class="solid">:دستخط ڈیپارٹمنٹ ھیڈ/انچارج </span>
+                                                </p>
+                                            </div>
+
+                                        </div><!--End of wrapper-->
+                                        
+                                        <div class="wrapper">
+
+                                            <div class="i-d-card" style="text-align: left; border-bottom: 1px dashed;" >
+                                                <p>
+                                                    <span class="liquid"></span>
+                                                    <span class="solid">:دستخط  مینیجر ایچ آراینڈ ایڈمن</span>
+                                                </p>
+                                            </div>
+                                            
+                                        </div><!--End of wrapper-->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="training_report">
+
+        <t t-call="report.html_container">
+            <t t-call="report.external_layout">
+                <t t-foreach="docs" t-as="o">
+
+                    <div class="page">
+
+                        <style>
+                            @font-face {
+                                font-family: 'NafeesNastaleeq';
+                                src: url('/orientation_training/static/src/fonts/NafeesNastaleeq.eot?#iefix') format('embedded-opentype'),  
+                                    url('/orientation_training/static/src/fonts/NafeesNastaleeq.woff') format('woff'), 
+                                    url('/orientation_training/static/src/fonts/NafeesNastaleeq.ttf')  format('truetype'), 
+                                    url('/orientation_training/static/src/fonts/NafeesNastaleeq.svg#NafeesNastaleeq') format('svg');
+                                font-weight: normal;
+                                font-style: normal;
+                            }
+                            .main-data {
+                                font-family: 'NafeesNastaleeq', serif;
+                            }
+                            h1,h2,h3,h4,h5,h6,span,p,li,a,span {
+                                line-height: 2.5;
+                            }
+                            @media (min-width: 992px)
+                            .container {
+                                width: 100%;
+                            }
+
+                            @media (min-width: 768px)
+                            .container {
+                                width: 100%;
+                            }
+                            .container {
+                                width: 100%;
+                            }
+                            .english {
+                                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                            }
+                            body {
+                                margin: 0px !important;
+                            }
+                            body.o_in_iframe {
+                                margin-top: 0px!important;
+                            }
+                            .main-data {
+                                width: 100%;
+                            }
+                            .center-data {
+                                width: 1000px;
+                                margin: 0px auto;
+                            }
+                            .heading {
+                                text-align: center;
+                                border-bottom: 2px solid;
+                                border-color: #A9A9A9;
+                                padding: 5px;
+                                font-weight: bold;
+                                text-align: center;
+                            }
+                            .no-margin {
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                            }
+                            .center-data p {
+                                font-size: 20px;
+                            }
+                            .solid {
+                                font-weight: bold;
+                                margin-right: 20px;
+                            }
+
+                            .no-margin {
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                            }
+                            .liquid {
+                                text-align: right;
+                                float: right;
+                                margin-left: 20px;
+                            }
+
+                            .job-app {
+                                width: 45%;
+                                float: right;
+                                float: right;
+                                font-weight: bold;
+                                text-align: right;
+                            }
+                            .job-app p {
+                                text-align: right;
+                            }
+                            .code-no {
+                                width: 23%;
+                                float: right;
+                                padding: 10px;
+                            }
+                            .report-footer .code-no {
+                                text-align: left;
+                            }
+                            .report-footer .liquid {
+                                float: none;
+                                display: inline-block;
+                                min-width: 115px;
+                                border-bottom: 1px solid #000;
+                                font-size: 14px;
+                            }
+                            .report-footer .solid {
+                                float: right;
+                                margin: 0px;
+                            }
+                            .lower-footer .liquid {
+                                float: none;
+                            }
+                        </style>
+
+                        <div class="main-data">
+                            <div class="center-data">
+                                <div class="heading">
+                                    <h2>مسٹر فیبرکس( پرائیویٹ )لمیٹڈ </h2>
+                                    <p class="no-margin">(ORIENTATION TRANING) ٹریننگ برائے ابتدائی آ گہی ۔</p>
+                                    
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid"></span><span class="solid">مسٹر فیبرکس( پرائیویٹ )لمیٹڈ  </span><br></br>
+                                    انتظامیہ آپ کو فیکٹری میں خوش آمدید کہتی ہے۔اور امید کرتے ہیں کہ آپ فیکٹری کیلئے انتہائی محنت اور ایمانداری  سے اپنی ذمہ داریاں نبھائیں گے ۔ فیکٹری میں مندرجہ ذیل امور کو ذہئن میں رکھنا ہے اور ہمیشہ قوادو ضوابط  خیال رکھنا ہے۔</p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-1</span><span class="solid">آپ کا انتخاب جس پوزیشن /پوسٹ کے لیے ہوا ہے آپ کو اس کے تمام قواعدو ضوابط  تحریری طور پر تقرری نامہ ، معاہدہ نامہ کی صورت میں دیا جائے گا ۔اس میں دستخط کریں اور کاپی اپنے پاس محفوظ رکھیں ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-2</span><span class="solid">فیکٹری میں آپ اپنی شفٹ کے مطابق کام کریں گے اور آپ کو ہفتہ وار چھٹی اتوار کو ہو گی۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-3</span><span class="solid">ایک کیلنڈر سال میں کل۱۰ اتفاقیہ اور ۸ بیماری کی چھٹیاں کی جا سکتی ہیں  او ر غیر مستعمل چھٹیاں  اگلے سال میں منتقل نہیں ہوتیں نیز ملازمت مکمل ہونے پر  ۱۴ سالانہ چھٹیاں بھی دی جاتی ہیں  جو زیادہ سے زیادہ ۲۸ یوم ( دوسال تک) جمع کی جا سکتی ہیں ۔اسکے علاوہ گورنمنٹ کی اعلان کردہ تہواری چھٹیاں بھی دی جائیں گی۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-4</span><span class="solid">آپ کو فیکٹری کی جانب سے شناختی کارڈ مہیا کیا گیا ہے  جسے آپ ہر وقت اپنے پاس رکھیں گے ۔اور کام کے دوران اپنی قمیض پر نمایاں 
+                                    جگہ پر آویزاں رکھیں گے۔ نیز کارڈ گم ہونے کی صورت میں فوری طور پر ایڈمن/ سکیورٹی افسر کو مطلع کرں گے ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-5</span><span class="solid">فیکٹری میں کام کے دوران  آپ اپنے اردگرد کے حالات وواقعات پر بھر پور نگاہ رکھیں گے  اور کسی بھی مشکوک حرکت یا واقعہ کی اطلاع  فورأ اپنے (ایچ  ۔او  ۔ ڈی ) ایڈمن مینیجر کو دیں ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-6</span><span class="solid">کسی بھی ساتھی ورکر  کی مشکوک حرکات  کا فوری نوٹس لیں  اور اپنے(  ایچ۔او۔ڈی) اور ایڈمن مینیجر کو اطلاع دیں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid"></span><span class="solid">کے تحت مندرجہ ذیل باتوں کا خیال رکھیں۔SESUIRITY AWAIRNESS PROGRAMME</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-1</span><span class="solid">سٹور روم، پیکنگ اور کنٹینر لوڈنگ میں کام کرنے والے  ورکرز اور ملازمین ہی جاسکتے ہیں ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-2</span><span class="solid">کسی  ملازم کو غیر ضروری سامان گھر سے لانے کی اجازت نہیں ہے۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-3</span><span class="solid">اپنے تمام زیر استعمال آلات (قینچی / کلپر وغیرہ) ہمیشہ محفوظ طریقے سے  باندھ کر رکھیں ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-4</span><span class="solid">فیکٹری سے جانے والا کارگو / کنٹینر امانت ہے اور اس کی حفاظت کریں  اور ہر مشکوک بات کی فوری اطلاع کریں ۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-5</span><span class="solid">فیکٹری میں ملازمت کے دوران  معلوم ہونے والی معلومات کو ہر گز کسی سے شیئر نہ کریں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-6</span><span class="solid">ہر طرح کی مشکوک ، غیر متعلقہ یا انجان چیز کی اطلاع فورأاپنے (ایچ۔او۔ڈی)اورایڈمن مینیجرکو دیں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-7</span><span class="solid">کمپیوٹر/ فیکس/ای میل اور دیگر ذرائع  جو کہ فیکٹری میں ملازمت کے دوران آپ کےزیر استعمال  ان کی مکمل حفاظت آپ پر لازم ہے۔ نیز  کسی بھی قسم کی معلومات کا باہر تبادلہ ممنوع ہے۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-8</span><span class="solid"> ڈیو ٹی کے دوران ہر قسم غیر معمو لی حرکت جس میں فیکٹری کی سکیورٹی کو خطرہ ہو سکتا ہو( ٹوٹی ہوئی دیوار، تالا،دروازہ،سیڑھی یا سرنگ یا راستہ اور خراب یا خستہ حالت کی کھڑ کی وغیرہ) کی اطلاع فورأ اپنے (ایچ۔او۔ڈی)سکیورٹی آفیسر اور ایڈمن مینیجر کو دیں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid"></span><span class="solid">:ہنگامی صورتحال میں ورکر کی ذمہ داری </span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-1</span><span class="solid">آگ لگنے کی صورت میں الارم بجائیں ،تمام مشینیں اور برقی آلات بند کریں ،ہنگامی اخراج کے راستوں سے گزرتے ہوئے  اسمبلی ایریا میں  پہنچ جایئں اور حاضری لگوائیں</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-2</span><span class="solid">ہنگامی  نمبروں پر اطلاع دیں اور تربیت یافتہ ورکر آگ بجھانے کی کوشش کریں اور آگ پھیلنے کی صورت میں اسمبلی ایریا میں رپورٹ کریں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-3</span><span class="solid"> کیمیکل مشین یا کسی اور حادثہ کی صورت میں  چوٹ لگنے کی صورت میں  بھی فیکٹری کے ہنگامی نمبروں پر اطلاع کریں۔</span><br></br>
+                                    </p>
+                                </div>
+                                <div class="job-app" style="width: 100%">
+                                    <p class="no-margin"><span class="liquid">-4</span><span class="solid">ابتدائی طبی امداد  کے تر بیت یافتہ واکر  طبی امداد دیں  جبکہ دیگر اپنی مشین پر اگلی ہدائیت کے ملنے تک انتیظار کریں اور زخمی ورکر کے اردگرد جمع نہ ہوں۔</span><br></br>
+                                    </p>
+                                </div>
+
+                                <div class="report-footer">
+                                    <div class="code-no">
+                                        <p class="no-margin">
+                                            <span class="solid">:کوڈنمبر</span>
+                                            <span class="liquid" t-esc="o.employee_card.name"></span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+
+                                    <div class="code-no">
+                                        <p class="no-margin">
+                                            <span class="solid">:نام کارکن</span>
+                                            <span class="liquid" t-esc="o.employee_name"></span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+
+                                    <div class="code-no">
+                                        <p class="no-margin">
+                                            <span class="solid">:عہدہ</span>
+                                            <span class="liquid" t-esc="o.designation.name"></span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+
+                                    <div class="code-no">
+                                        <p class="no-margin">
+                                            <span class="solid">:ڈیپارٹمنٹ</span>
+                                            <span class="liquid" t-esc="o.department.name"></span>
+                                        <br></br>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="lower-footer">
+                                    <div class="code-no" style="width:47%">
+                                        <p class="no-margin">
+                                            <span class="liquid">__________________________</span>
+                                            <span class="solid">:دستخط کارکن</span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+
+                                    <div class="code-no" style="width:47%">
+                                        <p class="no-margin">
+                                            <span class="liquid">__________________________</span>
+                                            <span class="solid">:دستخط ایچ آر مینیجر</span>
+                                            <br></br>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div><!--end of page-->
+                </t>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

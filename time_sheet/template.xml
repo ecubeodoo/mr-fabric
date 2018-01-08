@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="individual_time" 
+            model="hr.employee"
+            name="time_sheet.ind_time"
+            file="time_sheet.ind_time"
+            report_type="qweb-html"
+            string="Time"/> 
+    </data>
+</openerp>

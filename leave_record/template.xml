@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="leave_record" 
+            model="hr.employee"
+            name="leave_record.leave_rcrd"
+            file="leave_record.leave_rcrd"
+            report_type="qweb-html"
+            string="Leave Record"/> 
+    </data>
+</openerp>

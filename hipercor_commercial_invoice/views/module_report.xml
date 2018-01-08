@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>   
+
+        <template id="hipercor_report">
+
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+                            <style>
+                                .main-data {
+                                    width: 100%;
+                                }
+                                .center-data {
+                                    width: 1000px;
+                                    margin: 0px auto;
+                                }
+                                .heading {
+                                    text-align: center;
+                                    border-bottom: 2px solid;
+                                    border-color: #A9A9A9;
+                                    padding: 5px;
+                                }
+                                .no-margin {
+                                    margin-top: 0px;
+                                    margin-bottom: 0px;
+                                }
+                                .packing-list {
+                                    width: 60%;
+                                    float: left;
+                                    margin: 10px 0px 10px 0px;
+                                }
+                                .solid {
+                                    font-weight: bold;
+                                    margin-right: 20px;
+                                    margin-left: 10px;
+                                }
+                                table, td, th {
+                                    border: 1px solid;
+                                    border-collapse: collapse;
+                                    margin-top: 10px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    border-color: #F4F6F7;
+                                }
+                                table th {
+                                    background-color: #A9A9A9
+                                }
+                                table td {
+                                    background-color: #D3D3D3
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                .invoice-no {
+                                    width: 40%;
+                                    float: left;
+                                    margin: 20px 0px 20px 0px;
+                                }
+                                .clearfloat {
+                                    clear: both;
+                                    float: none;
+                                }
+                                .exporter {
+                                    border: 1px solid;
+                                    border-color: #A9A9A9;
+                                }
+                                .exporter p {
+                                    margin-left: 5px;
+                                }
+                                .loading-from {
+                                    width: 50%;
+                                    float: left;
+                                    margin: 20px 0px 20px 0px;
+                                }
+                                p {
+                                    margin-left: 20px;
+                                }
+                                .signature-name {
+                                    text-align: right;
+                                }
+                                .shipment {
+                                    width: 100%;
+                                    border: 1px solid;
+                                    border-color: #A9A9A9;
+                                    height: 150px;
+                                }
+                                .signature-name {
+                                    margin-top: 50px;
+                                    margin-right: 20px;
+                                }
+                            </style>
+
+                            <div class="main-data">
+                                <div class="center-data">
+                                    <div class="heading">
+                                        <h3 class="no-margin">MR.FABRICS(PVT) LTD.</h3>
+                                        <p class="no-margin">18-KM Ferozepur road behind Nishtar Colony Lahore Pakitan</p>
+                                        <p class="no-margin">Ph+ 92-42-35923034-35821995 Fax+92-42-35923033</p>
+                                        <p class="no-margin">www.mrfabrics.com.pk NTN#146525-7</p>
+                                    </div>
+                                    <div class="packing-list">
+                                        <p class="no-margin"><span class="solid">Supplier Name:</span><span class="liquid">MR FABRICS (PVT) LTD</span></p>
+                                        <p class="no-margin"><span class="solid">Address:</span><span class="liquid">18-KM Ferozepur Road Lahore Pakitan</span></p>
+                                        <p class="no-margin"><span class="solid">Tel:</span><span class="liquid">+92 42 35923033</span></p>
+                                        <p class="no-margin"><span class="solid">Fax:</span><span class="liquid">+92 4235923034</span></p>
+                                    </div>
+                                    <table width="40%" style="float: right;">
+                                        <tr>
+                                            <th>Supplier No</th>
+                                            <th>Department</th>
+                                            <th>Center</th>
+                                            <th>Order No</th>
+                                        </tr>
+                                        <tr>
+                                            <td>70040</td>
+                                            <td>0097</td>
+                                            <td>0050</td>
+                                            <td>90230501</td>
+                                        </tr>
+                                    </table>
+                                    <br class="clearfloat"/>
+                                    <h3 style="text-align: center; text-decoration: underline;">COMMERCIAL INVOICE</h3>
+                                    <br class="clearfloat"/>
+                                    <div class="invoice-no">
+                                        <p class="no-margin"><span class="solid">Invoice No:</span><span class="liquid">3615-17</span></p>
+                                        <p class="no-margin"><span class="solid">E FORM NO:</span><span class="liquid">SBL-2017-0000018885</span></p>
+                                    </div>
+                                    <div class="invoice-no">
+                                        <p class="no-margin"><span class="solid">DATE:</span><span class="liquid">3615-17</span></p>
+                                        <p class="no-margin"><span class="solid">DATED:</span><span class="liquid">3615-17</span></p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                    <div class="loading-from">
+                                        <p class="no-margin"><span class="solid">TO:</span><span class="liquid">HIPERCOR S.A.</span></p>
+                                        <p class="no-margin"><span class="liquid">Hermosilla112</span></p>
+                                        <p class="no-margin"><span class="liquid">28009 Madrid</span></p>
+                                        <p class="no-margin"><span class="liquid">Spain</span></p>
+                                        <p class="no-margin"><span class="liquid">EoriNo: DSA28642866</span></p>
+                                    </div>
+                                    <div class="loading-from">
+                                        <p class="no-margin"><span class="solid">PORT OF LOADING:</span><span class="liquid">LAHORE PAKISTAN</span></p>
+                                        <p class="no-margin"><span class="solid">PORT OF DISCHARGE:</span><span class="liquid">MADRID SPAIN</span></p>
+                                        <p class="no-margin"><span class="solid">Basis of Price:</span><span class="liquid">CPT MADRID</span></p>
+                                        <p class="no-margin"><span class="solid">Currency:</span><span class="liquid">US DOLLAR</span></p>
+                                        <p class="no-margin"><span class="solid">Country of Origin:</span><span class="liquid">PAKISTAN</span></p>
+                                        <p class="no-margin"><span class="solid">Packing/Catrons:</span><span class="liquid">PRE-PACK/SOLID</span></p>
+                                        <p class="no-margin"><span class="solid">Mods of shipping:</span><span class="liquid">AIR PREPAID</span></p>
+                                    </div>
+                                    <table width="100%">
+                                        <tr>
+                                            <th rowspan="2">Article No</th>
+                                            <th rowspan="2">Description</th>
+                                            <th rowspan="2">Size/Color</th>
+                                            <th colspan="3">Quantities</th>
+                                            <th rowspan="2">Total Quantities</th>
+                                            <th rowspan="2">Net Price USD</th>
+                                            <th rowspan="2">Amount USD</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Madrid-050</th>
+                                            <th>Barcelona-062</th>
+                                            <th>Canary-072</th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>POLO AS PER ORDER90230501-097</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>BLUE+BURBERY 2</td>
+                                            <td>89</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>89</td>
+                                            <td>7.05</td>
+                                            <td>627.45</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>TOTAL</td>
+                                            <td>3,425</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>3,425</td>
+                                            <td></td>
+                                            <td>3,425</td>
+                                        </tr>
+                                    </table>
+                                    <table width="40%">
+                                        <tr>
+                                            <td>Amount for Madrid:</td>
+                                            <td>24,146.25 USD</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amount for Barcelona:</td>
+                                            <td>USD</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amount for Canary Islands(Las Palmas):</td>
+                                            <td>USD</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Amount:</td>
+                                            <td>24,146,.25USD</td>
+                                        </tr>
+                                    </table>
+                                    <div class="invoice-no" style="width: 75%">
+                                        <p class="no-margin"><span class="solid" style="display: block;">Shipment Date:</span></p>
+                                    </div>
+                                    <div class="invoice-no" style="width: 65%">
+                                        <p class="no-margin"><span class="solid">Payment Terms</span><span class="liquid">LC (DRAFT AT 60 DAYS AFTER PRESENTARION DATE: L/CNO:3990101469108 </span></p>
+                                        <p class="no-margin"><span class="solid">Beneficiary:</span><span class="liquid">MR.FABRICS (PVT)LIMITED</span></p>
+                                        <p class="no-margin"><span class="solid">Advising Bank</span><span class="liquid">SONERI BANK LIMITED</span></p>
+                                        <p class="no-margin"><span class="solid">Addrss:</span><span class="liquid">DEFANCE BRANCH G-3 COMMERCIAL AREA DHA LAHORE PAKISTAN</span></p>
+                                        <p class="no-margin"><span class="solid">SWIFT CODE:</span><span class="liquid">SONEPKKADLH</span></p>
+                                    </div>
+                                    <div class="invoice-no" style="width: 35%">
+                                        <p class="no-margin"><span class="solid">DATE:</span><span class="liquid">08-JUNE-2017</span></p>
+                                        <p class="no-margin"><span class="solid">A/C NO:</span><span class="liquid">0201888466</span></p>
+                                        <p class="no-margin"><span class="solid">IBAN NO:</span><span class="liquid">PK78SONE001102010888466</span></p>
+                                    </div>
+                                    <br class="clearfloat"/>
+                                <div class="shipment">
+                                    <div class="invoice-no">
+                                        <p class="no-margin"><span class="solid">GOODS TO MADRID(050):</span><span class="liquid"></span></p>
+                                        <p class="no-margin"><span class="solid">Total Gross Weight(kg)</span><span class="liquid">2,010.00</span></p>
+                                        <p class="no-margin"><span class="solid">Measurement(Total CBM)</span><span class="liquid">10,126</span></p>
+                                        <p class="no-margin"><span class="solid">Total GOODS</span><span class="liquid"></span></p>
+                                        <p class="no-margin"><span class="solid">Total Gross Weight(kg)</span><span class="liquid">2,010.00</span></p>
+                                        <p class="no-margin"><span class="solid">Measurement (Total CBM)</span><span class="liquid">10.126</span></p>
+                                    </div>
+                                    <div class="invoice-no">
+                                        <p class="no-margin"><span class="solid">Total Net Weight(050)</span><span class="liquid">1,679.80</span></p>
+                                        <p class="no-margin"><span class="solid">Number of cartons:</span><span class="liquid">258</span></p>
+                                        <p class="no-margin"><span class="solid">Total Net Weight (kg)</span><span class="liquid">1,679.80</span></p>
+                                        <p class="no-margin"><span class="solid">Number of Cartons:</span><span class="liquid">258</span></p>
+                                    </div>
+                                </div>
+                                    <br class="clearfloat"/>
+                                <div class="exporter">
+                                    <p>Export [MR.FABRICS (PVT) LIMITED , Number of Registered Exporter PK REXPK14565257] of the troduct covered by this document declares that, except where otherwise clearly indicated, there products are of Pakistan preferential origin according th rules of origin of the Generalised system of preference of the Europian Union and that the origin ctiterion is "P" 6105.1000</p>
+                                </div>
+                                <div class="signature-name">
+                                    <p class="no-margin"><span class="solid">SHAHZAD NAZIR</span></p>
+                                    <p class="no-margin"><span class="liquid">Name, Signature and company chop</span></p>
+                                </div>
+                                </div>
+                            </div>
+
+                        </div><!--end of page-->
+                    </t>
+                </t>
+            </t>
+
+        </template>
+
+    </data>
+
+</openerp>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_readonly_bypass" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_readonly_bypass/static/src/js/readonly_bypass.js"></script>
+            </xpath>
+        </template>
+
+
+
+    <record id="web.qunit_suite"   model="ir.ui.view"> 
+        <!-- <field name="name">hide_purchase_method_field_product</field> 
+        <field name="model">product.template</field>  -->
+        <!-- <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>  -->
+        <field name="arch" type="xml"> 
+    
+
+            <t t-name="web.qunit_suite">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'style': 'height: 100%;'}"/>
+            <t t-set="title">Odoo Web Tests</t>
+            <t t-set="head">
+                <link type="text/css" rel="stylesheet" href="/web/static/lib/qunit/qunit-1.17.1.css"/>
+                <script type="text/javascript" src="/web/static/lib/qunit/qunit-1.17.1.js"/>
+
+                <t t-call-assets="web.assets_common" t-css="false"/>
+                <t t-call-assets="web.assets_backend" t-css="false"/>
+                <t t-call="web.webclient_script"/>
+
+
+                <script type="text/javascript" src="/web_readonly_bypass/static/test/web_readonly_bypass.js"/>
+                <script type="text/javascript" src="/web/static/test/testing.js"/>
+                <script type="text/javascript" src="/web/static/test/registry.js"/>
+                <script type="text/javascript" src="/web/static/test/rpc-misordered.js"/>
+                <script type="text/javascript" src="/web/static/test/mutex.js"/>
+                <script type="text/javascript" src="/web/static/test/data.js"/>
+                <script type="text/javascript" src="/web/static/test/evals.js"/>
+                <script type="text/javascript" src="/web/static/test/form.js"/>
+                <script type="text/javascript" src="/web/static/test/formats.js"/>
+                <script type="text/javascript" src="/web/static/test/framework.js"/>
+                <script type="text/javascript" src="/web/static/test/list.js"/>
+                <script type="text/javascript" src="/web/static/test/list-utils.js"/>
+                <script type="text/javascript" src="/web/static/test/list-editable.js"/>
+                <script type="text/javascript" src="/web/static/test/search.js"/>
+            </t>
+
+            <div id="qunit"/>
+            <div id="qunit-fixture"/>
+        </t>
+    </t>
+
+                
+
+                
+        </field> 
+    </record>
+
+
+
+
+
+      <!--   <template id="qunit_suite" name="web_readonly_bypass" inherit_id="web.qunit_suite">
+            <xpath expr="/head" position="replace">
+                <head>
+                <script type="text/javascript" src="/web_readonly_bypass/static/test/web_readonly_bypass.js"></script>
+             </head>
+            </xpath>
+
+        </template> -->
+    </data>
+</openerp>

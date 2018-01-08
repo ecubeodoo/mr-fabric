@@ -21,6 +21,34 @@ class WokrOrderMain(models.Model):
     buyer = fields.Many2one('res.partner',string="Buyer")
     production_id =fields.One2many('production.tree','production_tree')
 
+    state = fields.Selection([
+        ('draft','Draft'),
+        ('confirmed','Confirmed'),
+        ('inprogress','InProgress'),
+        ('done','Done'),
+        ('cancel','Cancel'),
+        ],default='draft')
+                        
+    @api.multi
+    def in_draft(self):
+        self.state = "draft"
+                        
+    @api.multi
+    def in_confirmed(self):
+        self.state = "confirmed"
+                        
+    @api.multi
+    def in_progress(self):
+        self.state = "inprogress"
+                        
+    @api.multi
+    def in_done(self):
+        self.state = "done"
+                        
+    @api.multi
+    def in_cancel(self):
+        self.state = "cancel"
+
     @api.multi
     def validate_tree(self):
         p_order = self.env['purchase.order'].search([('wo_no.name','=',self.name)])
