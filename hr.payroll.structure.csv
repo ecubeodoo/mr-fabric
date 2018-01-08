@@ -1,2 +1,0 @@
-"id","children_ids/id","company_id/id","create_uid/id","create_date","note","write_uid/id","write_date","name","parent_id/id","code","rule_ids/id"
-"hr_payroll.structure_base","","base.main_company","base.user_root","2017-11-10 10:42:37","","base.user_root","2017-12-07 12:42:42","Base for new structures","","BASE","hr_payroll.hr_rule_basic,hr_payroll.hr_rule_taxable,hr_payroll.hr_rule_net,__export__.hr_salary_rule_4,__export__.hr_salary_rule_5,__export__.hr_salary_rule_6,__export__.hr_salary_rule_7,__export__.hr_salary_rule_8,__export__.hr_salary_rule_9"

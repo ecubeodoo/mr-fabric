@@ -1,0 +1,56 @@
+<openerp>
+    <data>
+        <!-- Ecube Bio Machine Form View -->
+        <record id="ecube_bio_machine_form_view" model="ir.ui.view">
+            <field name="name">ecube_bio_machine_form_view</field>
+            <field name="model">ecube.machine</field>
+            <field name="arch" type="xml">
+                <form string="Bio Machine Form">
+                    <header> 
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1 style="width:50%;">
+                                <field name="name" placeholder="Machine Name"/>
+                            </h1>
+                        </div>
+                        <group name="group_left">
+                            <group name="group_top">
+                                <field name="machine_ip"/>
+                            </group>
+                            <group name="group_right">
+                                <field name="machine_status"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Ecube Bio Machine Tree View -->
+        <record id="ecube_bio_machine_tree_view" model="ir.ui.view">
+            <field name="name">ecube_bio_machine_tree_view</field>
+            <field name="model">ecube.machine</field>
+            <field name="arch" type="xml">
+                <tree string="Raw Attendance Tree">
+                    <field name="name"/>
+                    <field name="machine_ip"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Ecube Bio Machine Action -->
+        <record id="action_ecube_bio_machine" model="ir.actions.act_window">
+            <field name="name">Bio Machine</field>
+            <field name="res_model">ecube.machine</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    You have'nt created any record yet.
+                </p>
+            </field>
+        </record>
+    </data>
+</openerp>

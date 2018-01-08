@@ -1,0 +1,52 @@
+<openerp>
+    <data>
+        <!-- Ecube Bio Machine Form View -->
+        <record id="ecube_machine_info" model="ir.ui.view">
+            <field name="name">ecube_machine_info</field>
+            <field name="model">machine.info</field>
+            <field name="arch" type="xml">
+                <form string="Bio Machine Attendence Error Form" delete ="false" create = "false" >
+                    <group name="group_top"> 
+                        <group name="group_left">
+                            <field name="db"/>
+                            <field name="odooLogin"/>
+                            <field name="odooPasswd"/>
+                        </group>
+                        <field name="product_ids" nolabel='1'>
+                            <tree  editable="bottom">
+
+                                <field name="ip"/>                            
+                                <field name="status"/>
+
+                            </tree>
+                        </field>
+                    </group> 
+                </form>
+            </field>
+        </record>
+
+        <!-- Ecube Bio Machine Tree View -->
+        <record id="ecube_machine_info_tree" model="ir.ui.view">
+            <field name="name">ecube_machine_info_tree</field>
+            <field name="model">machine.info</field>
+            <field name="arch" type="xml">
+                <tree string="Machine Info" delete ="false" create = "false">
+                    <field name="db"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Ecube Bio Machine Action -->
+        <record id="ecube_machine_info_menu_action" model="ir.actions.act_window">
+            <field name="name">Bio Machine Info</field>
+            <field name="res_model">machine.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    You have'nt created any record yet.
+                </p>
+            </field>
+        </record>
+    </data>
+</openerp>

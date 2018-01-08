@@ -13,12 +13,16 @@ class EmployeeFormExtension(models.Model):
     doj = fields.Date(string='Date of Joining')
     doi = fields.Date(string='Date of issue',default=fields.Date.today)
     confirmation_date = fields.Date(string='Confirmation Date')
-    religion = fields.Char(string='Religion')
+    religion = fields.Selection([
+        ('muslim','Muslim'),
+        ('non_musliom','Non Muslim')
+        ],string='Religion',default='muslim')
     fname = fields.Char(string='Father Name')
     cnic = fields.Char(string='CNIC NO')
     social_security = fields.Boolean(string="Social Security")
     ss_no = fields.Char(string="SS No")
     eobi = fields.Boolean(string="EOBI")
+    merchant = fields.Boolean(string="Merchant")
     eobi_no = fields.Char(string="EOBI No")
     name_card = fields.Char(string="Name")
     emp_machine_id = fields.Float(string="ID")
@@ -37,31 +41,27 @@ class EmployeeFormExtension(models.Model):
     resigned = fields.Boolean(string="Resigned")
 
     salary = fields.Float(string="Salary")
+    salary_structure = fields.Many2one('hr.payroll.structure',string="Salary Structure")
 
     @api.onchange('name','card_no')
     def onchange_namecard(self):
         addition = str(self.name) + ' - ' + str(self.card_no.name)
         self.name_card = addition
 
-    # @api.model
-    # def create(self, vals):
-    #     new_record = super(driver_payments, self).create(vals)
-        
-    #     cash_enteries = self.env['account.bank.statement'].search([('branch.name','=',new_record.driver_payment.branch.name),('state','=','open')])
-    #     lineCreationIds = cash_enteries.line_ids
-    #     if cash_enteries:
-    #         for x in new_record:
-    #             lineCreation = lineCreationIds.create({
-    #                 'date':x.date,
-    #                 'name':"payment",
-    #                 'partner_id':x.driver_payment.customer.id,
-    #                 'ref':x.driver_payment.order_no,
-    #                 'amount':x.amount*(-1),
-    #                 'statement_id':cash_enteries.id,
-    #                 })
-    #             x.bank_id = lineCreation.id
+    @api.model
+    def create(self, vals):
+        new_record = super(EmployeeFormExtension, self).create(vals)
 
-    #     return new_record
+        newcontract = self.env['hr.contract'].create({
+            'name': 'vals.name',
+            'employee_id': 1,
+            'department_id': self.department_id.id,
+            'job_id': self.job_id.id,
+            'wage': self.salary,
+            'struct_id': self.salary_structure.id,
+        })
+
+        return new_record
 
     # @api.multi
     # def write(self, vals):
@@ -132,11 +132,6 @@ class EmployeExperience(models.Model):
 
 class HrContracts(models.Model):
     _inherit = 'hr.contract'
-
-    tax_amount = fields.Char(string="Tax Amount")
-    canteen = fields.Char(string="Canteen")
-    overtime_amount = fields.Char(string="Overtime Amount")
-    advance_salary = fields.Char(string="Advance Against Salary")
 
     mobile = fields.Char(string="Mobile")
     fuel = fields.Char(string="Fuel")

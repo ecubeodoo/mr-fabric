@@ -24,6 +24,7 @@
                             <field name="job_id" string="Designation"/>
                             <field name="parent_id"/>
                             <field name="coach_id"/>
+                            <field name="merchant" />
                             <field name="calendar_id"/>
                         </group>
                         <group string="Hr Benefits">
@@ -32,15 +33,11 @@
                             <field name="eobi"/>
                             <field name="eobi_no" attrs="{'invisible':[('eobi', '!=', True)]}"/>
                             <field name="salary"/>
+                            <field name="salary_structure"/>
                         </group>
                     </group>
                     
                 </xpath>
-
-                <!-- <xpath expr="//field[@name='name']" position="replace">
-                    <field name="name" placeholder="Employee's Name" class="oe_edit_only"/>
-                    <field name="name_card" class="oe_read_only"/>
-                </xpath> -->
 
                 <xpath expr="sheet/notebook" position="after">
                     <field name="notes" placeholder="Other Information ..." colspan="4"/>
@@ -75,6 +72,9 @@
                 <xpath expr="//field[@name='identification_id']" position="replace">
                     <field name="cnic" />
                 </xpath>
+
+                <!-- <xpath expr="//field[@name='coach_id']" position="after">
+                </xpath> -->
 
                 <xpath expr="//page[@name='public']" position="replace">
                 </xpath>
@@ -202,10 +202,6 @@
 
                 <xpath expr="//field[@name='wage']" position="replace">
                     <field name="wage"/>
-                    <field name="tax_amount"/>
-                    <field name="canteen"/>
-                    <field name="overtime_amount"/>
-                    <field name="advance_salary"/>
                     <field name="days" />
                     <field name="hours"/>
                 </xpath>

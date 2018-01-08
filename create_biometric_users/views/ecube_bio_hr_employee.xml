@@ -1,0 +1,19 @@
+<openerp>
+    <data>
+
+        <record id="bio_btn_form_view_hr_employee" model="ir.ui.view">
+            <field name="name">bio_btn_form_view_hr_employee</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//form/*" position="before">
+    				<header>
+                        <button name="createBioUsers" type="object" string="Bio User" />
+                        <!-- <button name="createBioUsersall" type="object" string="Creat all User" /> -->
+    				</header>
+            	</xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
